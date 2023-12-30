@@ -42,6 +42,7 @@
             background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer; /* Ajout du curseur pointer pour indiquer que l'élément est cliquable */
+            position: relative; /* Permet de positionner les images à l'intérieur de la case */
         }
 
         .result-item img {
@@ -50,6 +51,17 @@
             object-fit: cover;
             border-radius: 5px;
             margin-bottom: 15px;
+        }
+
+        .result-item .double-image {
+            display: flex;
+            justify-content: space-between;
+            height: 100%; /* Ajuste la hauteur pour occuper toute la case */
+            overflow: hidden; /* Pour cacher le dépassement des images */
+        }
+
+        .result-item .double-image img {
+            flex: 1;
         }
 
         .result-item.open img {
@@ -106,9 +118,10 @@
                             resultItem.innerHTML += '<img src="' + result.covers[0] + '" alt="Jaquette">';
                         } else if (result.covers.length > 1) {
                             // S'il y a plusieurs images, afficher toutes les images
-                            result.covers.forEach(function (cover, index) {
-                                resultItem.innerHTML += '<img src="' + cover + '" alt="Jaquette" onclick="openDetailsPage(\'' + result.title + '\', ' + index + ')">';
-                            });
+                            resultItem.innerHTML += '<div class="double-image">' +
+                                                      '<img src="' + result.covers[0] + '" alt="Jaquette">' +
+                                                      '<img src="' + result.covers[1] + '" alt="Jaquette">' +
+                                                  '</div>';
                         }
 
                         resultItem.addEventListener('click', function() {
