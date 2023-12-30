@@ -44,10 +44,16 @@
             cursor: pointer; /* Ajout du curseur pointer pour indiquer que l'élément est cliquable */
         }
 
-        img {
+        .result-item img {
             max-width: 100%;
-            height: auto;
+            height: 200px; /* Hauteur fixe pour toutes les images */
+            object-fit: cover;
             border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .result-item.open img {
+            height: auto; /* Pour que l'image puisse s'adapter à sa taille originale en mode plein écran */
         }
     </style>
 
@@ -100,8 +106,8 @@
                             resultItem.innerHTML += '<img src="' + result.covers[0] + '" alt="Jaquette">';
                         } else if (result.covers.length > 1) {
                             // S'il y a plusieurs images, afficher toutes les images
-                            result.covers.forEach(function (cover) {
-                                resultItem.innerHTML += '<img src="' + cover + '" alt="Jaquette">';
+                            result.covers.forEach(function (cover, index) {
+                                resultItem.innerHTML += '<img src="' + cover + '" alt="Jaquette" onclick="openDetailsPage(\'' + result.title + '\', ' + index + ')">';
                             });
                         }
 
