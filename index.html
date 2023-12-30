@@ -5,8 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recherche de Mangas</title>
+    <!-- Ajout de Bootstrap pour le style -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-        /* Ajoutez votre style CSS ici */
+        body {
+            background-color: #f8f9fa;
+            padding-top: 60px; /* Assure que la barre de navigation ne chevauche pas le contenu */
+        }
+
+        header {
+            background-color: #343a40;
+            padding: 20px 0;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        #search-results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .result-item {
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -15,59 +56,66 @@
         <h1>Recherche de Mangas</h1>
     </header>
 
-    <main>
-        <form id="search-form">
-            <label for="search-input">Rechercher un manga :</label>
-            <input type="text" id="search-input" name="search" placeholder="Entrez le nom du manga...">
-            <button type="submit">Rechercher</button>
+    <main class="container">
+        <form id="search-form" class="form-inline">
+            <label for="search-input" class="sr-only">Rechercher un manga :</label>
+            <input type="text" id="search-input" name="search" class="form-control mr-2" placeholder="Entrez le nom du manga...">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
         </form>
 
         <!-- Résultats de la recherche seront affichés ici -->
-        <div id="search-results">
+        <div id="search-results" class="row">
             <!-- Les résultats seront ajoutés ici dynamiquement avec JavaScript -->
         </div>
     </main>
 
+    <!-- Ajout de Bootstrap pour les scripts JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <script>
-        document.getElementById('search-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            // Récupérer la valeur de recherche
-            var searchTerm = document.getElementById('search-input').value;
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('search-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Récupérer la valeur de recherche
+                var searchTerm = document.getElementById('search-input').value;
 
-            // Exemple de traitement de la recherche (à remplacer par votre propre logique)
-            var results = searchMangas(searchTerm);
+                // Charger la base de données de mangas depuis le fichier MangasList.json
+                fetch('MangasList.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Exemple de traitement de la recherche
+                        var results = searchMangas(data, searchTerm);
 
-            // Afficher les résultats
-            displayResults(results);
-        });
+                        // Afficher les résultats
+                        displayResults(results);
+                    })
+                    .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
+            });
 
-        // Exemple de fonction de recherche (à remplacer par votre propre logique)
-        function searchMangas(term) {
-            // Vous devrez remplacer ceci par votre propre logique de recherche
-            // Cette fonction pourrait interagir avec une API, une base de données, etc.
-            // pour obtenir les résultats de la recherche.
-            return [
-                { title: 'Manga 1', cover: 'lien_vers_jaquette_1.jpg' },
-                { title: 'Manga 2', cover: 'lien_vers_jaquette_2.jpg' },
-                // Ajoutez d'autres résultats ici...
-            ];
-        }
-
-        // Exemple de fonction pour afficher les résultats
-        function displayResults(results) {
-            var resultsContainer = document.getElementById('search-results');
-            resultsContainer.innerHTML = ''; // Efface les résultats précédents
-
-            if (results.length === 0) {
-                resultsContainer.innerHTML = '<p>Aucun résultat trouvé.</p>';
-            } else {
-                results.forEach(function (result) {
-                    var resultItem = document.createElement('div');
-                    resultItem.innerHTML = '<h3>' + result.title + '</h3><img src="' + result.cover + '" alt="Jaquette">';
-                    resultsContainer.appendChild(resultItem);
-                });
+            function searchMangas(mangas, term) {
+                // Filtrer les mangas en fonction du terme de recherche
+                term = term.toLowerCase();
+                return mangas.filter(manga => manga.title.toLowerCase().includes(term));
             }
-        }
+
+            function displayResults(results) {
+                var resultsContainer = document.getElementById('search-results');
+                resultsContainer.innerHTML = ''; // Efface les résultats précédents
+
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = '<p>Aucun résultat trouvé.</p>';
+                } else {
+                    results.forEach(function (result) {
+                        var resultItem = document.createElement('div');
+                        resultItem.classList.add('result-item', 'col-md-4');
+                        resultItem.innerHTML = '<h3>' + result.title + '</h3><img src="' + result.cover + '" alt="Jaquette">';
+                        resultsContainer.appendChild(resultItem);
+                    });
+                }
+            }
+        });
     </script>
 
 </body>
