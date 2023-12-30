@@ -77,6 +77,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Charger la base de données de mangas depuis le fichier MangasList.json
+            fetch('MangasList.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Sélectionner 10 mangas au hasard
+                    var randomMangas = getRandomMangas(data, 10);
+
+                    // Afficher les résultats
+                    displayResults(randomMangas);
+                })
+                .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
+
             document.getElementById('search-form').addEventListener('submit', function (event) {
                 event.preventDefault();
                 // Récupérer la valeur de recherche
@@ -99,19 +111,6 @@
                     // Si la recherche est vide, afficher un message approprié
                     document.getElementById('search-results').innerHTML = '<p>Veuillez entrer un terme de recherche.</p>';
                 }
-            });
-
-            document.getElementById('show-examples').addEventListener('click', function () {
-                fetch('MangasList.json')
-                    .then(response => response.json())
-                    .then(data => {
-                        // Sélectionner 10 mangas au hasard
-                        var randomMangas = getRandomMangas(data, 10);
-
-                        // Afficher les résultats
-                        displayResults(randomMangas);
-                    })
-                    .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
             });
 
             function getRandomMangas(mangas, count) {
@@ -205,9 +204,6 @@
             <input type="text" id="search-input" name="search" class="form-control mr-2" placeholder="Entrez le nom du manga...">
             <button type="submit" class="btn btn-primary">Rechercher</button>
         </form>
-
-        <!-- Bouton pour afficher des exemples -->
-        <button id="show-examples" class="btn btn-secondary mb-2">Afficher des exemples</button>
 
         <!-- Résultats de la recherche seront affichés ici -->
         <div id="search-results" class="row">
