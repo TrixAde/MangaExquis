@@ -131,6 +131,15 @@
                 }
             });
 
+            // Sélectionnez l'élément .logo
+            var logoButton = document.querySelector('.logo');
+
+            // Ajoutez un gestionnaire d'événements pour le clic sur la maison
+            logoButton.addEventListener('click', function () {
+                // Redirigez l'utilisateur vers la page principale
+                window.location.href = window.location.origin + window.location.pathname;
+            });
+
             function getRandomMangas(mangas, count) {
                 // Mélanger la liste de mangas
                 var shuffledMangas = mangas.sort(() => Math.random() - 0.5);
