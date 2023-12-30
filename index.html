@@ -19,6 +19,13 @@
             padding: 20px 0;
             color: #ffffff;
             text-align: center;
+            position: relative; /* Permet de positionner le logo */
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
         }
 
         main {
@@ -168,11 +175,11 @@
                     });
                 }
 
-                // Ajouter le bouton de retour à l'accueil
+                // Ajouter le bouton de retour à l'accueil avec le logo
                 if (showHomeButton) {
                     var homeButton = document.createElement('button');
-                    homeButton.classList.add('btn', 'btn-primary', 'mt-3');
-                    homeButton.innerHTML = '<i class="fas fa-home"></i> Retour à l\'Accueil';
+                    homeButton.classList.add('btn', 'btn-primary', 'mt-3', 'logo');
+                    homeButton.innerHTML = '<i class="fas fa-home"></i>';
                     homeButton.addEventListener('click', function () {
                         fetch('MangasList.json')
                             .then(response => response.json())
@@ -182,7 +189,7 @@
                             })
                             .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
                     });
-                    resultsContainer.appendChild(homeButton);
+                    document.querySelector('header').appendChild(homeButton);
                 }
             }
 
