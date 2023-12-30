@@ -66,6 +66,10 @@
             object-fit: cover; /* Assure que l'image est croppée pour remplir la hauteur de la case */
         }
 
+        .result-item .double-image .cropped {
+            border-radius: 5px 0 0 5px; /* Ajout de border-radius spécifique pour les images cropées */
+        }
+
         .result-item.open img {
             height: auto; /* Pour que l'image puisse s'adapter à sa taille originale en mode plein écran */
         }
@@ -122,7 +126,7 @@
                             // S'il y a plusieurs images, afficher toutes les images
                             resultItem.innerHTML += '<div class="double-image">' +
                                                       '<img src="' + result.covers[0] + '" alt="Jaquette">' +
-                                                      '<img src="' + result.covers[1] + '" alt="Jaquette">' +
+                                                      '<img src="' + result.covers[1] + '" alt="Jaquette" class="cropped">' +
                                                   '</div>';
                         }
 
@@ -130,6 +134,14 @@
                             openDetailsPage(result);
                         });
                         resultsContainer.appendChild(resultItem);
+
+                        // Récupérer les images dans le résultat
+                        var images = resultItem.querySelectorAll('img');
+
+                        // Ajouter la classe "cropped" à la deuxième image si elle est cropée
+                        if (images.length > 1 && images[1].naturalWidth < images[0].naturalWidth) {
+                            images[1].classList.add('cropped');
+                        }
                     });
                 }
             }
