@@ -70,10 +70,11 @@
         }
     </style>
 
-    <!-- Ajout de Bootstrap pour les scripts JavaScript -->
+    <!-- Ajout de Bootstrap et Fuse.js pour les scripts JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -100,7 +101,7 @@
                     fetch('MangasList.json')
                         .then(response => response.json())
                         .then(data => {
-                            // Exemple de traitement de la recherche
+                            // Exemple de traitement de la recherche avec Fuse.js
                             var results = searchMangas(data, searchTerm);
 
                             // Afficher les résultats
@@ -121,9 +122,15 @@
             }
 
             function searchMangas(mangas, term) {
-                // Filtrer les mangas en fonction du terme de recherche
-                term = term.toLowerCase();
-                return mangas.filter(manga => manga.title.toLowerCase().includes(term));
+                var options = {
+                    includeScore: true,
+                    keys: ['title']
+                };
+
+                var fuse = new Fuse(mangas, options);
+                var result = fuse.search(term);
+
+                return result.map(item => item.item);
             }
 
             function displayResults(results) {
