@@ -1,5 +1,23 @@
 [
-    { "title": "Blue Lock Tome 14 Jaquette Exclusive Canal BD", "cover": "https://www.canalbd.net/img/comment/plus/jaquette-canal-bd-blue-lock-14.png" },
-    { "title": "Manga 2", "cover": "lien_vers_jaquette_2.jpg" },
-    { "title": "Manga 3", "cover": "lien_vers_jaquette_3.jpg" }
+    {
+        "title": "Blue Lock T14 Jaquette CanalBD",
+        "cover": "https://www.canalbd.net/img/comment/plus/jaquette-canal-bd-blue-lock-14.png",
+        "releaseDate": "14/06/2023",
+        "printRun": 5500,
+        "originalPrice": "7,20€"
+    },
+    {
+        "title": "Manga 2",
+        "cover": "lien_vers_jaquette_2.jpg",
+        "releaseDate": "02/01/2022",
+        "printRun": 8000,
+        "originalPrice": "$18.00"
+    },
+    {
+        "title": "Manga 3",
+        "cover": "lien_vers_jaquette_3.jpg",
+        "releaseDate": "03/01/2022",
+        "printRun": 12000,
+        "originalPrice": "$22.00"
+    }
 ]
