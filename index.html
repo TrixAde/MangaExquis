@@ -27,6 +27,7 @@
             top: 10px;
             left: 10px;
             cursor: pointer;
+            display: none; /* Le logo est initialement caché */
         }
 
         main {
@@ -95,7 +96,7 @@
                     var examples = getRandomMangas(data, 10);
 
                     // Afficher les exemples
-                    displayResults(examples, true);
+                    displayResults(examples, false);
                 })
                 .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
 
@@ -114,7 +115,7 @@
                             var results = searchMangas(data, searchTerm);
 
                             // Afficher les résultats
-                            displayResults(results, false);
+                            displayResults(results, true);
                         })
                         .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
                 } else {
@@ -123,7 +124,7 @@
                         .then(response => response.json())
                         .then(data => {
                             var examples = getRandomMangas(data, 10);
-                            displayResults(examples, true);
+                            displayResults(examples, false);
                         })
                         .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
                 }
@@ -176,21 +177,12 @@
                     });
                 }
 
-                // Ajouter le bouton de retour à l'accueil avec le logo si nécessaire
+                // Afficher ou cacher le bouton de retour à l'accueil avec le logo selon la condition
+                var logoButton = document.querySelector('.logo');
                 if (showHomeButton) {
-                    var homeButton = document.createElement('button');
-                    homeButton.classList.add('btn', 'btn-primary', 'logo');
-                    homeButton.innerHTML = '<i class="fas fa-home"></i>';
-                    homeButton.addEventListener('click', function () {
-                        fetch('MangasList.json')
-                            .then(response => response.json())
-                            .then(data => {
-                                var examples = getRandomMangas(data, 10);
-                                displayResults(examples, true);
-                            })
-                            .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
-                    });
-                    document.querySelector('header').appendChild(homeButton);
+                    logoButton.style.display = 'block';
+                } else {
+                    logoButton.style.display = 'none';
                 }
             }
 
