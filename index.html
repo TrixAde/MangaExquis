@@ -1,8 +1,74 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Title of your page here</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de Mangas</title>
+    <style>
+        /* Ajoutez votre style CSS ici */
+    </style>
 </head>
 <body>
-All the stuff you want on your page goes between the body tags.
+
+    <header>
+        <h1>Recherche de Mangas</h1>
+    </header>
+
+    <main>
+        <form id="search-form">
+            <label for="search-input">Rechercher un manga :</label>
+            <input type="text" id="search-input" name="search" placeholder="Entrez le nom du manga...">
+            <button type="submit">Rechercher</button>
+        </form>
+
+        <!-- Résultats de la recherche seront affichés ici -->
+        <div id="search-results">
+            <!-- Les résultats seront ajoutés ici dynamiquement avec JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            // Récupérer la valeur de recherche
+            var searchTerm = document.getElementById('search-input').value;
+
+            // Exemple de traitement de la recherche (à remplacer par votre propre logique)
+            var results = searchMangas(searchTerm);
+
+            // Afficher les résultats
+            displayResults(results);
+        });
+
+        // Exemple de fonction de recherche (à remplacer par votre propre logique)
+        function searchMangas(term) {
+            // Vous devrez remplacer ceci par votre propre logique de recherche
+            // Cette fonction pourrait interagir avec une API, une base de données, etc.
+            // pour obtenir les résultats de la recherche.
+            return [
+                { title: 'Manga 1', cover: 'lien_vers_jaquette_1.jpg' },
+                { title: 'Manga 2', cover: 'lien_vers_jaquette_2.jpg' },
+                // Ajoutez d'autres résultats ici...
+            ];
+        }
+
+        // Exemple de fonction pour afficher les résultats
+        function displayResults(results) {
+            var resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = ''; // Efface les résultats précédents
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p>Aucun résultat trouvé.</p>';
+            } else {
+                results.forEach(function (result) {
+                    var resultItem = document.createElement('div');
+                    resultItem.innerHTML = '<h3>' + result.title + '</h3><img src="' + result.cover + '" alt="Jaquette">';
+                    resultsContainer.appendChild(resultItem);
+                });
+            }
+        }
+    </script>
+
 </body>
 </html>
