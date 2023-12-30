@@ -49,7 +49,7 @@
             max-width: 100%;
             height: 200px; /* Hauteur fixe pour toutes les images */
             object-fit: cover;
-            border-radius: 5px; /* Ajout de border-radius pour arrondir les coins */
+            border-radius: 5px;
             margin-bottom: 15px;
         }
 
@@ -62,12 +62,6 @@
 
         .result-item .double-image img {
             flex: 1;
-            border-radius: 5px; /* Ajout de border-radius pour arrondir les coins */
-            object-fit: cover; /* Assure que l'image est croppée pour remplir la hauteur de la case */
-        }
-
-        .result-item .double-image .cropped {
-            border-radius: 5px 0 0 5px; /* Ajout de border-radius spécifique pour les images cropées */
         }
 
         .result-item.open img {
@@ -126,7 +120,7 @@
                             // S'il y a plusieurs images, afficher toutes les images
                             resultItem.innerHTML += '<div class="double-image">' +
                                                       '<img src="' + result.covers[0] + '" alt="Jaquette">' +
-                                                      '<img src="' + result.covers[1] + '" alt="Jaquette" class="cropped">' +
+                                                      '<img src="' + result.covers[1] + '" alt="Jaquette">' +
                                                   '</div>';
                         }
 
@@ -134,14 +128,6 @@
                             openDetailsPage(result);
                         });
                         resultsContainer.appendChild(resultItem);
-
-                        // Récupérer les images dans le résultat
-                        var images = resultItem.querySelectorAll('img');
-
-                        // Ajouter la classe "cropped" à la deuxième image si elle est cropée
-                        if (images.length > 1 && images[1].naturalWidth < images[0].naturalWidth) {
-                            images[1].classList.add('cropped');
-                        }
                     });
                 }
             }
@@ -160,7 +146,7 @@
                                 img {
                                     max-width: 100%;
                                     height: auto;
-                                    border-radius: 5px; /* Ajout de border-radius pour arrondir les coins */
+                                    border-radius: 5px;
                                     margin-bottom: 15px;
                                 }
                             </style>
