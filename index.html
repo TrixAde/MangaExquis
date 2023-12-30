@@ -94,17 +94,42 @@
                         resultItem.classList.add('result-item', 'col-md-4');
                         resultItem.innerHTML = '<h3>' + result.title + '</h3><img src="' + result.cover + '" alt="Jaquette">';
                         resultItem.addEventListener('click', function() {
-                            openImageInNewWindow(result.cover);
+                            openDetailsPage(result);
                         });
                         resultsContainer.appendChild(resultItem);
                     });
                 }
             }
 
-            function openImageInNewWindow(imageSrc) {
-                var newWindow = window.open('', '_blank');
-                newWindow.document.write('<html><head><title>Image en plein écran</title></head><body style="margin:0;text-align:center;"><img src="' + imageSrc + '" style="max-width:100%;max-height:100vh;"></body></html>');
-                newWindow.document.close();
+            function openDetailsPage(manga) {
+                var detailsWindow = window.open('', '_blank');
+                detailsWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Détails du Manga</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    padding: 20px;
+                                }
+                                img {
+                                    max-width: 100%;
+                                    height: auto;
+                                    border-radius: 5px;
+                                    margin-bottom: 15px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <h1>${manga.title}</h1>
+                            <img src="${manga.cover}" alt="Jaquette">
+                            <p><strong>Date de parution:</strong> ${manga.releaseDate}</p>
+                            <p><strong>Tirage:</strong> ${manga.printRun}</p>
+                            <p><strong>Prix d'origine:</strong> ${manga.originalPrice}</p>
+                        </body>
+                    </html>
+                `);
+                detailsWindow.document.close();
             }
         });
     </script>
