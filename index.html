@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #000000; /* Changement de la couleur de fond en noir */
             padding-top: 60px;
+            margin: 0; /* Suppression des marges par défaut */
         }
 
         header {
@@ -27,9 +28,14 @@
         .logo {
             position: absolute;
             top: 10px;
-            left: 10px;
+            left: 50%;
+            transform: translateX(-50%); /* Centrage horizontal */
             cursor: pointer;
             display: none;
+        }
+
+        h1 {
+            display: inline-block; /* Ajustement pour aligner correctement le titre avec le logo */
         }
 
         main {
