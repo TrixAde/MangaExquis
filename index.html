@@ -70,11 +70,12 @@
         }
     </style>
 
-    <!-- Ajout de Bootstrap et Fuse.js pour les scripts JavaScript -->
+    <!-- Ajout de Bootstrap, Fuse.js et Font Awesome pour les scripts JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js"></script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -82,11 +83,11 @@
             fetch('MangasList.json')
                 .then(response => response.json())
                 .then(data => {
-                    // Sélectionner 10 mangas au hasard
-                    var randomMangas = getRandomMangas(data, 10);
+                    // Sélectionner 10 mangas au hasard comme exemples
+                    var examples = getRandomMangas(data, 10);
 
-                    // Afficher les résultats
-                    displayResults(randomMangas);
+                    // Afficher les exemples
+                    displayResults(examples, true);
                 })
                 .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
 
@@ -105,12 +106,18 @@
                             var results = searchMangas(data, searchTerm);
 
                             // Afficher les résultats
-                            displayResults(results);
+                            displayResults(results, false);
                         })
                         .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
                 } else {
-                    // Si la recherche est vide, afficher un message approprié
-                    document.getElementById('search-results').innerHTML = '<p>Veuillez entrer un terme de recherche.</p>';
+                    // Si la recherche est vide, afficher les exemples
+                    fetch('MangasList.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            var examples = getRandomMangas(data, 10);
+                            displayResults(examples, true);
+                        })
+                        .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
                 }
             });
 
@@ -133,7 +140,7 @@
                 return result.map(item => item.item);
             }
 
-            function displayResults(results) {
+            function displayResults(results, showHomeButton) {
                 var resultsContainer = document.getElementById('search-results');
                 resultsContainer.innerHTML = ''; // Efface les résultats précédents
 
@@ -159,6 +166,23 @@
                         });
                         resultsContainer.appendChild(resultItem);
                     });
+                }
+
+                // Ajouter le bouton de retour à l'accueil
+                if (showHomeButton) {
+                    var homeButton = document.createElement('button');
+                    homeButton.classList.add('btn', 'btn-primary', 'mt-3');
+                    homeButton.innerHTML = '<i class="fas fa-home"></i> Retour à l\'Accueil';
+                    homeButton.addEventListener('click', function () {
+                        fetch('MangasList.json')
+                            .then(response => response.json())
+                            .then(data => {
+                                var examples = getRandomMangas(data, 10);
+                                displayResults(examples, true);
+                            })
+                            .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
+                    });
+                    resultsContainer.appendChild(homeButton);
                 }
             }
 
