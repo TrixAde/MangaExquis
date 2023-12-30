@@ -19,13 +19,14 @@
             padding: 20px 0;
             color: #ffffff;
             text-align: center;
-            position: relative; /* Permet de positionner le logo */
+            position: relative;
         }
 
         .logo {
             position: absolute;
             top: 10px;
             left: 10px;
+            cursor: pointer;
         }
 
         main {
@@ -175,10 +176,10 @@
                     });
                 }
 
-                // Ajouter le bouton de retour à l'accueil avec le logo
+                // Ajouter le bouton de retour à l'accueil avec le logo si nécessaire
                 if (showHomeButton) {
                     var homeButton = document.createElement('button');
-                    homeButton.classList.add('btn', 'btn-primary', 'mt-3', 'logo');
+                    homeButton.classList.add('btn', 'btn-primary', 'logo');
                     homeButton.innerHTML = '<i class="fas fa-home"></i>';
                     homeButton.addEventListener('click', function () {
                         fetch('MangasList.json')
@@ -233,13 +234,15 @@
 <body>
 
     <header>
+        <div class="logo"><i class="fas fa-home fa-lg"></i></div>
         <h1>Recherche de Mangas</h1>
     </header>
 
     <main class="container">
         <form id="search-form" class="form-inline">
             <label for="search-input" class="sr-only">Rechercher un manga :</label>
-            <input type="text" id="search-input" name="search" class="form-control mr-2" placeholder="Entrez le nom du manga...">
+            <input type="text" id="search-input" name="search" class="form-control mr-2"
+                placeholder="Entrez le nom du manga...">
             <button type="submit" class="btn btn-primary">Rechercher</button>
         </form>
 
