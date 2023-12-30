@@ -92,7 +92,19 @@
                     results.forEach(function (result) {
                         var resultItem = document.createElement('div');
                         resultItem.classList.add('result-item', 'col-md-4');
-                        resultItem.innerHTML = '<h3>' + result.title + '</h3><img src="' + result.cover + '" alt="Jaquette">';
+                        resultItem.innerHTML = '<h3>' + result.title + '</h3>';
+                        
+                        // Vérifie le nombre d'images pour chaque manga
+                        if (result.covers.length === 1) {
+                            // S'il y a une seule image, l'afficher
+                            resultItem.innerHTML += '<img src="' + result.covers[0] + '" alt="Jaquette">';
+                        } else if (result.covers.length > 1) {
+                            // S'il y a plusieurs images, afficher toutes les images
+                            result.covers.forEach(function (cover) {
+                                resultItem.innerHTML += '<img src="' + cover + '" alt="Jaquette">';
+                            });
+                        }
+
                         resultItem.addEventListener('click', function() {
                             openDetailsPage(result);
                         });
@@ -122,7 +134,10 @@
                         </head>
                         <body>
                             <h1>${manga.title}</h1>
-                            <img src="${manga.cover}" alt="Jaquette">
+                            
+                            <!-- Affiche toutes les images du manga -->
+                            ${manga.covers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')}
+                            
                             <p><strong>Date de parution:</strong> ${manga.releaseDate}</p>
                             <p><strong>Tirage:</strong> ${manga.printRun}</p>
                             <p><strong>Prix d'origine:</strong> ${manga.originalPrice}</p>
