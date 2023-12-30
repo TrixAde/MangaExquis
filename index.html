@@ -91,7 +91,7 @@
                         // Afficher les résultats
                         displayResults(results);
                     })
-                    fetch('https://github.com/TrixAde/MangaExquis/edit/main/MangasList.json')
+                    .catch(error => console.error('Erreur lors du chargement de la base de données :', error));
             });
 
             function searchMangas(mangas, term) {
