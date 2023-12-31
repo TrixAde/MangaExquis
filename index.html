@@ -13,9 +13,9 @@
     <style>
         body {
             background-color: #1B1E1F;
+            color: #ffffff;
             padding-top: 60px;
             margin: 0;
-            color: #ffffff;
         }
 
         header {
@@ -45,7 +45,7 @@
 
         form {
             margin-bottom: 20px;
-            text-align: center; /* Centrer le formulaire */
+            text-align: center;
         }
 
         #search-results {
@@ -57,20 +57,22 @@
         .result-item {
             margin: 10px;
             padding: 15px;
-            border: 1px solid #333; /* Assombrir un peu les bordures */
+            border: 1px solid #dee2e6;
             border-radius: 5px;
-            background-color: #1B1E1F; /* Fond plus sombre */
+            background-color: #181A1B;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .result-item img {
             max-width: 100%;
-            max-height: 200px; /* Hauteur maximale pour éviter un étirement excessif */
-            object-fit: cover;
+            height: 100%;
+            object-fit: contain;
             border-radius: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
 
         .result-item .double-image {
