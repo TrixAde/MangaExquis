@@ -56,13 +56,19 @@
 
         .result-item {
             margin: 10px;
-            padding: 15px;
-            border: 1px solid #333; /* Assombrir un peu les bordures */
+            padding: 10px; /* Réduire la marge interne */
+            border: 1px solid #333;
             border-radius: 5px;
-            background-color: #1B1E1F; /* Fond plus sombre */
+            background-color: #1B1E1F;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             position: relative;
+            overflow: hidden; /* Ajouter overflow pour cacher le contenu dépassant la boîte */
+        }
+
+        h3 {
+            font-size: 16px; /* Réduire la taille de la police pour le titre */
+            margin-bottom: 10px; /* Réduire l'espacement sous le titre */
         }
 
         .result-item img {
