@@ -69,7 +69,6 @@
             max-width: 100%;
             max-height: 200px; /* Hauteur maximale pour éviter un étirement excessif */
             object-fit: cover;
-            object-position: center center; /* Centrez l'image horizontalement et verticalement */
             border-radius: 5px;
             margin-bottom: 15px;
         }
@@ -92,12 +91,6 @@
         .btn {
             font-size: 14px;
             padding: 6px 12px;
-        }
-
-        /* Nouvelle classe pour standardiser la taille des boutons (plus petits) */
-        .btn-standard {
-            width: 100px; /* Largeur réduite */
-            height: 30px; /* Hauteur réduite */
         }
     </style>
 
@@ -183,15 +176,6 @@
                 var resultsContainer = document.getElementById('search-results');
                 resultsContainer.innerHTML = ''; // Efface les résultats précédents
 
-                // Trouver la hauteur maximale parmi toutes les images
-                var maxHeight = Math.max(...results.map(result => {
-                    if (result.covers.length === 1) {
-                        return result.covers[0].height;
-                    } else if (result.covers.length > 1) {
-                        return Math.max(result.covers[0].height, result.covers[1].height);
-                    }
-                }));
-
                 if (results.length === 0) {
                     resultsContainer.innerHTML = '<p>Aucun résultat trouvé.</p>';
                 } else {
@@ -212,10 +196,6 @@
                         resultItem.addEventListener('click', function () {
                             openDetailsPage(result);
                         });
-
-                        // Définir la hauteur du bouton en fonction de la hauteur maximale des images
-                        resultItem.querySelector('img').style.height = maxHeight + 'px';
-
                         resultsContainer.appendChild(resultItem);
                     });
                 }
@@ -278,8 +258,7 @@
             <label for="search-input" class="sr-only">Rechercher un manga :</label>
             <input type="text" id="search-input" name="search" class="form-control mr-2"
                 placeholder="Entrez le nom du manga...">
-            <!-- Utilisation de la classe btn-standard pour standardiser la taille du bouton -->
-            <button type="submit" class="btn btn-primary btn-standard">Rechercher</button>
+            <button type="submit" class="btn btn-primary">Rechercher</button>
         </form>
 
         <!-- Résultats de la recherche seront affichés ici -->
