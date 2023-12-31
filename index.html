@@ -19,9 +19,8 @@
         }
 
         header {
-            background-color: #343a40;
+            background-color: #181A1B;
             padding: 20px 0;
-            color: #ffffff;
             text-align: center;
             position: relative;
         }
@@ -37,15 +36,18 @@
 
         h1 {
             display: inline-block;
+            color: #ffffff;
         }
 
         main {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         form {
             margin-bottom: 20px;
-            text-align: center; /* Centrer le formulaire */
         }
 
         #search-results {
@@ -57,9 +59,9 @@
         .result-item {
             margin: 10px;
             padding: 15px;
-            border: 1px solid #333; /* Assombrir un peu les bordures */
+            border: 1px solid #2C2D2E;
             border-radius: 5px;
-            background-color: #1B1E1F; /* Fond plus sombre */
+            background-color: #181A1B;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             position: relative;
@@ -67,7 +69,7 @@
 
         .result-item img {
             max-width: 100%;
-            max-height: 200px; /* Hauteur maximale pour éviter un étirement excessif */
+            height: 200px;
             object-fit: cover;
             border-radius: 5px;
             margin-bottom: 15px;
@@ -86,11 +88,6 @@
 
         .result-item.open img {
             height: auto;
-        }
-
-        .btn {
-            font-size: 14px;
-            padding: 6px 12px;
         }
     </style>
 
@@ -219,6 +216,8 @@
                                 body {
                                     font-family: Arial, sans-serif;
                                     padding: 20px;
+                                    background-color: #1B1E1F;
+                                    color: #ffffff;
                                 }
 
                                 img {
