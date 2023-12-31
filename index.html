@@ -204,6 +204,9 @@
                 } else {
                     logoButton.style.display = 'none';
                 }
+
+                // Appel de la fonction pour égaliser la taille des boutons
+                setUniformButtonHeight();
             }
 
             function openDetailsPage(manga) {
@@ -241,6 +244,40 @@
                 `);
                 detailsWindow.document.close();
             }
+
+            // Fonction pour trouver la hauteur minimale parmi les images des résultats
+            function findMinImageHeight() {
+                var minImageHeight = Infinity;
+
+                var resultItems = document.querySelectorAll('.result-item img');
+                resultItems.forEach(function (image) {
+                    var height = image.clientHeight;
+                    if (height < minImageHeight) {
+                        minImageHeight = height;
+                    }
+                });
+
+                return minImageHeight;
+            }
+
+            // Fonction pour appliquer la hauteur minimale à toutes les images des résultats
+            function setUniformButtonHeight() {
+                var minImageHeight = findMinImageHeight();
+
+                var resultItems = document.querySelectorAll('.result-item');
+                resultItems.forEach(function (item) {
+                    var images = item.querySelectorAll('img');
+                    images.forEach(function (image) {
+                        image.style.height = minImageHeight + 'px';
+                    });
+                });
+            }
+
+            // Appel de la fonction lors du chargement initial de la page
+            setUniformButtonHeight();
+
+            // Appel de la fonction lors du redimensionnement de la fenêtre (si nécessaire)
+            window.addEventListener('resize', setUniformButtonHeight);
         });
     </script>
 </head>
