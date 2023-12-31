@@ -56,27 +56,33 @@
 
         .result-item {
             margin: 10px;
-            padding: 10px; /* Réduire la marge interne */
+            padding: 10px;
             border: 1px solid #333;
             border-radius: 5px;
             background-color: #1B1E1F;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             position: relative;
-            overflow: hidden; /* Ajouter overflow pour cacher le contenu dépassant la boîte */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            height: 100%;
         }
 
         h3 {
-            font-size: 16px; /* Réduire la taille de la police pour le titre */
-            margin-bottom: 10px; /* Réduire l'espacement sous le titre */
+            font-size: 16px;
+            margin-bottom: 10px;
+            flex-shrink: 0; /* Ne pas réduire la taille de la police du titre */
         }
 
         .result-item img {
             max-width: 100%;
-            max-height: 200px; /* Hauteur maximale pour éviter un étirement excessif */
-            object-fit: cover;
+            max-height: 100%; /* Changer à 100% pour permettre aux images d'ajuster leur hauteur */
+            object-fit: contain; /* Ajuster la taille de l'image sans étirer */
             border-radius: 5px;
             margin-bottom: 15px;
+            flex-grow: 1; /* Remplir l'espace disponible pour l'image */
         }
 
         .result-item .double-image {
