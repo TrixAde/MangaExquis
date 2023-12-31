@@ -57,10 +57,6 @@
         }
 
         .result-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centre les éléments horizontalement */
-            justify-content: center; /* Centre les éléments verticalement */
             margin: 10px;
             padding: 15px;
             border: 1px solid #2C2D2E;
@@ -71,15 +67,13 @@
             position: relative;
         }
 
-
         .result-item img {
             max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Ajuste la taille tout en préservant le ratio d'aspect */
+            height: 200px;
+            object-fit: cover;
             border-radius: 5px;
             margin-bottom: 15px;
         }
-
 
         .result-item .double-image {
             display: flex;
@@ -95,17 +89,6 @@
         .result-item.open img {
             height: auto;
         }
-
-        #search-form button.btn {
-            font-size: 0.5rem !important;
-            padding: 0.15rem 0.3rem !important;
-        }
-
-
-
-
-
-
     </style>
 
     <!-- Ajout de Bootstrap, Fuse.js et Font Awesome pour les scripts JavaScript -->
@@ -311,7 +294,7 @@
             <label for="search-input" class="sr-only">Rechercher un manga :</label>
             <input type="text" id="search-input" name="search" class="form-control mr-2"
                 placeholder="Entrez le nom du manga...">
-            <button type="submit" class="btn btn-primary" style="font-size: 0.5rem; padding: 0.15rem 0.3rem;">Rechercher</button>
+            <button type="submit" class="btn btn-primary" style="font-size: 0.875rem;">Rechercher</button>
         </form>
 
         <!-- Résultats de la recherche seront affichés ici -->
