@@ -15,7 +15,7 @@
             background-color: #1B1E1F;
             padding-top: 60px;
             margin: 0;
-            color: #495057;
+            color: #ffffff; /* Couleur du texte */
         }
 
         header {
@@ -176,7 +176,7 @@
                     results.forEach(function (result) {
                         var resultItem = document.createElement('div');
                         resultItem.classList.add('result-item', 'col-md-4');
-                        resultItem.innerHTML = '<h3>' + result.title + '</h3>';
+                        resultItem.innerHTML = '<h3 style="color: #ffffff;">' + result.title + '</h3>';
 
                         if (result.covers.length === 1) {
                             resultItem.innerHTML += '<img src="' + result.covers[0] + '" alt="Jaquette">';
