@@ -183,6 +183,15 @@
                 var resultsContainer = document.getElementById('search-results');
                 resultsContainer.innerHTML = ''; // Efface les résultats précédents
 
+                // Trouver la hauteur maximale parmi toutes les images
+                var maxHeight = Math.max(...results.map(result => {
+                    if (result.covers.length === 1) {
+                        return result.covers[0].height;
+                    } else if (result.covers.length > 1) {
+                        return Math.max(result.covers[0].height, result.covers[1].height);
+                    }
+                }));
+
                 if (results.length === 0) {
                     resultsContainer.innerHTML = '<p>Aucun résultat trouvé.</p>';
                 } else {
@@ -203,6 +212,10 @@
                         resultItem.addEventListener('click', function () {
                             openDetailsPage(result);
                         });
+
+                        // Définir la hauteur du bouton en fonction de la hauteur maximale des images
+                        resultItem.querySelector('img').style.height = maxHeight + 'px';
+
                         resultsContainer.appendChild(resultItem);
                     });
                 }
