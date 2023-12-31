@@ -68,9 +68,9 @@
         }
 
         .result-item img {
+            width: 100%; /* Ajustement automatique de la largeur */
             max-width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: auto;
             border-radius: 5px;
             margin-bottom: 15px;
         }
@@ -84,16 +84,6 @@
 
         .result-item .double-image img {
             flex: 1;
-        }
-
-        .result-item.open img {
-            height: auto;
-        }
-
-        /* Ajout de styles pour les boutons de recherche */
-        .btn-manga {
-            font-size: 0.7rem; /* Ajustez la taille de la police selon vos préférences */
-            padding: 0.2rem 0.4rem; /* Ajustez l'espacement interne selon vos préférences */
         }
     </style>
 
@@ -300,7 +290,7 @@
             <label for="search-input" class="sr-only">Rechercher un manga :</label>
             <input type="text" id="search-input" name="search" class="form-control mr-2"
                 placeholder="Entrez le nom du manga...">
-            <button type="submit" class="btn btn-sm btn-primary btn-manga">Rechercher</button>
+            <button type="submit" class="btn btn-sm btn-primary">Rechercher</button>
         </form>
 
         <!-- Résultats de la recherche seront affichés ici -->
