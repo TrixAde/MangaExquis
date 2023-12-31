@@ -56,7 +56,7 @@
             justify-content: space-around;
         }
 
-       .result-item {
+        .result-item {
             display: flex;
             flex-direction: column;
             align-items: center; /* Centre les éléments horizontalement */
@@ -71,7 +71,6 @@
             position: relative;
         }
 
-
         .result-item img {
             max-width: 100%;
             max-height: 100%;
@@ -79,7 +78,6 @@
             border-radius: 5px;
             margin-bottom: 15px;
         }
-
 
         .result-item .double-image {
             display: flex;
@@ -188,12 +186,18 @@
                         resultItem.innerHTML = '<h3>' + result.title + '</h3>';
 
                         if (result.covers.length === 1) {
-                            resultItem.innerHTML += '<img src="' + result.covers[0] + '" alt="Jaquette">';
+                            preloadImage(result.covers[0], function () {
+                                resultItem.innerHTML += '<img src="' + result.covers[0] + '" alt="Jaquette">';
+                            });
                         } else if (result.covers.length > 1) {
-                            resultItem.innerHTML += '<div class="double-image">' +
-                                '<img src="' + result.covers[0] + '" alt="Jaquette">' +
-                                '<img src="' + result.covers[1] + '" alt="Jaquette">' +
-                                '</div>';
+                            preloadImage(result.covers[0], function () {
+                                preloadImage(result.covers[1], function () {
+                                    resultItem.innerHTML += '<div class="double-image">' +
+                                        '<img src="' + result.covers[0] + '" alt="Jaquette">' +
+                                        '<img src="' + result.covers[1] + '" alt="Jaquette">' +
+                                        '</div>';
+                                });
+                            });
                         }
 
                         resultItem.addEventListener('click', function () {
@@ -249,6 +253,13 @@
                     </html>
                 `);
                 detailsWindow.document.close();
+            }
+
+            // Fonction pour précharger une image
+            function preloadImage(url, callback) {
+                var img = new Image();
+                img.onload = callback;
+                img.src = url;
             }
 
             // Fonction pour trouver la hauteur minimale parmi les images des résultats
