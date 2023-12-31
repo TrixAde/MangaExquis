@@ -68,9 +68,9 @@
         }
 
         .result-item img {
-            width: 100%; /* Ajustement automatique de la largeur */
             max-width: 100%;
-            height: auto;
+            height: 200px;
+            object-fit: cover;
             border-radius: 5px;
             margin-bottom: 15px;
         }
@@ -84,6 +84,10 @@
 
         .result-item .double-image img {
             flex: 1;
+        }
+
+        .result-item.open img {
+            height: auto;
         }
     </style>
 
