@@ -36,5 +36,14 @@
         "releaseDate": "23 Août 2023",
         "printRun": "Inconnu",
         "originalPrice": "7,20€"
+    },
+    {
+        "title": "Sexy Cosplay Doll T11 Jaquette 9ème Store",
+        "covers": [
+            "https://media.discordapp.net/attachments/1185938360116723723/1185939729590538330/IMG_1549.png?ex=65a3e471&is=65916f71&hm=5fac5016fdbf6744d21b0d7aea8e5ea7ab38baa3ad728ffa20d9b2030a53a57e&=&format=webp&quality=lossless&width=671&height=671"
+        ],
+        "releaseDate": "27 Octobre 2023",
+        "printRun": 300,
+        "originalPrice": "7,70€"
     }
 ]
