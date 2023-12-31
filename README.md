@@ -1,1 +1,1 @@
-MangaExquis
+**MangaExquis**
