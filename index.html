@@ -231,19 +231,26 @@
             }
 
             function setUniformButtonHeight() {
-                var minImageHeight = findMinImageHeight();
-
                 var resultItems = document.querySelectorAll('.result-item');
+
                 resultItems.forEach(function (item) {
                     var images = item.querySelectorAll('img');
+
+                    var maxImageHeight = 0;
+
                     images.forEach(function (image) {
-                        image.style.height = minImageHeight + 'px';
+                        maxImageHeight = Math.max(maxImageHeight, image.clientHeight);
+                    });
+
+                    images.forEach(function (image) {
+                        image.style.height = maxImageHeight + 'px';
                     });
 
                     var title = item.querySelector('h3');
-                    title.style.fontSize = minImageHeight * 0.09 + 'px';
+                    title.style.fontSize = maxImageHeight * 0.09 + 'px';
                 });
             }
+
 
             function openDetailsPage(manga) {
                 var detailsWindow = window.open('', '_blank');
