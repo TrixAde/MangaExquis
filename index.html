@@ -120,46 +120,27 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // JSON des mangas
-            var mangasData = [
-                {
-                    "title": "Blue Lock T14 Jaquette CanalBD",
-                    "covers": [
-                        "https://www.canalbd.net/img/comment/plus/jaquette-canal-bd-blue-lock-14.png"
-                    ],
-                    "releaseDate": "14 Juin 2023",
-                    "printRun": 5500,
-                    "originalPrice": "7,20€"
-                },
-                {
-                    "title": "Blue Lock T12 Jaquette Momie",
-                    "covers": [
-                        "https://media.discordapp.net/attachments/1185922887920668793/1186001537282088990/1702137434.png?ex=659ae381&is=65886e81&hm=c375c9a8e828d260c607d4e418ab9b7822e3b20c224260004aca056757f9cd2e&=&format=webp&quality=lossless&width=503&height=671",
-                        "https://media.discordapp.net/attachments/1185922887920668793/1186001537642811392/1702137434.png?ex=659ae381&is=65886e81&hm=28244a653466791c3bff51e70f5f9c913937f14d9b0587694624db936f61f192&=&format=webp&quality=lossless"
-                    ],
-                    "releaseDate": "1 Février 2023",
-                    "printRun": 2000,
-                    "originalPrice": "7,20€"
-                },
-                // ... (ajoutez les autres mangas ici)
-            ];
-
             // Charger les mangas au chargement de la page
-            var examples = getRandomMangas(mangasData, 10);
-            displayResults(examples, false);
-
-            document.getElementById('search-form').addEventListener('submit', function (event) {
-                event.preventDefault();
-                var searchTerm = document.getElementById('search-input').value.trim();
-
-                if (searchTerm !== "") {
-                    var results = searchMangas(mangasData, searchTerm);
-                    displayResults(results, true);
-                } else {
+            fetch('MangasList.json')
+                .then(response => response.json())
+                .then(mangasData => {
                     var examples = getRandomMangas(mangasData, 10);
                     displayResults(examples, false);
-                }
-            });
+
+                    document.getElementById('search-form').addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        var searchTerm = document.getElementById('search-input').value.trim();
+
+                        if (searchTerm !== "") {
+                            var results = searchMangas(mangasData, searchTerm);
+                            displayResults(results, true);
+                        } else {
+                            var examples = getRandomMangas(mangasData, 10);
+                            displayResults(examples, false);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
 
             var logoButton = document.querySelector('.logo');
             logoButton.addEventListener('click', function () {
