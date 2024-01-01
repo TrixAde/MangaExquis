@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -215,10 +215,8 @@
                     logoButton.style.display = 'none';
                 }
 
-                // Set uniform height after a short delay, only if there is more than one result
-                if (results.length > 1) {
-                    setTimeout(setUniformButtonHeight, 0);
-                }
+                // Set uniform height after a short delay
+                setTimeout(setUniformButtonHeight, 0);
             }
 
             function findMinImageHeight() {
