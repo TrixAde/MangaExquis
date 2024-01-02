@@ -6,9 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.2">
     <title>Recherche de Mangas</title>
-    <!-- Ajout de Bootstrap pour le style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
@@ -115,7 +113,6 @@
             max-width: 100%;
         }
 
-        /* Ajout de la classe details-image pour limiter la taille des images dans la fenêtre détaillée */
         .details-image {
             max-height: 594px;
             max-width: 1285px;
@@ -126,7 +123,6 @@
         }
     </style>
 
-    <!-- Ajout de Bootstrap, Fuse.js et Font Awesome pour les scripts JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -134,7 +130,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Charger les mangas au chargement de la page
             fetch('MangasList.json')
                 .then(response => response.json())
                 .then(mangasData => {
@@ -215,8 +210,6 @@
                 } else {
                     logoButton.style.display = 'none';
                 }
-
-                // Set uniform height after a short delay
                 setTimeout(setUniformButtonHeight, 0);
             }
 
@@ -236,7 +229,7 @@
 
             function setUniformButtonHeight() {
                 var resultItems = document.querySelectorAll('.result-item');
-                var targetHeight = 150; // Remplacez 150 par la hauteur cible souhaitée
+                var targetHeight = 150; 
 
                 resultItems.forEach(function (item) {
                     var images = item.querySelectorAll('img');
@@ -244,10 +237,8 @@
                         var originalWidth = image.naturalWidth;
                         var originalHeight = image.naturalHeight;
 
-                        // Calculer la nouvelle largeur en maintenant la proportion
                         var newWidth = (targetHeight / originalHeight) * originalWidth;
 
-                        // Appliquer la nouvelle largeur et la hauteur uniforme
                         image.style.width = newWidth + 'px';
                         image.style.height = targetHeight + 'px';
                     });
