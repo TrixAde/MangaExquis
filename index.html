@@ -240,6 +240,14 @@
                 resultItems.forEach(function (item) {
                     var images = item.querySelectorAll('img');
                     images.forEach(function (image) {
+                        var originalWidth = image.clientWidth;
+                        var originalHeight = image.clientHeight;
+
+                        // Calculer la nouvelle largeur en maintenant la proportion
+                        var newWidth = (minImageHeight / originalHeight) * originalWidth;
+
+                        // Appliquer la nouvelle largeur et la hauteur uniforme
+                        image.style.width = newWidth + 'px';
                         image.style.height = minImageHeight + 'px';
                     });
 
@@ -247,6 +255,7 @@
                     title.style.fontSize = '14px';
                 });
             }
+
 
             function openDetailsPage(manga) {
                 var detailsWindow = window.open('', '_blank');
