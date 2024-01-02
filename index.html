@@ -114,6 +114,16 @@
             text-overflow: ellipsis;
             max-width: 100%;
         }
+
+        /* Ajout de la classe details-image pour limiter la taille des images dans la fenêtre détaillée */
+        .details-image {
+            max-height: 594px;
+            max-width: 1285px;
+            width: auto;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
     </style>
 
     <!-- Ajout de Bootstrap, Fuse.js et Font Awesome pour les scripts JavaScript -->
@@ -261,8 +271,11 @@
                                     color: #ffffff;
                                 }
 
-                                img {
-                                    max-width: 100%;
+                                /* Utilisation de la classe details-image pour limiter la taille des images dans la fenêtre détaillée */
+                                .details-image {
+                                    max-height: 594px;
+                                    max-width: 1285px;
+                                    width: auto;
                                     height: auto;
                                     border-radius: 5px;
                                     margin-bottom: 15px;
@@ -273,8 +286,8 @@
                             <h1>${manga.title}</h1>
                             
                             ${manga.alternateCovers && manga.alternateCovers.length > 0
-                                ? manga.alternateCovers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')
-                                : manga.covers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')
+                                ? manga.alternateCovers.map(cover => `<img class="details-image" src="${cover}" alt="Jaquette">`).join('')
+                                : manga.covers.map(cover => `<img class="details-image" src="${cover}" alt="Jaquette">`).join('')
                             }
                             
                             <p><strong>Date de parution:</strong> ${manga.releaseDate}</p>
