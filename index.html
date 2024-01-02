@@ -6,9 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.2">
     <title>Recherche de Mangas</title>
-    <!-- Ajout de Bootstrap pour le style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
@@ -58,6 +56,7 @@
         }
 
         .result-item {
+            flex: 1 1 calc(25% - 20px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -112,7 +111,6 @@
         }
     </style>
 
-    <!-- Ajout de Bootstrap, Fuse.js et Font Awesome pour les scripts JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -120,7 +118,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Charger les mangas au chargement de la page
             fetch('MangasList.json')
                 .then(response => response.json())
                 .then(mangasData => {
@@ -215,7 +212,6 @@
                     logoButton.style.display = 'none';
                 }
 
-                // Set uniform height after a short delay
                 setTimeout(setUniformButtonHeight, 0);
             }
 
@@ -245,7 +241,6 @@
                     title.style.fontSize = '14px';
                 });
 
-                // Wait for layout changes to be applied, then set uniform height
                 setTimeout(function () {
                     var minImageHeight = findMinImageHeight();
                     resultItems.forEach(function (item) {
@@ -304,7 +299,6 @@
 </head>
 
 <body>
-
     <header>
         <div class="logo"><i class="fas fa-home fa-lg"></i></div>
         <h1>Recherche de Mangas</h1>
