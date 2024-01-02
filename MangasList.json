@@ -33,7 +33,7 @@
             "https://media.discordapp.net/attachments/1185922887920668793/1186001648850583692/1696074539_2_1.png?ex=659ae39b&is=65886e9b&hm=214ba2fd30f1f65fc269306bb404ed8907a9aedbc9a4c625077595f1191f5f3a&=&format=webp&quality=lossless",
             "https://media.discordapp.net/attachments/1185922887920668793/1186001649139978402/1696074539_1.png?ex=659ae39c&is=65886e9c&hm=b05450829a26b5b872fecae4a2e54bcd7cbf90aa7388585df853f502248812c1&=&format=webp&quality=lossless&width=140&height=537"
         ],
-        "releaseDate": "5 Avril 2023",
+        "releaseDate": "05 Avril 2023",
         "printRun": "Inconnu",
         "originalPrice": "7,20€"
     },
@@ -117,7 +117,7 @@
         "alternateCovers": [
             "https://www.manga-news.com/public/2023/news_11/gachiakuta-t5-jaq-canal-BD.jpg"
         ],
-        "releaseDate": "6 décembre 2023",
+        "releaseDate": "06 décembre 2023",
         "printRun": 3000,
         "originalPrice": "7,20€"
     },
@@ -132,5 +132,19 @@
         "releaseDate": "11 février 2021",
         "printRun": 2000,
         "originalPrice": "7,20€"
+    },
+                                {
+        "title": "Platinum End T4 Jaquette CanalBD",
+        "covers": [
+            "https://www.manga-sanctuary.com/img/o/manga-platinum-end-vol-4-collector-s43493-p279977.jpg"
+        ],
+        "alternateCovers": [
+            "https://www.canalbd.net/img/comment/plus/platinum-end-jaquette-canal-bd.jpg",
+            "https://media.discordapp.net/attachments/1185989596861972531/1186001054337343549/1698915003.png?ex=65a41d8e&is=6591a88e&hm=c7607f7bb47d6864a7b26abbc63a81444b1db8d0b472ccdf48c15f2269eff386&=&format=webp&quality=lossless&width=501&height=671",
+            "https://media.discordapp.net/attachments/1185989596861972531/1186001055360766104/1698915003.png?ex=65a41d8e&is=6591a88e&hm=09606c024a342df3551904f49b3c717a4654c81248c3e5028a6dc044d4c69226&=&format=webp&quality=lossless&width=501&height=671"          
+        ],
+        "releaseDate": "08 mars 2017",
+        "printRun": 3000,
+        "originalPrice": "7,15€"
     }
 ]
