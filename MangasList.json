@@ -20,7 +20,7 @@
             "https://media.discordapp.net/attachments/1185922887920668793/1186001537282088990/1702137434.png?ex=659ae381&is=65886e81&hm=c375c9a8e828d260c607d4e418ab9b7822e3b20c224260004aca056757f9cd2e&=&format=webp&quality=lossless&width=503&height=600",
             "https://media.discordapp.net/attachments/1185922887920668793/1186001537642811392/1702137434.png?ex=659ae381&is=65886e81&hm=28244a653466791c3bff51e70f5f9c913937f14d9b0587694624db936f61f192&=&format=webp&quality=lossless"
         ],
-        "releaseDate": "1 Février 2023",
+        "releaseDate": "1er Février 2023",
         "printRun": 2000,
         "originalPrice": "7,20€"
     },
@@ -60,5 +60,41 @@
         "releaseDate": "27 Octobre 2023",
         "printRun": 300,
         "originalPrice": "7,70€"
+    },
+        {
+        "title": "Hell's Paradise T3 Jaquette CanalBD",
+        "covers": [
+            "https://www.canalbd.net/img/couvpage/61/9782820337610_cg.jpg"
+        ],
+        "alternateCovers": [
+            "https://www.canalbd.net/img/ope/comment/hells-paradise-3-jaquette-canal-bd.jpg"
+        ],
+        "releaseDate": "3 Juillet 2019",
+        "printRun": 1000,
+        "originalPrice": "7,29€"
+    },
+            {
+        "title": "Fire Force T32 Jaquette CanalBD",
+        "covers": [
+            "https://api.mangacollec.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxsTnpaak16SXdaaTFtWW1WakxUUTFaVGt0WWpNMU5TMW1NR1E0TW1ObFlXUTRNekFHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--8c4be3d8df365d7efd8002dae046214cf9584f5e/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RkhKbGMybDZaVjkwYjE5c2FXMXBkRnNIYVFMMEFXa0M5QUU9IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--f4740ce9863997714730d7d28982d4fbc8d883df/490216e7-5a9d-4582-8cdd-9d57cdf90cbf.jpg"
+        ],
+        "alternateCovers": [
+            "https://www.canalbd.net/img/comment/plus/jaquette-fire-force-t32-canalbd.jpg"
+        ],
+        "releaseDate": "1er décembre 2023",
+        "printRun": 2500,
+        "originalPrice": "7,10€"
+    },
+                {
+        "title": "Jojo Crazy Diamonds T1 Jaquette CanalBD",
+        "covers": [
+            "https://www.canalbd.net/img/couvpage/63/9910000123634_cg.jpg"
+        ],
+        "alternateCovers": [
+            "https://www.canalbd.net/img/comment/plus/jojo-crazy-d-jaquette-canalbd.jpg"
+        ],
+        "releaseDate": "30 août 2023",
+        "printRun": 1500,
+        "originalPrice": "7,29€"
     }
 ]
