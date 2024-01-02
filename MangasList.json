@@ -45,5 +45,52 @@
         "releaseDate": "27 Octobre 2023",
         "printRun": 300,
         "originalPrice": "7,70€"
+    },
+      {
+        "title": "Blue Lock T14 Jaquette CanalBD",
+        "covers": [
+            "https://www.canalbd.net/img/comment/plus/jaquette-canal-bd-blue-lock-14.png"
+        ],
+        "releaseDate": "14 Juin 2023",
+        "printRun": 5500,
+        "originalPrice": "7,20€"
+    },
+    {
+        "title": "Sexy C Jaquette Momie",
+        "covers": [
+            "https://media.discordapp.net/attachments/1185922887920668793/1186001537282088990/1702137434.png?ex=659ae381&is=65886e81&hm=c375c9a8e828d260c607d4e418ab9b7822e3b20c224260004aca056757f9cd2e&=&format=webp&quality=lossless&width=503&height=671",
+            "https://media.discordapp.net/attachments/1185922887920668793/1186001537642811392/1702137434.png?ex=659ae381&is=65886e81&hm=28244a653466791c3bff51e70f5f9c913937f14d9b0587694624db936f61f192&=&format=webp&quality=lossless"
+        ],
+        "releaseDate": "1 Février 2023",
+        "printRun": 2000,
+        "originalPrice": "7,20€"
+    },
+    {
+        "title": "RAW T13 Jaquette Comptoir Du Rêve",
+        "covers": [
+            "https://media.discordapp.net/attachments/1185922887920668793/1186001648850583692/1696074539_2_1.png?ex=659ae39b&is=65886e9b&hm=214ba2fd30f1f65fc269306bb404ed8907a9aedbc9a4c625077595f1191f5f3a&=&format=webp&quality=lossless",
+            "https://media.discordapp.net/attachments/1185922887920668793/1186001649139978402/1696074539_1.png?ex=659ae39c&is=65886e9c&hm=b05450829a26b5b872fecae4a2e54bcd7cbf90aa7388585df853f502248812c1&=&format=webp&quality=lossless&width=140&height=669"
+        ],
+        "releaseDate": "5 Avril 2023",
+        "printRun": "Inconnu",
+        "originalPrice": "7,20€"
+    },
+    {
+        "title": "Blue Lock Jaquette Leclerc",
+        "covers": [
+            "https://media.discordapp.net/attachments/1185922887920668793/1186001717721047101/s-l1600.png?ex=659ae3ac&is=65886eac&hm=4bff3680ccaa7f8e1c88ded1ffa5c6699633c06ea0dae21f5261ca2aa47bcd3b&=&format=webp&quality=lossless&width=895&height=671"
+        ],
+        "releaseDate": "23 Août 2023",
+        "printRun": "Inconnu",
+        "originalPrice": "7,20€"
+    },
+    {
+        "title": "Sexy Cosplay Doll T11 Jaquette 9ème Store",
+        "covers": [
+            "https://media.discordapp.net/attachments/1185938360116723723/1185939729590538330/IMG_1549.png?ex=65a3e471&is=65916f71&hm=5fac5016fdbf6744d21b0d7aea8e5ea7ab38baa3ad728ffa20d9b2030a53a57e&=&format=webp&quality=lossless&width=671&height=671"
+        ],
+        "releaseDate": "27 Octobre 2023",
+        "printRun": 300,
+        "originalPrice": "7,70€"
     }
 ]
