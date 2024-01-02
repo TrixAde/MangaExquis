@@ -156,5 +156,17 @@
         "releaseDate": "31 Mars 2023",
         "printRun": "Inconnu",
         "originalPrice": "3€"
+    },
+                                        {
+        "title": "Jujutsu Kaisen T22 Jaquette Comptoir du Rêve",
+        "covers": [
+            "https://media.discordapp.net/attachments/664064616820768768/1191764230072963173/Jujutsu_dKaisen_22_-_Comptoir_du_reve.jpg"
+        ],
+        "alternateCovers": [
+            "https://media.discordapp.net/attachments/664064616820768768/1191764230345596990/Jujutsu_Kaisen_22_-_Comptoir_du_reve.jpg"
+        ],
+        "releaseDate": "04 Janvier 2024",
+        "printRun": "Inconnu",
+        "originalPrice": "6,95€"
     }
 ]
