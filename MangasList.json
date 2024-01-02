@@ -145,5 +145,17 @@
         "releaseDate": "08 mars 2017",
         "printRun": 3000,
         "originalPrice": "7,15€"
+    },
+                                    {
+        "title": "Blue Lock T1 Jaquette 48HBD",
+        "covers": [
+            "http://www.48hbd.com/wp-content/uploads/2023/02/Pika-BlueLock.jpg"
+        ],
+        "alternateCovers": [
+            "https://media.discordapp.net/attachments/664064616820768768/1191753393094529166/679C7CA9-3F07-4E49-A64E-15EA2D29E647.jpg"
+        ],
+        "releaseDate": "31 Mars 2023",
+        "printRun": "Inconnu",
+        "originalPrice": "3€"
     }
 ]
