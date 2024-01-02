@@ -106,14 +106,15 @@
             display: none;
         }
 
-         .result-item h3 {
-            font-size: 10px;
+        .result-item h3 {
+            font-size: 10px !important; /* Taille du texte réduite à 12px avec la directive !important */
             margin-bottom: 10px;
-            white-space: nowrap; /* Empêcher le texte de passer à la ligne */
-            overflow: hidden; /* Cacher le texte qui dépasse */
-            text-overflow: ellipsis; /* Ajouter des points de suspension (...) pour indiquer du texte coupé */
-            max-width: 100%; /* Ajout de cette ligne pour s'assurer que le texte ne dépasse pas la largeur de la case */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
+
 
 
     </style>
