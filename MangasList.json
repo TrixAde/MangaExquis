@@ -2,11 +2,10 @@
     {
         "title": "Blue Lock T14 Jaquette CanalBD",
         "covers": [
-            "https://www.canalbd.net/img/comment/plus/jaquette-canal-bd-blue-lock-14.png"
+            "https://api.mangacollec.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWszTVRBd05UUXhNeTFtWldJM0xUUXdNemN0T0dNME9DMWlNMkk0WkRNNVlXWXhaamdHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--b59ba2fffd7c2595a5facf735ea3373a29d3c128/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RkhKbGMybDZaVjkwYjE5c2FXMXBkRnNIYVFMMEFXa0M5QUU9IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--f4740ce9863997714730d7d28982d4fbc8d883df/ed70e83e-3a24-43a7-a7c3-7fefc0d1636d.jpg"
         ],
         "alternateCovers": [
-            "https://example.com/alternate-cover-1.png",
-            "https://example.com/alternate-cover-2.png"
+            "https://www.canalbd.net/img/comment/plus/jaquette-canal-bd-blue-lock-14.png"
         ],
         "releaseDate": "14 Juin 2023",
         "printRun": 5500,
