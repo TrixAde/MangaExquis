@@ -96,5 +96,29 @@
         "releaseDate": "30 août 2023",
         "printRun": 1500,
         "originalPrice": "7,29€"
+    },
+                    {
+        "title": "Great Trailers T2 Jaquette CanalBD",
+        "covers": [
+            "https://www.canalbd.net/img/couvpage/04/9910000121043_cg.jpg"
+        ],
+        "alternateCovers": [
+            "https://www.canalbd.net/img/comment/plus/trailers-t2-jaquette-collector.jpg"
+        ],
+        "releaseDate": "22 novembre 2023",
+        "printRun": 2000,
+        "originalPrice": "8,45€"
+    },
+                        {
+        "title": "Gachiakuta T5 Jaquette CanalBD",
+        "covers": [
+            "https://www.canalbd.net/img/couvpage/91/9910000121913_cg.jpg"
+        ],
+        "alternateCovers": [
+            "https://www.manga-news.com/public/2023/news_11/gachiakuta-t5-jaq-canal-BD.jpg"
+        ],
+        "releaseDate": "6 décembre 2023",
+        "printRun": 3000,
+        "originalPrice": "7,20€"
     }
 ]
