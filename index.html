@@ -235,29 +235,17 @@
 
             function setUniformButtonHeight() {
                 var resultItems = document.querySelectorAll('.result-item');
+                var minImageHeight = findMinImageHeight();
+
                 resultItems.forEach(function (item) {
                     var images = item.querySelectorAll('img');
                     images.forEach(function (image) {
-                        image.style.height = 'auto';
+                        image.style.height = minImageHeight + 'px';
                     });
 
                     var title = item.querySelector('h3');
                     title.style.fontSize = '14px';
                 });
-
-                // Wait for layout changes to be applied, then set uniform height
-                setTimeout(function () {
-                    var minImageHeight = findMinImageHeight();
-                    resultItems.forEach(function (item) {
-                        var images = item.querySelectorAll('img');
-                        images.forEach(function (image) {
-                            image.style.height = minImageHeight + 'px';
-                        });
-
-                        var title = item.querySelector('h3');
-                        title.style.fontSize = minImageHeight * 0.09 + 'px';
-                    });
-                }, 0);
             }
 
             function openDetailsPage(manga) {
