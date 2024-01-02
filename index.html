@@ -183,16 +183,10 @@
                         var coverContainer = document.createElement('div');
                         coverContainer.classList.add('cover-container');
 
-                        if (result.covers.length === 1) {
-                            var coverImg = document.createElement('img');
-                            coverImg.src = result.covers[0];
-                            coverImg.alt = 'Jaquette';
-                            coverContainer.appendChild(coverImg);
-                        } else if (result.covers.length > 1) {
+                        if (result.alternateCovers && result.alternateCovers.length > 0) {
                             var doubleImageContainer = document.createElement('div');
                             doubleImageContainer.classList.add('double-image');
 
-                            // Utiliser 'alternateCovers' au lieu de 'covers' ici
                             result.alternateCovers.forEach(function (coverUrl) {
                                 var coverImg = document.createElement('img');
                                 coverImg.src = coverUrl;
@@ -201,18 +195,17 @@
                             });
 
                             coverContainer.appendChild(doubleImageContainer);
+                        } else if (result.covers && result.covers.length > 0) {
+                            var coverImg = document.createElement('img');
+                            coverImg.src = result.covers[0];
+                            coverImg.alt = 'Jaquette';
+                            coverContainer.appendChild(coverImg);
                         }
 
                         resultItem.appendChild(coverContainer);
 
                         resultItem.addEventListener('click', function () {
-                            // Vérifier si la classe 'open' est présente
-                            var useAlternateCovers = resultItem.classList.contains('open');
-
-                            // Utiliser soit 'covers' soit 'alternateCovers' en fonction de la condition
-                            var coversArray = useAlternateCovers ? result.alternateCovers : result.covers;
-
-                            openDetailsPage(result, coversArray);
+                            openDetailsPage(result);
                         });
 
                         resultsContainer.appendChild(resultItem);
@@ -246,7 +239,7 @@
 
             function setUniformButtonHeight() {
                 var resultItems = document.querySelectorAll('.result-item');
-                var targetHeight = 150;
+                var targetHeight = 150; // Remplacez 150 par la hauteur cible souhaitée
 
                 resultItems.forEach(function (item) {
                     var images = item.querySelectorAll('img');
@@ -254,8 +247,10 @@
                         var originalWidth = image.naturalWidth;
                         var originalHeight = image.naturalHeight;
 
+                        // Calculer la nouvelle largeur en maintenant la proportion
                         var newWidth = (targetHeight / originalHeight) * originalWidth;
 
+                        // Appliquer la nouvelle largeur et la hauteur uniforme
                         image.style.width = newWidth + 'px';
                         image.style.height = targetHeight + 'px';
                     });
@@ -265,7 +260,7 @@
                 });
             }
 
-            function openDetailsPage(manga, coversArray) {
+            function openDetailsPage(manga) {
                 var detailsWindow = window.open('', '_blank');
                 detailsWindow.document.write(`
                     <html>
@@ -290,7 +285,7 @@
                         <body>
                             <h1>${manga.title}</h1>
                             
-                            ${coversArray.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')}
+                            ${manga.alternateCovers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')}
                             
                             <p><strong>Date de parution:</strong> ${manga.releaseDate}</p>
                             <p><strong>Tirage:</strong> ${manga.printRun}</p>
@@ -309,6 +304,7 @@
 </head>
 
 <body>
+
     <header>
         <div class="logo"><i class="fas fa-home fa-lg"></i></div>
         <h1>Recherche de Mangas</h1>
@@ -324,6 +320,7 @@
 
         <div id="search-results" class="row"></div>
     </main>
+
 </body>
 
 </html>
