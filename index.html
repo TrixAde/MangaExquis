@@ -75,7 +75,7 @@
 
         .result-item img {
             max-width: 100%;
-            height: auto; /* Réglage de la hauteur à "auto" */
+            height: auto;
             object-fit: contain;
             border-radius: 5px;
             margin-bottom: 10px;
@@ -107,16 +107,13 @@
         }
 
         .result-item h3 {
-            font-size: 10px !important; /* Taille du texte réduite à 12px avec la directive !important */
+            font-size: 10px !important;
             margin-bottom: 10px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
         }
-
-
-
     </style>
 
     <!-- Ajout de Bootstrap, Fuse.js et Font Awesome pour les scripts JavaScript -->
@@ -186,31 +183,18 @@
                         var coverContainer = document.createElement('div');
                         coverContainer.classList.add('cover-container');
 
-                        if (result.covers.length === 1) {
-                            var coverImg = document.createElement('img');
-                            coverImg.src = result.covers[0];
-                            coverImg.alt = 'Jaquette';
-                            coverContainer.appendChild(coverImg);
-                        } else if (result.covers.length > 1) {
-                            var doubleImageContainer = document.createElement('div');
-                            doubleImageContainer.classList.add('double-image');
+                        var coverImg = document.createElement('img');
+                        coverImg.src = result.covers[0];
+                        coverImg.alt = 'Jaquette';
+                        coverContainer.appendChild(coverImg);
 
-                            result.covers.forEach(function (coverUrl) {
-                               var coverImg = document.createElement('img');
-                                coverImg.src = result.alternateCovers && result.alternateCovers.length > 0 ? result.alternateCovers[0] : result.covers[0];
-                                coverImg.alt = 'Jaquette';
-                                coverContainer.appendChild(coverImg);
+                        if (result.alternateCovers && result.alternateCovers.length > 0) {
+                            resultItem.addEventListener('click', function () {
+                                openDetailsPage(result);
                             });
-
-                            coverContainer.appendChild(doubleImageContainer);
                         }
 
                         resultItem.appendChild(coverContainer);
-
-                        resultItem.addEventListener('click', function () {
-                            openDetailsPage(result);
-                        });
-
                         resultsContainer.appendChild(resultItem);
                     });
                 }
@@ -288,7 +272,10 @@
                         <body>
                             <h1>${manga.title}</h1>
                             
-                            ${manga.covers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')}
+                            ${manga.alternateCovers && manga.alternateCovers.length > 0
+                                ? manga.alternateCovers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')
+                                : manga.covers.map(cover => `<img src="${cover}" alt="Jaquette">`).join('')
+                            }
                             
                             <p><strong>Date de parution:</strong> ${manga.releaseDate}</p>
                             <p><strong>Tirage:</strong> ${manga.printRun}</p>
