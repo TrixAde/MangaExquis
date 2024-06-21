@@ -139,12 +139,12 @@
     <div id="particles-js"></div>
     <button id="celebrateBtn">Cliquez ici</button>
     <div id="message" class="animate__animated">Joyeux Anniversaire Papa !</div>
-    <div id="age" class="animate__animated">43 ans!</div>
+    <div id="age" class="animate__animated">45 ans!</div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <audio id="partySound" src="https://www.fesliyanstudios.com/play-mp3/6697"></audio>
-    <audio id="backgroundMusic" src="https://www.fesliyanstudios.com/play-mp3/6716" loop></audio>
+    <audio id="backgroundMusic" src="https://www.orangefreesounds.com/wp-content/uploads/2016/08/Happy-birthday-instrumental.mp3" loop></audio>
 
     <script>
         document.getElementById('celebrateBtn').addEventListener('click', function() {
@@ -155,12 +155,10 @@
             const background = document.getElementById('background');
             const button = document.getElementById('celebrateBtn');
 
-            // Afficher le message et le fond d'écran
             message.style.display = 'block';
             background.style.opacity = '1';
             button.style.display = 'none';
 
-            // Initialiser les particules
             particlesJS("particles-js", {
                 "particles": {
                     "number": {
@@ -264,22 +262,21 @@
                 "retina_detect": true
             });
 
-            // Jouer le son de confettis et la musique de fête
             partySound.play();
             backgroundMusic.play();
 
-            // Déclencher les confettis
             confetti({
-                particleCount: 500,
-                spread: 200,
+                particleCount: 1000,
+                spread: 1000,
                 origin: { y: 0.6 }
             });
 
-            // Afficher l'âge après 1 seconde avec un effet impact
             setTimeout(function() {
                 ageDiv.style.display = 'block';
             }, 1000);
+
+            partySound.addEventListener('ended', function() {
+                partySound.currentTime = 0;
+            });
         });
     </script>
-</body>
-</html>
