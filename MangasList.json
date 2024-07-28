@@ -179,5 +179,16 @@
         "releaseDate": "02 Février 2024",
         "printRun": "Inconnu",
         "originalPrice": "7.20€"
+    },
+        "title": "Hell's Paradise T1 Jaquette Fnac",
+        "covers": [
+            "https://static.fnac-static.com/multimedia/Images/FR/NR/64/9b/a6/10918756/1507-1/tsp20190226133149/Hell-s-paradise-Exclusivite-Fnac-Couverture.jpg"
+        ],
+        "alternateCovers": [
+            "https://media.discordapp.net/attachments/921055361346187315/1267178469771706478/Capture_decran_2024-07-28_195431.png"
+        ],
+        "releaseDate": "13 mars 2019",
+        "printRun": "Inconnu",
+        "originalPrice": "7,29€"
     }
 ]
