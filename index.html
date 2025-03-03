@@ -28,10 +28,7 @@
       text-align: center;
     }
 
-    nav {
-      margin-top: 5px;
-    }
-
+    nav { margin-top: 5px; }
     nav a {
       color: #fff;
       margin: 0 15px;
@@ -39,7 +36,6 @@
       font-weight: 700;
       transition: color 0.3s, transform 0.3s;
     }
-
     nav a:hover {
       color: #ff6f61;
       transform: scale(1.1);
@@ -54,7 +50,6 @@
       background: rgba(255,255,255,0.5);
       z-index: 1100;
     }
-
     .progress-bar {
       width: 0%;
       height: 100%;
@@ -72,7 +67,6 @@
       z-index: 2;
       overflow: hidden;
     }
-
     .road-bg::after {
       content: "";
       position: absolute;
@@ -90,12 +84,13 @@
       );
     }
 
-    /* Modification clé : Position initiale en haut */
     .road-bg .car {
       position: absolute;
-      bottom: 100%;
+      top: 20px;
+      left: 20px;
       width: 50px;
-      transform: translateY(-100%);
+      transition: left 0.5s;
+      z-index: 3;
     }
 
     .side-landscape {
@@ -107,12 +102,10 @@
       background-size: cover;
       opacity: 0.95;
     }
-
     .side-landscape.left {
       left: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?forest,trees') no-repeat center center/cover;
     }
-
     .side-landscape.right {
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
@@ -125,6 +118,7 @@
       background-size: contain;
       background-repeat: no-repeat;
       z-index: 3;
+      filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
     }
 
     .content {
@@ -136,9 +130,7 @@
       padding-bottom: 100px;
     }
 
-    .group-past, .group-future {
-      overflow: hidden;
-    }
+    .group-past, .group-future { overflow: hidden; }
 
     .separator {
       width: 100%;
@@ -146,7 +138,6 @@
       margin: 60px 0;
       position: relative;
     }
-
     .separator::before, .separator::after {
       content: "";
       position: absolute;
@@ -155,7 +146,6 @@
       height: 2px;
       background: #ff6f61;
     }
-
     .separator::before { left: 0; }
     .separator::after { right: 0; }
     .separator span {
@@ -175,14 +165,12 @@
       margin: 80px 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       opacity: 0;
-      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-
     .event:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-
     .event::before {
       content: '';
       position: absolute;
@@ -195,20 +183,17 @@
       box-shadow: 0 0 0 4px #ff6f61;
       animation: pulse 2s infinite;
     }
-
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-
     .event.left {
       float: left;
       clear: both;
       text-align: right;
       margin-right: 60%;
     }
-
     .event.left::before { right: -70px; }
     .event.right {
       float: right;
@@ -216,7 +201,6 @@
       text-align: left;
       margin-left: 60%;
     }
-
     .event.right::before { left: -70px; }
 
     .toggle-btn {
@@ -230,10 +214,7 @@
       margin-top: 10px;
       font-size: 0.9em;
     }
-
-    .toggle-btn:hover {
-      background: #e55b50;
-    }
+    .toggle-btn:hover { background: #e55b50; }
 
     .extra-content {
       max-height: 0;
@@ -242,7 +223,6 @@
       padding: 0 10px;
       font-size: 0.9em;
     }
-
     .extra-content.open {
       padding: 10px;
       max-height: 300px;
@@ -261,6 +241,9 @@
       transform: rotate(-10deg);
       box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
+    #signpost1 { left: 5%; top: 300px; }
+    #signpost2 { right: 5%; top: 700px; }
+    #signpost3 { left: 5%; top: 1200px; }
 
     #scrollToTop {
       position: fixed;
@@ -279,7 +262,6 @@
       transition: opacity 0.4s, visibility 0.4s;
       z-index: 1100;
     }
-
     #scrollToTop:hover { background: #e55b50; }
 
     .clearfix::after {
@@ -392,21 +374,38 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Nouvelle animation pour la voiture
-    gsap.set(".car", { x: 60, y: 0 });
-    gsap.to(".car", {
-      x: 190,
-      y: window.innerHeight + 100, // Descendre sous la vue
+    // Animation complète de la voiture
+    const car = document.querySelector('.car');
+    const separator = document.querySelector('.separator');
+    const roadWidth = document.querySelector('.road-bg').offsetWidth;
+
+    // Partie 1 : Déplacement vertical gauche
+    gsap.to(car, {
+      y: separator.offsetTop - 100,
+      x: 20,
       ease: "none",
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
+        end: `+=${separator.offsetTop}`,
+        scrub: 1
+      }
+    });
+
+    // Partie 2 : Déplacement vertical droit
+    gsap.to(car, {
+      y: document.body.scrollHeight,
+      x: roadWidth - 70,
+      ease: "none",
+      scrollTrigger: {
+        trigger: separator,
+        start: "top center",
         end: "bottom bottom",
         scrub: 1
       }
     });
 
-    // Reste du code inchangé
+    // Animations des éléments
     gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
     gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
 
@@ -419,43 +418,48 @@
       );
     });
 
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: document.querySelector('header').offsetHeight }});
-        }
-      });
-    });
-
-    document.querySelectorAll('.toggle-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        const extraContent = this.nextElementSibling;
-        extraContent.classList.toggle('open');
-        this.textContent = extraContent.classList.contains('open') ? 'Show less 😄' : 'Show more 😊';
-      });
-    });
-
-    gsap.utils.toArray('.signpost').forEach(sign => {
+    // Gestion des panneaux
+    gsap.utils.toArray('.signpost').forEach((sign, index) => {
       gsap.fromTo(sign,
-        { opacity: 0, x: sign.classList.contains('signpost-left') ? -50 : 50 },
-        { opacity: 1, x: 0, duration: 1, scrollTrigger: { trigger: sign, start: "top 90%" } }
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1,
+          scrollTrigger: {
+            trigger: `.event:nth-of-type(${index + 1})`,
+            start: "top center",
+            toggleActions: "play none none reverse"
+          }
+        }
       );
     });
 
-    const vegetationImages = [/* URLs inchangés */];
-    for (let i = 0; i < 20; i++) {
+    // Génération de la végétation
+    const vegetationImages = [
+      'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
+      'https://img.icons8.com/emoji/48/000000/rose.png',
+      'https://img.icons8.com/emoji/48/000000/tulip.png',
+      'https://img.icons8.com/emoji/48/000000/sunflower.png'
+    ];
+
+    for (let i = 0; i < 30; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
       veg.style.backgroundImage = `url(${vegetationImages[Math.floor(Math.random() * vegetationImages.length)]})`;
+      
       const side = Math.random() < 0.5 ? 'left' : 'right';
-      veg.style.top = `${Math.floor(Math.random() * 80 + 10)}vh`;
-      veg.style[side] = `${Math.floor(Math.random() * (250 - 48))}px`;
+      veg.style.top = `${Math.random() * 120}vh`;
+      veg.style[side] = `${Math.random() * 200}px`;
+      
       document.body.appendChild(veg);
-      gsap.to(veg, { duration: 3, rotation: Math.random() * 6 - 3, yoyo: true, repeat: -1 });
+      gsap.to(veg, {
+        duration: 3 + Math.random() * 5,
+        y: 30,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
+      });
     }
 
+    // Gestion du scroll
     ScrollTrigger.create({
       trigger: document.body,
       onUpdate: self => {
@@ -466,8 +470,25 @@
       }
     });
 
+    // Bouton retour en haut
     document.getElementById('scrollToTop').addEventListener('click', () => {
       gsap.to(window, { duration: 1, scrollTo: 0 });
+    });
+
+    // Gestion du contenu extensible
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const extraContent = this.nextElementSibling;
+        if (extraContent.classList.contains('open')) {
+          gsap.to(extraContent, { maxHeight: 0, padding: 0, duration: 0.5 });
+          extraContent.classList.remove('open');
+          this.textContent = 'Show more 😊';
+        } else {
+          extraContent.classList.add('open');
+          gsap.to(extraContent, { maxHeight: 300, padding: "10px", duration: 0.5 });
+          this.textContent = 'Show less 😄';
+        }
+      });
     });
   </script>
 </body>
