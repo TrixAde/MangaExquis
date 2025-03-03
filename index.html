@@ -1,319 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.2">
-    <title>Recherche de Mangas</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <style>
-        body {
-            background-color: #1B1E1F;
-            padding-top: 60px;
-            margin: 0;
-            color: #ffffff;
-        }
-
-        header {
-            background-color: #181A1B;
-            padding: 30px 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .logo {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            display: none;
-        }
-
-        h1 {
-            display: inline-block;
-            color: #ffffff;
-            font-size: 24px;
-        }
-
-        main {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        #search-results {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        .result-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #2C2D2E;
-            border-radius: 5px;
-            background-color: #181A1B;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            position: relative;
-            max-width: 200px;
-        }
-
-        .result-item img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .result-item .double-image {
-            display: flex;
-            justify-content: space-around;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .result-item .double-image img {
-            max-width: 48%;
-            height: auto;
-        }
-
-        .result-item.open img {
-            height: auto;
-        }
-
-        .logo {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            display: none;
-        }
-
-        .result-item h3 {
-            font-size: 10px !important;
-            margin-bottom: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-
-        .details-image {
-            max-height: 594px;
-            max-width: 1285px;
-            width: auto;
-            height: auto;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('MangasList.json')
-                .then(response => response.json())
-                .then(mangasData => {
-                    var examples = getRandomMangas(mangasData, 10);
-                    displayResults(examples, false);
-
-                    document.getElementById('search-form').addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        var searchTerm = document.getElementById('search-input').value.trim();
-
-                        if (searchTerm !== "") {
-                            var results = searchMangas(mangasData, searchTerm);
-                            displayResults(results, true);
-                        } else {
-                            var examples = getRandomMangas(mangasData, 10);
-                            displayResults(examples, false);
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching data:', error));
-
-            var logoButton = document.querySelector('.logo');
-            logoButton.addEventListener('click', function () {
-                window.location.href = window.location.origin + window.location.pathname;
-            });
-
-            function getRandomMangas(mangas, count) {
-                var shuffledMangas = mangas.sort(() => Math.random() - 0.5);
-                return shuffledMangas.slice(0, count);
-            }
-
-            function searchMangas(mangas, term) {
-                var options = {
-                    includeScore: true,
-                    keys: ['title']
-                };
-
-                var fuse = new Fuse(mangas, options);
-                var result = fuse.search(term);
-
-                return result.map(item => item.item);
-            }
-
-            function displayResults(results, showHomeButton) {
-                var resultsContainer = document.getElementById('search-results');
-                resultsContainer.innerHTML = '';
-
-                if (results.length === 0) {
-                    resultsContainer.innerHTML = '<p>Aucun résultat trouvé.</p>';
-                } else {
-                    results.forEach(function (result) {
-                        var resultItem = document.createElement('div');
-                        resultItem.classList.add('result-item', 'col-md-4');
-                        resultItem.innerHTML = '<h3>' + result.title + '</h3>';
-
-                        var coverContainer = document.createElement('div');
-                        coverContainer.classList.add('cover-container');
-
-                        var coverImg = document.createElement('img');
-                        coverImg.src = result.covers[0];
-                        coverImg.alt = 'Jaquette';
-                        coverContainer.appendChild(coverImg);
-
-                        if (result.alternateCovers && result.alternateCovers.length > 0) {
-                            resultItem.addEventListener('click', function () {
-                                openDetailsPage(result);
-                            });
-                        }
-
-                        resultItem.appendChild(coverContainer);
-                        resultsContainer.appendChild(resultItem);
-                    });
-                }
-
-                var logoButton = document.querySelector('.logo');
-                if (showHomeButton) {
-                    logoButton.style.display = 'block';
-                } else {
-                    logoButton.style.display = 'none';
-                }
-                setTimeout(setUniformButtonHeight, 0);
-            }
-
-            function findMinImageHeight() {
-                var minImageHeight = Infinity;
-                var resultItems = document.querySelectorAll('.result-item img');
-
-                resultItems.forEach(function (image) {
-                    var height = image.naturalHeight;
-                    if (height < minImageHeight) {
-                        minImageHeight = height;
-                    }
-                });
-
-                return minImageHeight;
-            }
-
-            function setUniformButtonHeight() {
-                var resultItems = document.querySelectorAll('.result-item');
-                var targetHeight = 150; 
-
-                resultItems.forEach(function (item) {
-                    var images = item.querySelectorAll('img');
-                    images.forEach(function (image) {
-                        var originalWidth = image.naturalWidth;
-                        var originalHeight = image.naturalHeight;
-
-                        var newWidth = (targetHeight / originalHeight) * originalWidth;
-
-                        image.style.width = newWidth + 'px';
-                        image.style.height = targetHeight + 'px';
-                    });
-
-                    var title = item.querySelector('h3');
-                    title.style.fontSize = '14px';
-                });
-            }
-
-            function openDetailsPage(manga) {
-                var detailsWindow = window.open('', '_blank');
-                detailsWindow.document.write(`
-                    <html>
-                        <head>
-                            <title>Détails du Manga</title>
-                            <style>
-                                body {
-                                    font-family: Arial, sans-serif;
-                                    padding: 20px;
-                                    background-color: #1B1E1F;
-                                    color: #ffffff;
-                                }
-
-                                .details-image {
-                                    max-height: 594px;
-                                    max-width: 1285px;
-                                    width: auto;
-                                    height: auto;
-                                    border-radius: 5px;
-                                    margin-bottom: 15px;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <h1>${manga.title}</h1>
-                            
-                            ${manga.alternateCovers && manga.alternateCovers.length > 0
-                                ? manga.alternateCovers.map(cover => `<img class="details-image" src="${cover}" alt="Jaquette">`).join('')
-                                : manga.covers.map(cover => `<img class="details-image" src="${cover}" alt="Jaquette">`).join('')
-                            }
-                            
-                            <p><strong>Date de parution:</strong> ${manga.releaseDate}</p>
-                            <p><strong>Tirage:</strong> ${manga.printRun}</p>
-                            <p><strong>Prix d'origine:</strong> ${manga.originalPrice}</p>
-                        </body>
-                    </html>
-                `);
-                detailsWindow.document.close();
-            }
-
-            setUniformButtonHeight();
-
-            window.addEventListener('resize', setUniformButtonHeight);
-        });
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon Road Movie - Parcours à LLA</title>
+  <!-- Reset CSS optionnel -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    /* Styles de base */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    .road {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px 0;
+    }
+    /* Ligne verticale symbolisant la route */
+    .road::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: #555;
+    }
+    /* Style des événements */
+    .event {
+      position: relative;
+      width: 45%;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      opacity: 0; /* pour l'animation */
+    }
+    .event h2 {
+      margin-top: 0;
+      color: #ff6f61;
+    }
+    /* Le marqueur circulaire */
+    .event::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ff6f61;
+      border: 4px solid #fff;
+      box-shadow: 0 0 0 4px #ff6f61;
+    }
+    /* Positionner les événements à gauche et à droite de la ligne */
+    .event.left {
+      left: 0;
+      text-align: right;
+    }
+    .event.left::before {
+      right: -50px;
+    }
+    .event.right {
+      left: 55%;
+      text-align: left;
+    }
+    .event.right::before {
+      left: -50px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #333;
+      color: #fff;
+    }
+    /* Responsive : en petit écran, on passe en mode colonne */
+    @media (max-width: 768px) {
+      .event, .event.left, .event.right {
+        width: 90%;
+        left: 5%;
+        text-align: left;
+      }
+      .road::before {
+        left: 20px;
+      }
+      .event::before {
+        left: -30px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-    <header>
-        <div class="logo"><i class="fas fa-home fa-lg"></i></div>
-        <h1>Recherche de Mangas</h1>
-    </header>
-
-    <main class="container">
-        <form id="search-form" class="form-inline">
-            <label for="search-input" class="sr-only">Rechercher un manga :</label>
-            <input type="text" id="search-input" name="search" class="form-control mr-2"
-                placeholder="Entrez le nom du manga...">
-            <button type="submit" class="btn btn-primary" style="font-size: 0.500rem;">Rechercher</button>
-        </form>
-
-        <div id="search-results" class="row"></div>
-    </main>
-
+  <header>
+    <h1>Mon Road Movie - Parcours à LLA</h1>
+  </header>
+  
+  <div class="road">
+    <!-- Événement 1 : Premier jour de Seconde -->
+    <div class="event left" id="event1">
+      <h2>Premier jour de Seconde</h2>
+      <p>J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, incroyablement proche des élèves. Sa gentillesse, ses blagues et sa manière de créer une ambiance conviviale m'ont immédiatement mis à l'aise.</p>
+    </div>
+    
+    <!-- Événement 2 : Projet en Première sur Roblox -->
+    <div class="event right" id="event2">
+      <h2>Projet en Première : Jeu vidéo sur Roblox</h2>
+      <p>Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur la plateforme Roblox. J'ai géré les scripts. Malgré un crash à la fin et une petite honte, les vidéos réalisées pendant la pause ont permis à notre travail d'être acclamé par la classe.</p>
+    </div>
+    
+    <!-- Événement 3 : Vision pour Terminale -->
+    <div class="event left" id="event3">
+      <h2>Vision pour Terminale : Philosophie et Maths Expertes</h2>
+      <p>J'ai hâte de suivre mes cours de philosophie, que j'adore, et d'obtenir d'excellentes notes. Par ailleurs, Maths Expertes représente un bonus ambitieux, bien que redoutable, surtout si je tombe sur un professeur qui ne m'inspire pas. C'est un pari risqué mais motivant !</p>
+    </div>
+    
+    <!-- Événement 4 : Le Bac et l'Avenir -->
+    <div class="event right" id="event4">
+      <h2>Le Bac et l'Avenir : EPITA et au-delà</h2>
+      <p>Pour le Bac, je compte être très préparé, mieux organisé et viser le maximum. Après le Bac, mon objectif est d'intégrer EPITA à Strasbourg – un parcours de 5 ans menant à un doctorat reconnu à l'international, avec notamment un voyage d'étude de 6 mois en deuxième année. Le concours "Advance" est un défi de taille, mais je suis déterminé à exceller.</p>
+    </div>
+  </div>
+  
+  <footer>
+    <p>© 2025 Mon Parcours à LLA</p>
+  </footer>
+  
+  <!-- Inclusion de GSAP et ScrollTrigger via CDN pour les animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    // Enregistrement du plugin ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Animation de chaque événement lors du scroll
+    gsap.utils.toArray('.event').forEach(function(event) {
+      gsap.fromTo(event, 
+        { opacity: 0, y: 50 }, 
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 1, 
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: event,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+  </script>
 </body>
-
 </html>
