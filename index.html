@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Road Movie - Journey at LLA 🚀</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -91,7 +91,6 @@
       width: 50px;
       transition: left 0.5s;
       z-index: 3;
-      will-change: transform; /* Nouvelle propriété ajoutée */
     }
 
     .side-landscape {
@@ -129,7 +128,6 @@
       max-width: 1000px;
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
-      transform: translateZ(0); /* Nouvelle propriété ajoutée */
     }
 
     .group-past, .group-future { overflow: hidden; }
@@ -376,31 +374,34 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // NOUVELLE ANIMATION CORRIGÉE
+    // Animation complète de la voiture
     const car = document.querySelector('.car');
     const separator = document.querySelector('.separator');
-    const road = document.querySelector('.road-bg');
-    const roadWidth = road.offsetWidth;
+    const roadWidth = document.querySelector('.road-bg').offsetWidth;
 
-    // Réinitialisation de la position
-    gsap.set(car, { x: 20, y: 20 });
-
-    // Animation unique et fluide
+    // Partie 1 : Déplacement vertical gauche
     gsap.to(car, {
-      y: document.body.scrollHeight - 100,
-      x: roadWidth - 70,
+      y: separator.offsetTop - 100,
+      x: 20,
       ease: "none",
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
+        end: `+=${separator.offsetTop}`,
+        scrub: 1
+      }
+    });
+
+    // Partie 2 : Déplacement vertical droit
+    gsap.to(car, {
+      y: document.body.scrollHeight,
+      x: roadWidth - 70,
+      ease: "none",
+      scrollTrigger: {
+        trigger: separator,
+        start: "top center",
         end: "bottom bottom",
-        scrub: 1,
-        onUpdate: self => {
-          // Transition progressive à droite après le séparateur
-          if (self.progress > 0.5) {
-            gsap.to(car, { x: roadWidth - 70, duration: 0.3 });
-          }
-        }
+        scrub: 1
       }
     });
 
@@ -489,9 +490,6 @@
         }
       });
     });
-
-    // Actualisation des positions
-    ScrollTrigger.refresh();
   </script>
 </body>
 </html>
