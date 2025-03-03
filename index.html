@@ -16,23 +16,26 @@
       position: relative;
       overflow-x: hidden;
     }
+    /* Banderole (header) moins haute */
     header {
       position: fixed;
       top: 0;
-      width: 80%;
-      max-width: 800px;
-      left: 50%;
-      transform: translateX(-50%);
+      width: 100%;
       background: rgba(51,51,51,0.9);
       color: #fff;
       z-index: 1000;
-      padding: 10px 0;
+      padding: 5px 0; /* réduction de la hauteur */
       text-align: center;
     }
-    nav { margin-top: 5px; }
+    header h1 {
+      margin: 0;
+      font-size: 1.5em; /* taille réduite */
+      line-height: 1;
+    }
+    nav { margin-top: 3px; }
     nav a {
       color: #fff;
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
       font-weight: 700;
       transition: color 0.3s, transform 0.3s;
@@ -84,8 +87,7 @@
     }
     .road-bg .car {
       position: absolute;
-      top: 0;
-      /* La voiture commence désormais en haut */
+      top: 0; /* Voiture placée tout en haut */
       width: 50px;
       z-index: 3;
     }
@@ -107,20 +109,18 @@
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
     .vegetation {
-      width: 48px;
-      height: 48px;
       position: absolute;
-      background-size: contain;
-      background-repeat: no-repeat;
+      /* font-size sera défini dynamiquement */
+      line-height: 1;
       z-index: 3;
-      filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+      /* Animation appliquée via GSAP */
     }
     .content {
       position: relative;
       z-index: 4;
       width: 90%;
       max-width: 1000px;
-      margin: 120px auto 40px auto;
+      margin: 80px auto 40px auto;
       padding-bottom: 100px;
     }
     .group-past, .group-future { overflow: hidden; }
@@ -273,8 +273,6 @@
       .event::before { left: -40px; }
       .road-bg { width: 80px; }
       .signpost { font-size: 0.9em; }
-      .side-landscape { width: 100px; }
-      .vegetation { width: 40px; height: 40px; }
     }
   </style>
 </head>
@@ -364,9 +362,9 @@
     gsap.set(car, { x: 20, y: 0 });
     
     const finalY = window.innerHeight - car.offsetHeight - 20; 
-    const finalX = roadBg.offsetWidth - car.offsetWidth - 20; // Position sur la droite du bloc route
+    const finalX = roadBg.offsetWidth - car.offsetWidth - 20;
 
-    // Animation unique qui fait descendre la voiture dès le début du scroll
+    // Animation de la voiture dès le scroll
     gsap.to(car, {
       x: finalX,
       y: finalY,
@@ -420,32 +418,46 @@
       );
     });
 
-    // Génération de la végétation avec plus d'emojis
-    const vegetationImages = [
-      'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
-      'https://img.icons8.com/emoji/48/000000/rose.png',
-      'https://img.icons8.com/emoji/48/000000/tulip.png',
-      'https://img.icons8.com/emoji/48/000000/sunflower.png',
-      'https://img.icons8.com/emoji/48/000000/seedling.png',
-      'https://img.icons8.com/emoji/48/000000/evergreen-tree.png',
-      'https://img.icons8.com/emoji/48/000000/deciduous-tree.png',
-      'https://img.icons8.com/emoji/48/000000/palm-tree.png'
+    // Génération de la végétation répartie en 3 groupes : gauche, droite et bas
+    const vegetationEmojis = [
+      { type: '🌳', size: 80 },   // Arbre
+      { type: '🌻', size: 40 },   // Fleur
+      { type: '🌿', size: 60 },   // Buisson
+      { type: '🌸', size: 35 },   // Fleur délicate
+      { type: '🎋', size: 70 },   // Bambou
+      { type: '🍁', size: 45 },   // Feuille d'érable
+      { type: '🍀', size: 50 },   // Trèfle
+      { type: '🌵', size: 55 }    // Cactus
     ];
-    for (let i = 0; i < 30; i++) {
-      const veg = document.createElement('div');
-      veg.className = 'vegetation';
-      veg.style.backgroundImage = `url(${vegetationImages[Math.floor(Math.random() * vegetationImages.length)]})`;
-      const side = Math.random() < 0.5 ? 'left' : 'right';
-      veg.style.top = `${Math.random() * 120}vh`;
-      veg.style[side] = `${Math.random() * 200}px`;
-      document.body.appendChild(veg);
-      gsap.to(veg, {
-        duration: 3 + Math.random() * 5,
-        y: 30,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut"
-      });
+    const groups = { left: 10, right: 10, bottom: 10 };
+
+    for (let side in groups) {
+      let count = groups[side];
+      for (let i = 0; i < count; i++) {
+        const emoji = vegetationEmojis[Math.floor(Math.random() * vegetationEmojis.length)];
+        const veg = document.createElement('div');
+        veg.className = 'vegetation';
+        veg.textContent = emoji.type;
+        veg.style.fontSize = emoji.size + 'px';
+        if(side === 'left'){
+          veg.style.left = (10 + Math.random()*20) + 'px';
+          veg.style.top = ((i / count) * 100 + Math.random()*5) + 'vh';
+        } else if(side === 'right'){
+          veg.style.right = (10 + Math.random()*20) + 'px';
+          veg.style.top = ((i / count) * 100 + Math.random()*5) + 'vh';
+        } else if(side === 'bottom'){
+          veg.style.bottom = (10 + Math.random()*20) + 'px';
+          veg.style.left = (Math.random()*80 + 10) + '%';
+        }
+        document.body.appendChild(veg);
+        gsap.to(veg, {
+          duration: 3 + Math.random() * 5,
+          y: 30,
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut"
+        });
+      }
     }
 
     // Bouton retour en haut
