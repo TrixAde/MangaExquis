@@ -63,7 +63,7 @@
       height: 100%;
       background: rgba(255,111,97,0.3);
     }
-    /* Road background – affiche un cadre gris (asphalt) avec une ligne blanche en pointillés */
+    /* Road background – affichant une vraie route avec fond gris et ligne blanche en pointillés */
     .road-bg {
       position: fixed;
       top: 0;
@@ -100,27 +100,30 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      opacity: 0.95;
     }
     .side-landscape.left {
       left: 0;
-      background-image: url('https://source.unsplash.com/collection/190727/250x1200/?forest,trees');
+      background: url('https://source.unsplash.com/collection/190727/250x1200/?forest,trees') no-repeat center center/cover;
     }
     .side-landscape.right {
       right: 0;
-      background-image: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers');
+      background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Animated car on the road */
-    .car {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+    /* Vegetation elements (arbres, fleurs, feuilles) animés sur les côtés */
+    .vegetation {
+      position: fixed;
+      width: 48px;
+      height: 48px;
+      background-size: contain;
+      background-repeat: no-repeat;
       z-index: 3;
     }
-    .car img {
-      width: 50px;
-      height: auto;
-      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
+    .vegetation.vegetation-left {
+      left: 20px;
+    }
+    .vegetation.vegetation-right {
+      right: 20px;
     }
     /* Main container */
     .content {
@@ -305,6 +308,16 @@
       .road-bg { width: 80px; }
       .signpost { font-size: 0.9em; }
       .side-landscape { width: 100px; }
+      .vegetation { width: 40px; height: 40px; }
+    }
+    /* Vegetation decorative elements */
+    .vegetation {
+      position: fixed;
+      width: 48px;
+      height: 48px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 3;
     }
   </style>
 </head>
@@ -312,6 +325,12 @@
   <!-- Side landscapes: left (forest) and right (garden) -->
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
+  
+  <!-- Decorative vegetation elements -->
+  <div class="vegetation vegetation-left" style="top: 150px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png');"></div>
+  <div class="vegetation vegetation-left" style="top: 400px; left: 50px; background-image: url('https://img.icons8.com/color/48/000000/tree.png');"></div>
+  <div class="vegetation vegetation-right" style="top: 200px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png');"></div>
+  <div class="vegetation vegetation-right" style="top: 600px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png');"></div>
   
   <!-- Progress Bar fixed at the bottom -->
   <div class="progress-container">
@@ -494,6 +513,9 @@
         }
       );
     });
+    
+    // Animate vegetation elements for a gentle sway
+    gsap.to(".vegetation", {duration: 3, rotation: 3, yoyo: true, repeat: -1, ease: "power1.inOut"});
     
     // Update progress bar on scroll
     ScrollTrigger.create({
