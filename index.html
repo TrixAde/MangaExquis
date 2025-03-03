@@ -90,6 +90,31 @@
       margin-top: 0;
       color: #ff6f61;
     }
+    /* Bouton toggle pour afficher/masquer le contenu supplémentaire */
+    .toggle-btn {
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+    .toggle-btn:hover {
+      background: #e55b50;
+    }
+    /* Contenu supplémentaire caché par défaut */
+    .extra-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, padding 0.5s;
+      padding: 0 10px;
+    }
+    .extra-content.open {
+      padding: 10px;
+      max-height: 300px;
+    }
     /* Marqueur circulaire sur la route avec effet pulse */
     .event::before {
       content: '';
@@ -181,6 +206,10 @@
       <p>
         J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, qui était incroyablement proche des élèves. Sa bienveillance, son sens de l'humour et ses blagues ont tout de suite créé une ambiance chaleureuse et m'ont mis à l'aise.
       </p>
+      <button class="toggle-btn">Afficher plus</button>
+      <div class="extra-content">
+        <p>Le premier jour a aussi été marqué par l'appréhension de l'inconnu, mais très vite, j'ai trouvé ma place grâce à l'accueil chaleureux de mes camarades et des enseignants.</p>
+      </div>
     </section>
     
     <!-- Événement 2 : Projet en Première sur Roblox -->
@@ -189,22 +218,34 @@
       <p>
         Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré la difficulté du projet et un crash en fin de présentation – source d’embarras –, les vidéos réalisées pendant la pause ont permis de sauver la mise et notre travail a été acclamé par la classe.
       </p>
+      <button class="toggle-btn">Afficher plus</button>
+      <div class="extra-content">
+        <p>Ce projet nous a appris à gérer le stress, à travailler en équipe et à persévérer même face aux imprévus techniques.</p>
+      </div>
     </section>
     
     <!-- Événement 3 : Vision pour Terminale -->
     <section class="event left" id="event3">
       <h2>Vision pour Terminale : Philosophie et Maths Expertes</h2>
       <p>
-        J’attends avec impatience les cours de philosophie, ma matière de cœur, et je me réjouis à l'idée d'établir d’excellents liens avec mon futur prof. Je vise les meilleures notes en philo ! Parallèlement, Maths Expertes, même s’il s’agit d’un bonus risqué – un pari sur un enseignement exigeant – représente un défi stimulant que je suis prêt à relever.
+        J’attends avec impatience les cours de philosophie, ma matière de cœur, et je me réjouis à l'idée d'établir d’excellents liens avec mon futur prof. Je vise les meilleures notes en philo ! Parallèlement, Maths Expertes, bien que risqué, représente un défi stimulant que je suis prêt à relever.
       </p>
+      <button class="toggle-btn">Afficher plus</button>
+      <div class="extra-content">
+        <p>Je m'imagine déjà débattre passionnément en classe et explorer des problématiques mathématiques innovantes pour repousser mes limites.</p>
+      </div>
     </section>
     
     <!-- Événement 4 : Le Bac et l'Avenir -->
     <section class="event right" id="event4">
       <h2>Le Bac et l'Avenir : EPITA et le futur</h2>
       <p>
-        Pour le Bac, je compte être très préparé en changeant ma mentalité et en m'organisant mieux. Mon objectif ultime : réussir le concours "Advance" afin d'intégrer EPITA à Strasbourg. Avec seulement 70 places, il me faudra atteindre un niveau exceptionnel pour décrocher ce diplôme, qui ouvre la voie à un doctorat reconnu à l’international et à de nombreux projets stimulants (comme un voyage d'étude de 6 mois dès la 2ème année).
+        Pour le Bac, je compte être très préparé en changeant ma mentalité et en m'organisant mieux. Mon objectif ultime : réussir le concours "Advance" afin d'intégrer EPITA à Strasbourg. Avec seulement 70 places, il me faudra atteindre un niveau exceptionnel.
       </p>
+      <button class="toggle-btn">Afficher plus</button>
+      <div class="extra-content">
+        <p>Je me projette dans un futur où je combine passion pour la technologie, études intenses et aventures internationales, ouvrant la voie à un doctorat et à de nombreux projets innovants.</p>
+      </div>
     </section>
   </div>
   
@@ -256,6 +297,23 @@
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
           gsap.to(window, {duration: 1, scrollTo: {y: target, offsetY: headerHeight}});
+        }
+      });
+    });
+
+    // Interactivité pour les boutons toggle
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const extraContent = this.nextElementSibling;
+        if (extraContent.classList.contains('open')) {
+          gsap.to(extraContent, {maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
+            extraContent.classList.remove('open');
+          }});
+          this.textContent = 'Afficher plus';
+        } else {
+          extraContent.classList.add('open');
+          gsap.to(extraContent, {maxHeight: 300, padding: "10px", duration: 0.5});
+          this.textContent = 'Afficher moins';
         }
       });
     });
