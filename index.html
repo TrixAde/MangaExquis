@@ -19,7 +19,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Header (the bande containing the title and buttons) – reverted to original */
+    /* Header – the bande with title and nav */
     header {
       position: fixed;
       top: 0;
@@ -48,7 +48,7 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar now placed fixed at the bottom of the viewport */
+    /* Progress Bar fixed at the bottom of the viewport */
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -63,7 +63,7 @@
       height: 100%;
       background: rgba(255,111,97,0.3);
     }
-    /* Road background (the "road") with increased transparency */
+    /* Road background (the "road") – now less transparent and with more defined white markings */
     .road-bg {
       position: fixed;
       top: 0;
@@ -71,9 +71,17 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: rgba(51,51,51,0.3);
-      background-image: linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
-      background-size: 100% 80px;
+      background: rgba(51,51,51,0.8);
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 30px,
+        rgba(255,255,255,0.4) 30px,
+        rgba(255,255,255,0.4) 35px,
+        transparent 35px,
+        transparent 70px
+      );
+      background-size: 100% 70px;
       z-index: 1;
     }
     /* Animated car on the road */
@@ -89,7 +97,26 @@
       height: auto;
       filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
     }
-    /* Main container */
+    /* Side landscapes: left (trees) and right (flowers) */
+    .side-landscape {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .side-landscape.left {
+      left: 0;
+      background-image: url('https://source.unsplash.com/random/300x800/?forest');
+    }
+    .side-landscape.right {
+      right: 0;
+      background-image: url('https://source.unsplash.com/random/300x800/?flowers');
+    }
+    /* Main container for content */
     .content {
       position: relative;
       z-index: 3;
@@ -98,7 +125,7 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-    /* Grouping sections */
+    /* Grouping sections (for 10th/11th vs 12th/Bac) */
     .group-past, .group-future {
       overflow: hidden;
     }
@@ -147,7 +174,7 @@
       margin-top: 0;
       color: #ff6f61;
     }
-    /* Red marker (without emoji) */
+    /* Red marker on events (without emoji) */
     .event::before {
       content: '';
       position: absolute;
@@ -271,16 +298,21 @@
       .event::before { left: -40px; }
       .road-bg { width: 80px; }
       .signpost { font-size: 0.9em; }
+      .side-landscape { width: 80px; }
     }
   </style>
 </head>
 <body>
+  <!-- Side landscapes (trees & flowers) -->
+  <div class="side-landscape left"></div>
+  <div class="side-landscape right"></div>
+  
   <!-- Progress Bar fixed at the bottom -->
   <div class="progress-container">
     <div class="progress-bar"></div>
   </div>
   
-  <!-- Header (band containing the title and buttons) – reverted to original -->
+  <!-- Header (band containing the title and buttons) -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
