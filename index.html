@@ -5,24 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Road Movie - Journey at LLA 🚀</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset et styles de base */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
       font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
       background: linear-gradient(135deg, #8DC26F, #A4DE02);
       color: #333;
+      position: relative;
       overflow-x: hidden;
-      min-height: 200vh;
     }
 
-    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -30,346 +24,470 @@
       background: rgba(51,51,51,0.9);
       color: #fff;
       z-index: 1000;
-      padding: 15px 0;
+      padding: 10px 0;
       text-align: center;
-      backdrop-filter: blur(5px);
     }
 
-    nav {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
+    nav { margin-top: 5px; }
     nav a {
       color: #fff;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: 700;
-      transition: all 0.3s;
+      transition: color 0.3s, transform 0.3s;
     }
-
     nav a:hover {
       color: #ff6f61;
       transform: scale(1.1);
     }
 
-    /* Barre de progression */
     .progress-container {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 8px;
-      background: rgba(255,255,255,0.3);
-      z-index: 999;
+      background: rgba(255,255,255,0.5);
+      z-index: 1100;
     }
-
     .progress-bar {
       width: 0%;
       height: 100%;
       background: #ff6f61;
-      transition: width 0.3s ease;
     }
 
-    /* Route */
-    .road-container {
+    .road-bg {
       position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 250px;
-      height: 100vh;
-      z-index: 2;
-    }
-
-    .road-bg {
-      position: absolute;
-      width: 100%;
       height: 100%;
-      background: #555;
+      background: #777;
+      z-index: 2;
+      overflow: hidden;
     }
-
-    .road-line {
+    .road-bg::after {
+      content: "";
       position: absolute;
       left: 50%;
+      top: 0;
       transform: translateX(-50%);
       width: 8px;
       height: 100%;
       background: repeating-linear-gradient(
         to bottom,
-        #fff 0px,
-        #fff 20px,
+        rgba(255,255,255,0.8) 0px,
+        rgba(255,255,255,0.8) 20px,
         transparent 20px,
         transparent 40px
       );
     }
 
-    .car {
+    .road-bg .car {
       position: absolute;
-      width: 50px;
-      left: 20px;
       top: 20px;
-      z-index: 3;
+      left: 20px;
+      width: 50px;
       transition: left 0.5s;
+      z-index: 3;
     }
 
-    /* Paysages latéraux */
     .side-landscape {
       position: fixed;
       top: 0;
       bottom: 0;
-      width: calc(50% - 125px);
-      z-index: 1;
+      width: 250px;
+      z-index: 0;
       background-size: cover;
+      opacity: 0.95;
     }
-
-    .left-landscape {
+    .side-landscape.left {
       left: 0;
-      background-image: url('https://source.unsplash.com/random/800x1200?forest');
+      background: url('https://source.unsplash.com/collection/190727/250x1200/?forest,trees') no-repeat center center/cover;
     }
-
-    .right-landscape {
+    .side-landscape.right {
       right: 0;
-      background-image: url('https://source.unsplash.com/random/800x1200?meadow');
+      background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
 
-    /* Végétation */
     .vegetation {
-      position: fixed;
+      width: 48px;
+      height: 48px;
+      position: absolute;
       background-size: contain;
       background-repeat: no-repeat;
-      z-index: 2;
-      filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+      z-index: 3;
+      filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
     }
 
-    /* Contenu principal */
     .content {
       position: relative;
       z-index: 4;
       width: 90%;
       max-width: 1000px;
-      margin: 120px auto;
-      padding: 40px 0 200px;
+      margin: 120px auto 40px auto;
+      padding-bottom: 100px;
+    }
+
+    .group-past, .group-future { overflow: hidden; }
+
+    .separator {
+      width: 100%;
+      text-align: center;
+      margin: 60px 0;
+      position: relative;
+    }
+    .separator::before, .separator::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 2px;
+      background: #ff6f61;
+    }
+    .separator::before { left: 0; }
+    .separator::after { right: 0; }
+    .separator span {
+      background: #fff;
+      padding: 0 15px;
+      font-size: 1.2em;
+      color: #ff6f61;
+      font-weight: bold;
     }
 
     .event {
       position: relative;
       width: 45%;
-      padding: 25px;
-      margin: 100px 0;
-      background: rgba(255,255,255,0.9);
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(247,247,247,0.7));
+      border-radius: 8px;
+      margin: 80px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       opacity: 0;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-
-    .event.left {
-      float: left;
-      margin-right: 55%;
+    .event:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-
-    .event.right {
-      float: right;
-      margin-left: 55%;
-    }
-
     .event::before {
       content: '';
       position: absolute;
-      top: 30px;
-      width: 25px;
-      height: 25px;
+      top: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: #ff6f61;
-      border: 3px solid white;
-      box-shadow: 0 0 0 3px #ff6f61;
+      border: 4px solid #fff;
+      box-shadow: 0 0 0 4px #ff6f61;
+      animation: pulse 2s infinite;
     }
-
-    .event.left::before {
-      right: -60px;
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
     }
-
-    .event.right::before {
-      left: -60px;
-    }
-
-    .separator {
+    .event.left {
+      float: left;
       clear: both;
-      text-align: center;
-      margin: 100px 0;
-      position: relative;
+      text-align: right;
+      margin-right: 60%;
     }
-
-    .separator span {
-      display: inline-block;
-      padding: 10px 30px;
-      background: white;
-      border-radius: 30px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    .event.left::before { right: -70px; }
+    .event.right {
+      float: right;
+      clear: both;
+      text-align: left;
+      margin-left: 60%;
     }
+    .event.right::before { left: -70px; }
 
-    /* Boutons et interactions */
     .toggle-btn {
       background: #ff6f61;
-      color: white;
+      color: #fff;
       border: none;
-      padding: 8px 15px;
-      border-radius: 20px;
+      padding: 8px 12px;
+      border-radius: 4px;
       cursor: pointer;
-      margin-top: 15px;
-      transition: all 0.3s;
+      transition: background 0.3s;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    .toggle-btn:hover { background: #e55b50; }
+
+    .extra-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, padding 0.5s;
+      padding: 0 10px;
+      font-size: 0.9em;
+    }
+    .extra-content.open {
+      padding: 10px;
+      max-height: 300px;
     }
 
-    .toggle-btn:hover {
-      background: #e55b50;
-      transform: scale(1.05);
+    .signpost {
+      position: absolute;
+      padding: 10px 15px;
+      background: linear-gradient(45deg, #ff6f61, #ffe66d);
+      border: 2px solid #fff;
+      border-radius: 4px;
+      font-weight: bold;
+      color: #333;
+      opacity: 0;
+      z-index: 5;
+      transform: rotate(-10deg);
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
+    #signpost1 { left: 5%; top: 300px; }
+    #signpost2 { right: 5%; top: 700px; }
+    #signpost3 { left: 5%; top: 1200px; }
 
     #scrollToTop {
       position: fixed;
       bottom: 30px;
       right: 30px;
       background: #ff6f61;
-      color: white;
+      color: #fff;
       border: none;
-      padding: 15px;
-      border-radius: 50%;
+      padding: 12px 16px;
+      border-radius: 50px;
       cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       opacity: 0;
-      transition: all 0.3s;
+      visibility: hidden;
+      transition: opacity 0.4s, visibility 0.4s;
+      z-index: 1100;
+    }
+    #scrollToTop:hover { background: #e55b50; }
+
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
     }
 
-    /* Animations */
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #333;
+      color: #fff;
+      position: relative;
+      z-index: 6;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
-      .road-container { width: 100px; }
-      
-      .event {
-        width: 85%;
-        margin: 60px auto;
-        float: none !important;
+      .event, .event.left, .event.right {
+        width: 90%;
+        float: none;
+        margin: 40px auto;
+        text-align: left;
       }
-      
-      .event::before {
-        top: -35px;
-        left: 50% !important;
-        transform: translateX(-50%);
-      }
+      .event::before { left: -40px; }
+      .road-bg { width: 80px; }
+      .signpost { font-size: 0.9em; }
+      .side-landscape { width: 100px; }
+      .vegetation { width: 40px; height: 40px; }
     }
   </style>
 </head>
 <body>
-  <!-- Structure de base -->
+  <div class="side-landscape left"></div>
+  <div class="side-landscape right"></div>
+
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
       <a href="#event1">10th Grade</a>
       <a href="#event2">11th Grade</a>
       <a href="#event3">12th Grade</a>
-      <a href="#event4">Future</a>
+      <a href="#event4">Baccalaureate & Future</a>
     </nav>
   </header>
 
-  <div class="progress-container">
-    <div class="progress-bar"></div>
+  <div class="road-bg">
+    <div class="car">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
+    </div>
   </div>
 
-  <div class="side-landscape left-landscape"></div>
-  <div class="side-landscape right-landscape"></div>
+  <div class="signpost signpost-left" id="signpost1">Discovery</div>
+  <div class="signpost signpost-right" id="signpost2">Adventure</div>
+  <div class="signpost signpost-left" id="signpost3">Future!</div>
 
-  <div class="road-container">
-    <div class="road-bg"></div>
-    <div class="road-line"></div>
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" 
-         class="car" 
-         alt="Voiture">
+  <div class="content clearfix">
+    <div class="group-past">
+      <section class="event left" id="event1">
+        <h2>First Day of 10th Grade 🚀</h2>
+        <button class="toggle-btn">Show more 😊</button>
+        <div class="extra-content">
+          <p>I was surprised to meet my main history-geography teacher, Mr. Deraco...</p>
+        </div>
+      </section>
+
+      <section class="event right" id="event2">
+        <h2>11th Grade Project: Roblox Video Game 🎮</h2>
+        <button class="toggle-btn">Show more 😊</button>
+        <div class="extra-content">
+          <p>For an EMC assignment on cyberbullying, I collaborated with friends...</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="separator"><span>The Future Awaits</span></div>
+
+    <div class="group-future">
+      <section class="event left" id="event3">
+        <h2>12th Grade Vision: Philosophy & Advanced Math 💡</h2>
+        <button class="toggle-btn">Show more 😊</button>
+        <div class="extra-content">
+          <p>I eagerly anticipate philosophy classes, my favorite subject...</p>
+        </div>
+      </section>
+
+      <section class="event right" id="event4">
+        <h2>Baccalaureate & the Future: EPITA & Me 🎓</h2>
+        <button class="toggle-btn">Show more 😊</button>
+        <div class="extra-content">
+          <p>For the Bac, I plan to reorganize my priorities to achieve excellence...</p>
+        </div>
+      </section>
+    </div>
   </div>
 
-  <div class="content">
-    <!-- Contenu des événements -->
-  </div>
+  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
 
-  <button id="scrollToTop">↑</button>
+  <footer>
+    <p>© 2025 My Journey at LLA</p>
+  </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Configuration de base
-      const car = document.querySelector('.car');
-      const separator = document.querySelector('.separator');
-      const roadWidth = document.querySelector('.road-container').offsetWidth;
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-      // Animation principale de la voiture
-      gsap.to(car, {
-        y: () => window.innerHeight * 2,
-        x: () => roadWidth - 70,
-        scrollTrigger: {
-          trigger: document.body,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1
+    // Animation complète de la voiture
+    const car = document.querySelector('.car');
+    const separator = document.querySelector('.separator');
+    const roadWidth = document.querySelector('.road-bg').offsetWidth;
+
+    // Partie 1 : Déplacement vertical gauche
+    gsap.to(car, {
+      y: separator.offsetTop - 100,
+      x: 20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".content",
+        start: "top top",
+        end: `+=${separator.offsetTop}`,
+        scrub: 1
+      }
+    });
+
+    // Partie 2 : Déplacement vertical droit
+    gsap.to(car, {
+      y: document.body.scrollHeight,
+      x: roadWidth - 70,
+      ease: "none",
+      scrollTrigger: {
+        trigger: separator,
+        start: "top center",
+        end: "bottom bottom",
+        scrub: 1
+      }
+    });
+
+    // Animations des éléments
+    gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
+    gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
+
+    gsap.utils.toArray('.event').forEach(section => {
+      gsap.fromTo(section,
+        { opacity: 0, y: 50, rotation: -5 },
+        { opacity: 1, y: 0, rotation: 0, duration: 1, ease: "power2.out",
+          scrollTrigger: { trigger: section, start: "top 80%", toggleActions: "play none none reverse" }
         }
-      });
+      );
+    });
 
-      // Gestion des événements
-      gsap.utils.toArray('.event').forEach(event => {
-        gsap.fromTo(event, {
-          opacity: 0,
-          y: 50
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 1,
+    // Gestion des panneaux
+    gsap.utils.toArray('.signpost').forEach((sign, index) => {
+      gsap.fromTo(sign,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1,
           scrollTrigger: {
-            trigger: event,
-            start: "top 80%",
-            toggleActions: "play none none none"
+            trigger: `.event:nth-of-type(${index + 1})`,
+            start: "top center",
+            toggleActions: "play none none reverse"
           }
-        });
-      });
-
-      // Végétation dynamique
-      const createVegetation = () => {
-        const types = [
-          {name: 'tree', size: [80, 80], imgs: ['🌳', '🌲', '🌴']},
-          {name: 'bush', size: [60, 60], imgs: ['🌿', '🍀', '🎋']},
-          {name: 'flower', size: [40, 40], imgs: ['🌻', '🌺', '🌷']}
-        ];
-
-        for(let i = 0; i < 30; i++) {
-          const type = types[Math.floor(Math.random() * types.length)];
-          const veg = document.createElement('div');
-          veg.className = `vegetation ${type.name}`;
-          veg.style.cssText = `
-            width: ${type.size[0]}px;
-            height: ${type.size[1]}px;
-            left: ${Math.random() * 45}%;
-            top: ${Math.random() * 100}vh;
-            font-size: ${type.size[0]}px;
-          `;
-          veg.textContent = type.imgs[Math.floor(Math.random() * type.imgs.length)];
-          document.body.appendChild(veg);
         }
-      };
-      createVegetation();
+      );
+    });
 
-      // Gestion du scroll
-      ScrollTrigger.create({
-        onUpdate: ({progress}) => {
-          document.querySelector('.progress-bar').style.width = `${progress * 100}%`;
-          document.getElementById('scrollToTop').style.opacity = progress > 0.1 ? 1 : 0;
-        }
+    // Génération de la végétation
+    const vegetationImages = [
+      'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
+      'https://img.icons8.com/emoji/48/000000/rose.png',
+      'https://img.icons8.com/emoji/48/000000/tulip.png',
+      'https://img.icons8.com/emoji/48/000000/sunflower.png'
+    ];
+
+    for (let i = 0; i < 30; i++) {
+      const veg = document.createElement('div');
+      veg.className = 'vegetation';
+      veg.style.backgroundImage = `url(${vegetationImages[Math.floor(Math.random() * vegetationImages.length)]})`;
+      
+      const side = Math.random() < 0.5 ? 'left' : 'right';
+      veg.style.top = `${Math.random() * 120}vh`;
+      veg.style[side] = `${Math.random() * 200}px`;
+      
+      document.body.appendChild(veg);
+      gsap.to(veg, {
+        duration: 3 + Math.random() * 5,
+        y: 30,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
       });
+    }
 
-      document.getElementById('scrollToTop').addEventListener('click', () => {
-        gsap.to(window, {duration: 1, scrollTo: 0});
+    // Gestion du scroll
+    ScrollTrigger.create({
+      trigger: document.body,
+      onUpdate: self => {
+        document.querySelector('.progress-bar').style.width = `${self.progress * 100}%`;
+        const btn = document.getElementById('scrollToTop');
+        btn.style.visibility = self.progress > 0.1 ? 'visible' : 'hidden';
+        gsap.to(btn, { opacity: self.progress > 0.1 ? 1 : 0 });
+      }
+    });
+
+    // Bouton retour en haut
+    document.getElementById('scrollToTop').addEventListener('click', () => {
+      gsap.to(window, { duration: 1, scrollTo: 0 });
+    });
+
+    // Gestion du contenu extensible
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const extraContent = this.nextElementSibling;
+        if (extraContent.classList.contains('open')) {
+          gsap.to(extraContent, { maxHeight: 0, padding: 0, duration: 0.5 });
+          extraContent.classList.remove('open');
+          this.textContent = 'Show more 😊';
+        } else {
+          extraContent.classList.add('open');
+          gsap.to(extraContent, { maxHeight: 300, padding: "10px", duration: 0.5 });
+          this.textContent = 'Show less 😄';
+        }
       });
     });
   </script>
