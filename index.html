@@ -116,21 +116,14 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Vegetation decorative elements – positionnés aléatoirement via JS */
+    /* Vegetation decorative elements – style de base pour la végétation générée dynamiquement */
     .vegetation {
-      position: absolute;
       width: 48px;
       height: 48px;
+      position: absolute;
       background-size: contain;
       background-repeat: no-repeat;
       z-index: 3;
-    }
-    /* Ajout des images de fond pour la végétation */
-    .vegetation.vegetation-left {
-      background-image: url('https://img.icons8.com/emoji/48/000000/deciduous-tree.png');
-    }
-    .vegetation.vegetation-right {
-      background-image: url('https://img.icons8.com/emoji/48/000000/cherry-blossom.png');
     }
     /* Main container */
     .content {
@@ -238,7 +231,7 @@
     .toggle-btn:hover {
       background: #e55b50;
     }
-    /* Extra content hidden by défaut */
+    /* Extra content hidden par défaut */
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -325,23 +318,6 @@
   <!-- Side landscapes -->
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
-  
-  <!-- Vegetation decorative elements (7 on each side, positions seront randomisées) -->
-  <div class="vegetation vegetation-left"></div>
-  <div class="vegetation vegetation-left"></div>
-  <div class="vegetation vegetation-left"></div>
-  <div class="vegetation vegetation-left"></div>
-  <div class="vegetation vegetation-left"></div>
-  <div class="vegetation vegetation-left"></div>
-  <div class="vegetation vegetation-left"></div>
-  
-  <div class="vegetation vegetation-right"></div>
-  <div class="vegetation vegetation-right"></div>
-  <div class="vegetation vegetation-right"></div>
-  <div class="vegetation vegetation-right"></div>
-  <div class="vegetation vegetation-right"></div>
-  <div class="vegetation vegetation-right"></div>
-  <div class="vegetation vegetation-right"></div>
   
   <!-- Progress Bar fixed at the bottom -->
   <div class="progress-container">
@@ -469,30 +445,22 @@
         scrub: true
       }
     });
-    
-    // Animate the car: start in the left lane (x: 60) then move to the right lane (x: 190)
+
+    // Animate the car using a timeline to combine horizontal and vertical movements
     gsap.set(".car", { x: 60 });
-    gsap.to(".car", {
-      x: 190,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".separator",
-        start: "top center",
-        end: "bottom center",
-        scrub: true
-      }
-    });
-    gsap.to(".car", {
-      y: () => window.innerHeight - 100,
-      ease: "none",
+    gsap.timeline({
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
         end: "bottom bottom",
         scrub: true
       }
-    });
-    
+    })
+    .fromTo(".car", 
+      { x: 60, y: 0 }, 
+      { x: 120, y: () => window.innerHeight - 100, ease: "none" }
+    );
+
     // Smooth navigation using ScrollToPlugin
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
@@ -504,7 +472,7 @@
         }
       });
     });
-    
+
     // Toggle extra content on events
     document.querySelectorAll('.toggle-btn').forEach(button => {
       button.addEventListener('click', function() {
@@ -521,7 +489,7 @@
         }
       });
     });
-    
+
     // Animate the symbolic signposts
     gsap.utils.toArray('.signpost').forEach(sign => {
       gsap.fromTo(sign,
@@ -535,24 +503,36 @@
         }
       );
     });
-    
-    // Animate vegetation elements with gentle sway and assign random positions
-    document.querySelectorAll('.vegetation').forEach(elem => {
-      // Position them randomly within 10% to 90% of viewport height
-      const randomTop = Math.floor(Math.random() * 80 + 10);
-      elem.style.top = randomTop + "vh";
-      // For left ones, assign a random left offset; for right ones, a random right offset
-      if (elem.classList.contains('vegetation-left')) {
-        const randomLeft = Math.floor(Math.random() * 40 + 10);
-        elem.style.left = randomLeft + "px";
-      } else {
-        const randomRight = Math.floor(Math.random() * 40 + 10);
-        elem.style.right = randomRight + "px";
-      }
+
+    // Dynamic generation of vegetation elements with multiple flower images
+    const flowerImages = [
+      'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
+      'https://img.icons8.com/emoji/48/000000/rose.png',
+      'https://img.icons8.com/emoji/48/000000/tulip.png',
+      'https://img.icons8.com/emoji/48/000000/sunflower.png'
+    ];
+    const vegetationCount = 14;
+    // Remove any existing vegetation elements
+    document.querySelectorAll('.vegetation').forEach(el => el.remove());
+    for (let i = 0; i < vegetationCount; i++) {
+      const veg = document.createElement('div');
+      veg.className = 'vegetation';
+      const randomImage = flowerImages[Math.floor(Math.random() * flowerImages.length)];
+      veg.style.backgroundImage = `url(${randomImage})`;
+      // Position the vegetation element at a random position on the screen
+      veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
+      veg.style.left = Math.floor(Math.random() * 90 + 5) + "vw";
+      document.body.appendChild(veg);
       // Gentle oscillation animation
-      gsap.to(elem, { duration: 3, rotation: Math.random() * 6 - 3, yoyo: true, repeat: -1, ease: "power1.inOut" });
-    });
-    
+      gsap.to(veg, { 
+        duration: 3, 
+        rotation: Math.random() * 6 - 3, 
+        yoyo: true, 
+        repeat: -1, 
+        ease: "power1.inOut" 
+      });
+    }
+
     // Update progress bar on scroll
     ScrollTrigger.create({
       trigger: document.body,
@@ -562,7 +542,7 @@
         document.querySelector('.progress-bar').style.width = (self.progress * 100) + "%";
       }
     });
-    
+
     // Show "Back to Top" button when scrolling down
     ScrollTrigger.create({
       trigger: document.body,
@@ -580,7 +560,7 @@
         }
       }
     });
-    
+
     // Scroll-to-top button action
     document.getElementById('scrollToTop').addEventListener('click', () => {
       gsap.to(window, { duration: 1, scrollTo: { y: 0 }});
