@@ -11,32 +11,34 @@
   <style>
     /* Base */
     body {
+      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #2c3e50;
-      color: #fff;
+      background: #8DC26F; /* Vert léger pour le champ */
+      color: #333;
+      position: relative;
       overflow-x: hidden;
     }
     header {
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(0,0,0,0.85);
-      padding: 15px 20px;
+      background: rgba(51,51,51,0.9);
+      color: #fff;
       z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      padding: 10px 0;
+      text-align: center;
     }
     header h1 {
       margin: 0;
-      font-size: 1.6em;
+      font-size: 1.8em;
+    }
+    nav {
+      margin-top: 5px;
     }
     nav a {
       color: #fff;
-      margin-left: 20px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: 700;
       transition: color 0.3s;
@@ -44,105 +46,82 @@
     nav a:hover {
       color: #ff6f61;
     }
-    /* Conteneur de la route symbolique */
-    .road-container {
-      position: relative;
-      margin-top: 80px; /* espace pour le header */
-      min-height: 300vh;
-      background: #444; /* asphalte */
-      background-image: linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
-      background-size: 100% 80px;
-      overflow: hidden;
-    }
-    /* Ligne centrale */
-    .central-line {
-      position: absolute;
+    /* Road background */
+    .road-bg {
+      position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 6px;
+      width: 250px;
       height: 100%;
-      background: #ff6f61;
-      opacity: 0.8;
+      background: #333;
+      background-image: 
+         linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
+      background-size: 100% 80px;
+      z-index: 1;
     }
-    /* Marqueurs */
-    .marker {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: #ff6f61;
-      border: 4px solid #fff;
-      cursor: pointer;
-      opacity: 0;
-    }
-    /* Tooltip caché */
-    .tooltip {
-      position: absolute;
-      padding: 6px 10px;
-      background: rgba(0,0,0,0.8);
-      border-radius: 4px;
-      font-size: 0.9em;
-      pointer-events: none;
-      opacity: 0;
-      white-space: nowrap;
-    }
-    /* Positionnement pour les marqueurs (alternance gauche/droite) */
-    /* Chaque marker aura une position verticale (en pourcentage) et une position horizontale calculée */
-    .marker.marker1 { top: 15%; left: calc(50% - 80px); }
-    .marker.marker2 { top: 40%; left: calc(50% + 50px); }
-    .marker.marker3 { top: 65%; left: calc(50% - 90px); }
-    .marker.marker4 { top: 90%; left: calc(50% + 40px); }
-    
-    /* Tooltip : position dynamique en fonction du marker */
-    .marker:hover + .tooltip {
-      opacity: 1;
-      transform: translateY(-10px);
-    }
-    
-    /* Modal overlay */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-    .modal {
-      background: #fff;
-      color: #333;
-      border-radius: 10px;
-      padding: 30px;
-      max-width: 600px;
-      width: 90%;
+    /* Container pour le contenu (défilement) */
+    .content {
       position: relative;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+      z-index: 2;
+      width: 90%;
+      max-width: 1000px;
+      margin: 120px auto 40px auto;
+      padding-bottom: 100px;
     }
-    .modal h2 {
+    /* Chaque événement */
+    .event {
+      position: relative;
+      width: 45%;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      margin: 80px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      opacity: 0;
+    }
+    .event h2 {
       margin-top: 0;
       color: #ff6f61;
     }
-    .modal p {
-      line-height: 1.6;
-    }
-    .modal .close-btn {
+    /* Marqueur circulaire sur la route */
+    .event::before {
+      content: '';
       position: absolute;
-      top: 10px;
-      right: 15px;
-      background: #ff6f61;
-      color: #fff;
-      border: none;
+      top: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      cursor: pointer;
-      font-size: 1.4em;
+      background: #ff6f61;
+      border: 4px solid #fff;
+      box-shadow: 0 0 0 4px #ff6f61;
     }
+    /* Positionnement à gauche/droite */
+    .event.left {
+      float: left;
+      clear: both;
+      text-align: right;
+      margin-right: 60%;
+    }
+    .event.left::before {
+      right: -70px;
+    }
+    .event.right {
+      float: right;
+      clear: both;
+      text-align: left;
+      margin-left: 60%;
+    }
+    .event.right::before {
+      left: -70px;
+    }
+    /* Nettoyage des floats */
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    /* Footer */
     footer {
       text-align: center;
       padding: 20px;
@@ -153,9 +132,17 @@
     }
     /* Responsive */
     @media (max-width: 768px) {
-      .marker {
-        width: 25px;
-        height: 25px;
+      .event, .event.left, .event.right {
+        width: 90%;
+        float: none;
+        margin: 40px auto;
+        text-align: left;
+      }
+      .event::before {
+        left: -40px;
+      }
+      .road-bg {
+        width: 80px;
       }
     }
   </style>
@@ -164,136 +151,85 @@
   <header>
     <h1>Mon Road Movie - Parcours à LLA</h1>
     <nav>
-      <a href="#m1" class="nav-link" data-target="0">Seconde</a>
-      <a href="#m2" class="nav-link" data-target="0.33">Première</a>
-      <a href="#m3" class="nav-link" data-target="0.66">Terminale</a>
-      <a href="#m4" class="nav-link" data-target="1">Bac & Futur</a>
+      <a href="#event1">Seconde</a>
+      <a href="#event2">Première</a>
+      <a href="#event3">Terminale</a>
+      <a href="#event4">Bac & Futur</a>
     </nav>
   </header>
   
-  <div class="road-container">
-    <!-- Ligne centrale de la route -->
-    <div class="central-line"></div>
-    
-    <!-- Marqueurs -->
-    <div class="marker marker1" id="m1" data-index="0"></div>
-    <div class="tooltip" style="top: 12%; left: calc(50% - 120px);">Seconde</div>
-    
-    <div class="marker marker2" id="m2" data-index="1"></div>
-    <div class="tooltip" style="top: 37%; left: calc(50% + 60px);">Première</div>
-    
-    <div class="marker marker3" id="m3" data-index="2"></div>
-    <div class="tooltip" style="top: 62%; left: calc(50% - 130px);">Terminale</div>
-    
-    <div class="marker marker4" id="m4" data-index="3"></div>
-    <div class="tooltip" style="top: 87%; left: calc(50% + 20px);">Bac & Futur</div>
-  </div>
+  <!-- Fond de la route -->
+  <div class="road-bg"></div>
   
-  <!-- Modal d'information -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modalContent">
-      <button class="close-btn" id="closeBtn">&times;</button>
-      <h2 id="modalTitle"></h2>
-      <p id="modalText"></p>
-    </div>
+  <!-- Contenu principal -->
+  <div class="content clearfix">
+    <!-- Événement 1 : Premier jour de Seconde -->
+    <section class="event left" id="event1">
+      <h2>Premier jour de Seconde</h2>
+      <p>
+        J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, qui était incroyablement proche des élèves. Sa bienveillance, son sens de l'humour et ses blagues ont tout de suite créé une ambiance chaleureuse et m'ont mis à l'aise.
+      </p>
+    </section>
+    
+    <!-- Événement 2 : Projet en Première sur Roblox -->
+    <section class="event right" id="event2">
+      <h2>Projet en Première : Jeu vidéo sur Roblox</h2>
+      <p>
+        Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré la difficulté du projet et un crash en fin de présentation – source d’embarras –, les vidéos réalisées pendant la pause ont permis de sauver la mise et notre travail a été acclamé par la classe.
+      </p>
+    </section>
+    
+    <!-- Événement 3 : Vision pour Terminale -->
+    <section class="event left" id="event3">
+      <h2>Vision pour Terminale : Philosophie et Maths Expertes</h2>
+      <p>
+        J’attends avec impatience les cours de philosophie, ma matière de cœur, et je me réjouis à l'idée d'établir d’excellents liens avec mon futur prof. Je vise les meilleures notes en philo ! Parallèlement, Maths Expertes, même s’il s’agit d’un bonus risqué – un pari sur un enseignement exigeant – représente un défi stimulant que je suis prêt à relever.
+      </p>
+    </section>
+    
+    <!-- Événement 4 : Le Bac et l'Avenir -->
+    <section class="event right" id="event4">
+      <h2>Le Bac et l'Avenir : EPITA et le futur</h2>
+      <p>
+        Pour le Bac, je compte être très préparé en changeant ma mentalité et en m'organisant mieux. Mon objectif ultime : réussir le concours "Advance" afin d'intégrer EPITA à Strasbourg. Avec seulement 70 places, il me faudra atteindre un niveau exceptionnel pour décrocher ce diplôme, qui ouvre la voie à un doctorat reconnu à l’international et à de nombreux projets stimulants (comme un voyage d'étude de 6 mois dès la 2ème année).
+      </p>
+    </section>
   </div>
   
   <footer>
     <p>© 2025 Mon Parcours à LLA</p>
   </footer>
   
-  <!-- GSAP et plugins -->
+  <!-- GSAP et ScrollTrigger pour animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger, TextPlugin, ScrollToPlugin);
-    
-    // Données pour les événements
-    const events = [
-      {
-        title: "Premier jour de Seconde",
-        description: "J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, incroyablement proche des élèves, drôle et bienveillant. Son approche chaleureuse m'a mis immédiatement à l'aise."
-      },
-      {
-        title: "Projet en Première : Jeu vidéo sur Roblox",
-        description: "Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré un crash en fin de présentation qui m'a gêné, nos vidéos réalisées pendant la pause ont sauvé la mise et ont valu des acclamations de la classe."
-      },
-      {
-        title: "Vision pour Terminale : Philosophie & Maths Expertes",
-        description: "J'attends avec impatience les cours de philosophie, ma matière favorite, et je vise l'excellence. Parallèlement, Maths Expertes représente un bonus ambitieux et un défi stimulant, malgré mes appréhensions sur la qualité d'enseignement."
-      },
-      {
-        title: "Le Bac et l'Avenir : EPITA et le Futur",
-        description: "Pour le Bac, je compte changer de mentalité, m'organiser mieux et viser l'excellence. Mon objectif ultime est de réussir le concours 'Advance' pour intégrer EPITA à Strasbourg, un parcours de 5 ans menant à un doctorat reconnu à l'international, avec un voyage d'étude de 6 mois dès la 2ème année."
-      }
-    ];
+    gsap.registerPlugin(ScrollTrigger);
 
-    // Animation d'apparition des marqueurs lors du scroll
-    gsap.utils.toArray('.marker').forEach(function(marker) {
-      gsap.from(marker, {
-        opacity: 0,
-        scale: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: marker,
-          start: "top 90%"
+    // Animation d'apparition pour chaque section événement
+    gsap.utils.toArray('.event').forEach(function(section) {
+      gsap.fromTo(section,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
         }
-      });
+      );
     });
 
-    // Navigation fluide
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetProgress = parseFloat(this.getAttribute('data-target'));
-        const container = document.querySelector('.road-container');
-        const totalScroll = container.scrollHeight - window.innerHeight;
-        const targetY = totalScroll * targetProgress;
-        gsap.to(window, {duration: 1, scrollTo: {y: targetY}, ease: "power2.inOut"});
-      });
-    });
-
-    // Modal gestion
-    const markers = document.querySelectorAll('.marker');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalText = document.getElementById('modalText');
-    const closeBtn = document.getElementById('closeBtn');
-    
-    markers.forEach(marker => {
-      marker.addEventListener('click', function() {
-        const index = parseInt(this.getAttribute('data-index'));
-        const data = events[index];
-        modalTitle.textContent = "";
-        modalText.textContent = "";
-        modalOverlay.style.display = "flex";
-        gsap.fromTo(modalOverlay, {opacity: 0}, {opacity: 1, duration: 0.5});
-        // Animation typewriter pour le titre et le texte
-        gsap.to(modalTitle, {duration: 1, text: {value: data.title}, ease: "none"});
-        gsap.to(modalText, {duration: 1.5, text: {value: data.description}, ease: "none", delay: 0.5});
-      });
-    });
-    
-    closeBtn.addEventListener('click', function() {
-      gsap.to(modalOverlay, {duration: 0.5, opacity: 0, onComplete: () => {
-        modalOverlay.style.display = "none";
-        modalOverlay.style.opacity = 1;
-      }});
-    });
-    
-    // Effet parallax pour la route
-    gsap.to(".road-container", {
+    // Animation de la route en arrière-plan pour un effet de parallaxe
+    gsap.to(".road-bg", {
+      y: 100,
+      ease: "none",
       scrollTrigger: {
-        trigger: ".road-container",
+        trigger: ".content",
         start: "top top",
         scrub: true
-      },
-      backgroundPosition: "center 100%"
+      }
     });
-    
   </script>
 </body>
 </html>
