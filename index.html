@@ -27,7 +27,7 @@
       background: linear-gradient(90deg, #FF5733, #FFC300, #DAF7A6, #28B463);
       color: #fff;
       z-index: 1000;
-      padding: 15px 0 30px; /* padding-bottom augmenté pour laisser la place à la barre */
+      padding: 15px 0 30px; /* increased bottom padding for progress bar */
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
@@ -49,7 +49,7 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar inside header */
+    /* Progress Bar placed inside the header (at bottom) */
     .progress-container {
       position: absolute;
       bottom: 5px;
@@ -62,9 +62,9 @@
     .progress-bar {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, #FF5733, #FFC300, #DAF7A6, #28B463);
+      background: rgba(255,111,97,0.3); /* same as button color, more transparent */
     }
-    /* Road background with improved markings and increased transparency */
+    /* Road background with same color as buttons and increased transparency */
     .road-bg {
       position: fixed;
       top: 0;
@@ -72,13 +72,13 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: rgba(85,85,85,0.3); /* asphalt color with increased transparency */
+      background: rgba(255,111,97,0.15);
       background-image: repeating-linear-gradient(
         to bottom,
         transparent,
         transparent 30px,
-        rgba(255,255,255,0.8) 30px,
-        rgba(255,255,255,0.8) 35px,
+        rgba(255,111,97,0.2) 30px,
+        rgba(255,111,97,0.2) 35px,
         transparent 35px,
         transparent 70px
       );
