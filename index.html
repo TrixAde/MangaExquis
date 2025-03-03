@@ -47,7 +47,7 @@
       color: #ff6f61;
       transform: scale(1.05);
     }
-    /* Road background */
+    /* Fond de la route */
     .road-bg {
       position: fixed;
       top: 0;
@@ -56,15 +56,26 @@
       width: 250px;
       height: 100%;
       background: #333;
-      background-image: 
-         linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
+      background-image: linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
       background-size: 100% 80px;
       z-index: 1;
     }
-    /* Container pour le contenu (défilement) */
+    /* Voiture animée sur la route */
+    .car {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .car img {
+      width: 50px;
+      height: auto;
+    }
+    /* Conteneur principal */
     .content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       width: 90%;
       max-width: 1000px;
       margin: 120px auto 40px auto;
@@ -90,7 +101,7 @@
       margin-top: 0;
       color: #ff6f61;
     }
-    /* Bouton toggle pour afficher/masquer le contenu supplémentaire */
+    /* Bouton toggle pour contenu supplémentaire dans les événements */
     .toggle-btn {
       background: #ff6f61;
       color: #fff;
@@ -104,7 +115,7 @@
     .toggle-btn:hover {
       background: #e55b50;
     }
-    /* Contenu supplémentaire caché par défaut */
+    /* Contenu supplémentaire des événements caché par défaut */
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -158,6 +169,58 @@
       display: table;
       clear: both;
     }
+    /* Section symbolique */
+    .symbolism {
+      position: relative;
+      z-index: 3;
+      width: 90%;
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .symbolism h2 {
+      text-align: center;
+      color: #ff6f61;
+    }
+    .symbol-section {
+      margin: 20px 0;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+    .symbol-toggle {
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-size: 1.1em;
+      transition: background 0.3s;
+    }
+    .symbol-toggle:hover {
+      background: #e55b50;
+    }
+    .symbol-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, padding 0.5s;
+      padding: 0 10px;
+      margin-top: 10px;
+    }
+    .symbol-content.open {
+      padding: 10px;
+      max-height: 600px;
+    }
+    .symbol-content img {
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
     /* Footer */
     footer {
       text-align: center;
@@ -165,11 +228,11 @@
       background: #333;
       color: #fff;
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
     /* Responsive */
     @media (max-width: 768px) {
-      .event, .event.left, .event.right {
+      .event, .event.left, .event.right, .symbolism {
         width: 90%;
         float: none;
         margin: 40px auto;
@@ -195,8 +258,12 @@
     </nav>
   </header>
   
-  <!-- Fond de la route -->
-  <div class="road-bg"></div>
+  <!-- Fond de la route avec voiture animée -->
+  <div class="road-bg">
+    <div class="car">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Voiture">
+    </div>
+  </div>
   
   <!-- Contenu principal -->
   <div class="content clearfix">
@@ -204,11 +271,11 @@
     <section class="event left" id="event1">
       <h2>Premier jour de Seconde</h2>
       <p>
-        J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, qui était incroyablement proche des élèves. Sa bienveillance, son sens de l'humour et ses blagues ont tout de suite créé une ambiance chaleureuse et m'ont mis à l'aise.
+        J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, qui était incroyablement proche des élèves. Sa bienveillance et ses blagues ont créé une ambiance chaleureuse dès le départ.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Le premier jour a aussi été marqué par l'appréhension de l'inconnu, mais très vite, j'ai trouvé ma place grâce à l'accueil chaleureux de mes camarades et des enseignants.</p>
+        <p>Ce jour-là, malgré l'appréhension, j'ai senti naître en moi le désir d'explorer et de découvrir de nouveaux horizons.</p>
       </div>
     </section>
     
@@ -216,11 +283,11 @@
     <section class="event right" id="event2">
       <h2>Projet en Première : Jeu vidéo sur Roblox</h2>
       <p>
-        Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré la difficulté du projet et un crash en fin de présentation – source d’embarras –, les vidéos réalisées pendant la pause ont permis de sauver la mise et notre travail a été acclamé par la classe.
+        Pour un travail d'EMC sur le cyberharcèlement, j'ai collaboré avec mes amis pour créer un jeu vidéo sur Roblox. J’ai assuré la partie script et, malgré quelques imprévus, notre projet a su captiver la classe.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Ce projet nous a appris à gérer le stress, à travailler en équipe et à persévérer même face aux imprévus techniques.</p>
+        <p>Ce projet fut l'occasion d'apprendre à gérer le stress, à travailler en équipe et à transformer l'échec en opportunité d'innovation.</p>
       </div>
     </section>
     
@@ -228,11 +295,11 @@
     <section class="event left" id="event3">
       <h2>Vision pour Terminale : Philosophie et Maths Expertes</h2>
       <p>
-        J’attends avec impatience les cours de philosophie, ma matière de cœur, et je me réjouis à l'idée d'établir d’excellents liens avec mon futur prof. Je vise les meilleures notes en philo ! Parallèlement, Maths Expertes, bien que risqué, représente un défi stimulant que je suis prêt à relever.
+        J’attends avec impatience les cours de philosophie, ma matière de cœur, ainsi que Maths Expertes, un défi stimulant pour repousser mes limites.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Je m'imagine déjà débattre passionnément en classe et explorer des problématiques mathématiques innovantes pour repousser mes limites.</p>
+        <p>Je m'imagine débattre passionnément en classe et explorer des problématiques innovantes, en repoussant toujours plus loin mes frontières intellectuelles.</p>
       </div>
     </section>
     
@@ -240,31 +307,69 @@
     <section class="event right" id="event4">
       <h2>Le Bac et l'Avenir : EPITA et le futur</h2>
       <p>
-        Pour le Bac, je compte être très préparé en changeant ma mentalité et en m'organisant mieux. Mon objectif ultime : réussir le concours "Advance" afin d'intégrer EPITA à Strasbourg. Avec seulement 70 places, il me faudra atteindre un niveau exceptionnel.
+        Pour le Bac, je compte changer de mentalité et m'organiser pour atteindre l'excellence et intégrer EPITA à Strasbourg, ouvrant la voie à un futur riche en projets.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Je me projette dans un futur où je combine passion pour la technologie, études intenses et aventures internationales, ouvrant la voie à un doctorat et à de nombreux projets innovants.</p>
+        <p>Je me projette dans un avenir où passion, technologie et aventures internationales se conjuguent pour m'emmener vers un doctorat et au-delà.</p>
       </div>
     </section>
   </div>
+  
+  <!-- Nouvelle section : La Symbolique de la Route -->
+  <section class="symbolism">
+    <h2>La Symbolique de la Route</h2>
+    
+    <!-- I. Longing for Freedom -->
+    <div class="symbol-section">
+      <button class="symbol-toggle">I. Longing for Freedom</button>
+      <div class="symbol-content">
+        <img src="https://source.unsplash.com/random/800x400?freedom" alt="Longing for Freedom">
+        <p>
+          Le chemin évoque le désir ardent de liberté, l'appel de l'inconnu et l'envie de briser les chaînes du quotidien. Cette quête de liberté se reflète dans chaque virage et chaque horizon qui s'ouvre devant nous.
+        </p>
+      </div>
+    </div>
+    
+    <!-- II. The Building of a Nation -->
+    <div class="symbol-section">
+      <button class="symbol-toggle">II. The Building of a Nation</button>
+      <div class="symbol-content">
+        <img src="https://source.unsplash.com/random/800x400?nation" alt="Building of a Nation">
+        <p>
+          La route symbolise aussi la construction d'une nation – pierre par pierre – où chaque étape représente un défi surmonté et une fondation posée pour un avenir commun.
+        </p>
+      </div>
+    </div>
+    
+    <!-- III. In Search of a New Life -->
+    <div class="symbol-section">
+      <button class="symbol-toggle">III. In Search of a New Life</button>
+      <div class="symbol-content">
+        <img src="https://source.unsplash.com/random/800x400?newlife" alt="In Search of a New Life">
+        <p>
+          Enfin, le voyage incarne la recherche d'une nouvelle vie, la volonté d'explorer, de se réinventer et de tracer sa propre route vers des horizons inédits.
+        </p>
+      </div>
+    </div>
+  </section>
   
   <footer>
     <p>© 2025 Mon Parcours à LLA</p>
   </footer>
   
-  <!-- GSAP, ScrollTrigger et ScrollToPlugin pour animations -->
+  <!-- GSAP, ScrollTrigger et ScrollToPlugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Animation d'apparition pour le header et le contenu lors du chargement
+    // Animation d'apparition du header et du contenu au chargement
     gsap.from("header", {duration: 1, y: -100, opacity: 0, ease: "power2.out"});
     gsap.from(".content", {duration: 1, opacity: 0, ease: "power2.out", delay: 0.5});
-
-    // Animation d'apparition pour chaque section événement avec rotation légère
+    
+    // Animation pour chaque section événement avec rotation légère
     gsap.utils.toArray('.event').forEach(function(section) {
       gsap.fromTo(section,
         { opacity: 0, y: 50, rotation: -5 },
@@ -278,7 +383,7 @@
       );
     });
 
-    // Animation de la route en arrière-plan pour un effet de parallaxe
+    // Animation de la route en arrière-plan pour effet de parallaxe
     gsap.to(".road-bg", {
       y: 100,
       ease: "none",
@@ -288,8 +393,20 @@
         scrub: true
       }
     });
-
-    // Navigation fluide avec GSAP ScrollToPlugin
+    
+    // Animation de la voiture qui circule sur la route
+    gsap.to(".car", {
+      y: () => window.innerHeight - 100,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".content",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true
+      }
+    });
+    
+    // Navigation fluide via ScrollToPlugin
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -300,8 +417,8 @@
         }
       });
     });
-
-    // Interactivité pour les boutons toggle
+    
+    // Boutons interactifs pour les contenus supplémentaires des événements
     document.querySelectorAll('.toggle-btn').forEach(button => {
       button.addEventListener('click', function() {
         const extraContent = this.nextElementSibling;
@@ -314,6 +431,24 @@
           extraContent.classList.add('open');
           gsap.to(extraContent, {maxHeight: 300, padding: "10px", duration: 0.5});
           this.textContent = 'Afficher moins';
+        }
+      });
+    });
+    
+    // Boutons interactifs pour les sections symboliques
+    document.querySelectorAll('.symbol-toggle').forEach(button => {
+      button.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        if (content.classList.contains('open')) {
+          gsap.to(content, {maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
+            content.classList.remove('open');
+          }});
+          // Supprime l'indication d'ouverture
+          this.textContent = this.textContent.replace(" (Fermer)", "");
+        } else {
+          content.classList.add('open');
+          gsap.to(content, {maxHeight: 600, padding: "10px", duration: 0.5});
+          this.textContent += " (Fermer)";
         }
       });
     });
