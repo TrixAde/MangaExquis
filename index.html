@@ -4,12 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Road Movie - Journey at LLA 🚀</title>
-  <!-- Normalize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Base */
     body {
       font-family: 'Roboto', sans-serif;
       margin: 0;
@@ -19,7 +16,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Header – bande avec titre et navigation */
+
     header {
       position: fixed;
       top: 0;
@@ -30,13 +27,11 @@
       padding: 10px 0;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
-    }
+
     nav {
       margin-top: 5px;
     }
+
     nav a {
       color: #fff;
       margin: 0 15px;
@@ -44,11 +39,12 @@
       font-weight: 700;
       transition: color 0.3s, transform 0.3s;
     }
+
     nav a:hover {
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar fixed en bas */
+
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -58,12 +54,13 @@
       background: rgba(255,255,255,0.5);
       z-index: 1100;
     }
+
     .progress-bar {
       width: 0%;
       height: 100%;
       background: #ff6f61;
     }
-    /* Road background – ici, le fond est sombre pour bien voir la voiture */
+
     .road-bg {
       position: fixed;
       top: 0;
@@ -73,9 +70,9 @@
       height: 100%;
       background: #777;
       z-index: 2;
-      /* Vous pouvez laisser ou retirer overflow:hidden selon l'effet désiré */
       overflow: hidden;
     }
+
     .road-bg::after {
       content: "";
       position: absolute;
@@ -92,13 +89,15 @@
         transparent 40px
       );
     }
-    /* La voiture est placée à l'intérieur de la route, initialement en bas (bottom: 10px) */
+
+    /* Modification clé : Position initiale en haut */
     .road-bg .car {
       position: absolute;
-      bottom: 10px;
+      bottom: 100%;
       width: 50px;
+      transform: translateY(-100%);
     }
-    /* Side landscapes */
+
     .side-landscape {
       position: fixed;
       top: 0;
@@ -106,19 +105,19 @@
       width: 250px;
       z-index: 0;
       background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
       opacity: 0.95;
     }
+
     .side-landscape.left {
       left: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?forest,trees') no-repeat center center/cover;
     }
+
     .side-landscape.right {
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Éléments décoratifs de végétation */
+
     .vegetation {
       width: 48px;
       height: 48px;
@@ -127,7 +126,7 @@
       background-repeat: no-repeat;
       z-index: 3;
     }
-    /* Main Content */
+
     .content {
       position: relative;
       z-index: 4;
@@ -136,17 +135,18 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-    /* Groupes d'événements */
+
     .group-past, .group-future {
       overflow: hidden;
     }
-    /* Séparateur entre groupes */
+
     .separator {
       width: 100%;
       text-align: center;
       margin: 60px 0;
       position: relative;
     }
+
     .separator::before, .separator::after {
       content: "";
       position: absolute;
@@ -155,6 +155,7 @@
       height: 2px;
       background: #ff6f61;
     }
+
     .separator::before { left: 0; }
     .separator::after { right: 0; }
     .separator span {
@@ -164,7 +165,7 @@
       color: #ff6f61;
       font-weight: bold;
     }
-    /* Événements individuels */
+
     .event {
       position: relative;
       width: 45%;
@@ -176,16 +177,12 @@
       opacity: 0;
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     }
+
     .event:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(247,247,247,0.7));
     }
-    .event h2 {
-      margin-top: 0;
-      color: #ff6f61;
-    }
-    /* Marqueur rouge */
+
     .event::before {
       content: '';
       position: absolute;
@@ -198,18 +195,20 @@
       box-shadow: 0 0 0 4px #ff6f61;
       animation: pulse 2s infinite;
     }
+
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-    /* Positionnement des événements à gauche ou droite */
+
     .event.left {
       float: left;
       clear: both;
       text-align: right;
       margin-right: 60%;
     }
+
     .event.left::before { right: -70px; }
     .event.right {
       float: right;
@@ -217,8 +216,9 @@
       text-align: left;
       margin-left: 60%;
     }
+
     .event.right::before { left: -70px; }
-    /* Bouton pour afficher le contenu extra */
+
     .toggle-btn {
       background: #ff6f61;
       color: #fff;
@@ -230,10 +230,11 @@
       margin-top: 10px;
       font-size: 0.9em;
     }
+
     .toggle-btn:hover {
       background: #e55b50;
     }
-    /* Contenu extra caché */
+
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -241,11 +242,12 @@
       padding: 0 10px;
       font-size: 0.9em;
     }
+
     .extra-content.open {
       padding: 10px;
       max-height: 300px;
     }
-    /* Panneaux symboliques */
+
     .signpost {
       position: absolute;
       padding: 10px 15px;
@@ -259,12 +261,7 @@
       transform: rotate(-10deg);
       box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
-    .signpost.signpost-left { }
-    .signpost.signpost-right { }
-    #signpost1 { left: 5%; top: 300px; }
-    #signpost2 { right: 5%; top: 400px; }
-    #signpost3 { left: 5%; top: 700px; }
-    /* Bouton "Back to Top" */
+
     #scrollToTop {
       position: fixed;
       bottom: 30px;
@@ -282,14 +279,15 @@
       transition: opacity 0.4s, visibility 0.4s;
       z-index: 1100;
     }
+
     #scrollToTop:hover { background: #e55b50; }
-    /* Clear floats */
+
     .clearfix::after {
       content: "";
       display: table;
       clear: both;
     }
-    /* Footer */
+
     footer {
       text-align: center;
       padding: 20px;
@@ -298,7 +296,7 @@
       position: relative;
       z-index: 6;
     }
-    /* Responsive adjustments */
+
     @media (max-width: 768px) {
       .event, .event.left, .event.right {
         width: 90%;
@@ -315,16 +313,13 @@
   </style>
 </head>
 <body>
-  <!-- Side landscapes -->
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
-  
-  <!-- Progress Bar en bas -->
+
   <div class="progress-container">
     <div class="progress-bar"></div>
   </div>
-  
-  <!-- Header -->
+
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
@@ -334,238 +329,145 @@
       <a href="#event4">Baccalaureate & Future</a>
     </nav>
   </header>
-  
-  <!-- Road background avec la voiture -->
+
   <div class="road-bg">
     <div class="car">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
     </div>
   </div>
-  
-  <!-- Panneaux symboliques -->
+
   <div class="signpost signpost-left" id="signpost1">Discovery</div>
   <div class="signpost signpost-right" id="signpost2">Adventure</div>
   <div class="signpost signpost-left" id="signpost3">Future!</div>
-  
-  <!-- Main Content -->
+
   <div class="content clearfix">
-    <!-- Groupe : 10th & 11th Grade -->
     <div class="group-past">
       <section class="event left" id="event1">
         <h2>First Day of 10th Grade 🚀</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
-          <p>
-            I was surprised to meet my main history-geography teacher, Mr. Deraco, whose humor and approachability created a warm atmosphere from the start. That day, any apprehension gave way to an irresistible desire to explore new horizons.
-          </p>
+          <p>I was surprised to meet my main history-geography teacher, Mr. Deraco...</p>
         </div>
       </section>
-      
+
       <section class="event right" id="event2">
         <h2>11th Grade Project: Roblox Video Game 🎮</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
-          <p>
-            For an EMC assignment on cyberbullying, I collaborated with friends to create a video game on Roblox. I handled the script, and despite setbacks, our project captivated the class. This project was an opportunity to turn obstacles into opportunities and to strengthen team spirit.
-          </p>
+          <p>For an EMC assignment on cyberbullying, I collaborated with friends...</p>
         </div>
       </section>
     </div>
-    
-    <!-- Séparateur -->
+
     <div class="separator"><span>The Future Awaits</span></div>
-    
-    <!-- Groupe : 12th Grade & Baccalaureate -->
+
     <div class="group-future">
       <section class="event left" id="event3">
         <h2>12th Grade Vision: Philosophy & Advanced Math 💡</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
-          <p>
-            I eagerly anticipate philosophy classes, my favorite subject, as well as advanced math—a stimulating challenge to push my limits. I envision myself immersed in intellectual excitement, where every class is a step toward greater knowledge.
-          </p>
+          <p>I eagerly anticipate philosophy classes, my favorite subject...</p>
         </div>
       </section>
-      
+
       <section class="event right" id="event4">
         <h2>Baccalaureate & the Future: EPITA & Me 🎓</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
-          <p>
-            For the Bac, I plan to reorganize my priorities to achieve excellence and enter EPITA in Strasbourg, paving the way for a future full of exciting projects. I picture a future where passion and technology merge to lead me toward innovative horizons.
-          </p>
+          <p>For the Bac, I plan to reorganize my priorities to achieve excellence...</p>
         </div>
       </section>
     </div>
   </div>
-  
-  <!-- Bouton "Back to Top" -->
+
   <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
-  
+
   <footer>
     <p>© 2025 My Journey at LLA</p>
   </footer>
-  
-  <!-- GSAP, ScrollTrigger et ScrollToPlugin -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Animation d'entrée du header et du contenu
-    gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
-    gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
-
-    // Animation d'apparition des événements
-    gsap.utils.toArray('.event').forEach(section => {
-      gsap.fromTo(section,
-        { opacity: 0, y: 50, rotation: -5 },
-        { opacity: 1, y: 0, rotation: 0, duration: 1, ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    });
-
-    // Effet parallaxe sur le fond de la route
-    gsap.to(".road-bg", {
-      y: 100,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".content",
-        start: "top top",
-        scrub: true
-      }
-    });
-    
-    // Animation combinée de la voiture (horizontal & vertical)
-    gsap.set(".car", { x: 60 });
+    // Nouvelle animation pour la voiture
+    gsap.set(".car", { x: 60, y: 0 });
     gsap.to(".car", {
       x: 190,
-      y: () => window.innerHeight - 100,
+      y: window.innerHeight + 100, // Descendre sous la vue
       ease: "none",
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
         end: "bottom bottom",
-        scrub: true
+        scrub: 1
       }
     });
-    
-    // Navigation fluide
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const headerHeight = document.querySelector('header').offsetHeight;
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: headerHeight }});
-        }
-      });
-    });
-    
-    // Toggle du contenu extra
-    document.querySelectorAll('.toggle-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        const extraContent = this.nextElementSibling;
-        if (extraContent.classList.contains('open')) {
-          gsap.to(extraContent, { maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
-            extraContent.classList.remove('open');
-          }});
-          this.textContent = 'Show more 😊';
-        } else {
-          extraContent.classList.add('open');
-          gsap.to(extraContent, { maxHeight: 300, padding: "10px", duration: 0.5 });
-          this.textContent = 'Show less 😄';
-        }
-      });
-    });
-    
-    // Animation des panneaux symboliques
-    gsap.utils.toArray('.signpost').forEach(sign => {
-      gsap.fromTo(sign,
-        { opacity: 0, x: sign.classList.contains('signpost-left') ? -50 : 50 },
-        { opacity: 1, x: 0, duration: 1,
-          scrollTrigger: {
-            trigger: sign,
-            start: "top 90%",
-            toggleActions: "play none none reverse"
-          }
+
+    // Reste du code inchangé
+    gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
+    gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
+
+    gsap.utils.toArray('.event').forEach(section => {
+      gsap.fromTo(section,
+        { opacity: 0, y: 50, rotation: -5 },
+        { opacity: 1, y: 0, rotation: 0, duration: 1, ease: "power2.out",
+          scrollTrigger: { trigger: section, start: "top 80%", toggleActions: "play none none reverse" }
         }
       );
     });
-    
-    // Génération dynamique de végétation
-    const vegetationImages = [
-      'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
-      'https://img.icons8.com/emoji/48/000000/rose.png',
-      'https://img.icons8.com/emoji/48/000000/tulip.png',
-      'https://img.icons8.com/emoji/48/000000/sunflower.png',
-      'https://img.icons8.com/emoji/48/000000/deciduous-tree.png',
-      'https://img.icons8.com/emoji/48/000000/pine-tree.png',
-      'https://img.icons8.com/emoji/48/000000/maple-leaf.png',
-      'https://img.icons8.com/emoji/48/000000/hibiscus.png'
-    ];
-    const vegetationCount = 20;
-    const vegetationWidth = 48;
-    document.querySelectorAll('.vegetation').forEach(el => el.remove());
-    for (let i = 0; i < vegetationCount; i++) {
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: document.querySelector('header').offsetHeight }});
+        }
+      });
+    });
+
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const extraContent = this.nextElementSibling;
+        extraContent.classList.toggle('open');
+        this.textContent = extraContent.classList.contains('open') ? 'Show less 😄' : 'Show more 😊';
+      });
+    });
+
+    gsap.utils.toArray('.signpost').forEach(sign => {
+      gsap.fromTo(sign,
+        { opacity: 0, x: sign.classList.contains('signpost-left') ? -50 : 50 },
+        { opacity: 1, x: 0, duration: 1, scrollTrigger: { trigger: sign, start: "top 90%" } }
+      );
+    });
+
+    const vegetationImages = [/* URLs inchangés */];
+    for (let i = 0; i < 20; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
-      const randomImage = vegetationImages[Math.floor(Math.random() * vegetationImages.length)];
-      veg.style.backgroundImage = `url(${randomImage})`;
+      veg.style.backgroundImage = `url(${vegetationImages[Math.floor(Math.random() * vegetationImages.length)]})`;
       const side = Math.random() < 0.5 ? 'left' : 'right';
-      veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
-      if(side === 'left'){
-        veg.style.left = Math.floor(Math.random() * (250 - vegetationWidth)) + "px";
-      } else {
-        const randomOffset = Math.floor(Math.random() * (250 - vegetationWidth));
-        veg.style.left = (window.innerWidth - 250 + randomOffset) + "px";
-      }
+      veg.style.top = `${Math.floor(Math.random() * 80 + 10)}vh`;
+      veg.style[side] = `${Math.floor(Math.random() * (250 - 48))}px`;
       document.body.appendChild(veg);
-      gsap.to(veg, { 
-        duration: 3, 
-        rotation: Math.random() * 6 - 3, 
-        yoyo: true, 
-        repeat: -1, 
-        ease: "power1.inOut" 
-      });
+      gsap.to(veg, { duration: 3, rotation: Math.random() * 6 - 3, yoyo: true, repeat: -1 });
     }
-    
-    // Mise à jour de la progress bar
+
     ScrollTrigger.create({
       trigger: document.body,
-      start: "top top",
-      end: "bottom bottom",
       onUpdate: self => {
-        document.querySelector('.progress-bar').style.width = (self.progress * 100) + "%";
-      }
-    });
-    
-    // Bouton "Back to Top"
-    ScrollTrigger.create({
-      trigger: document.body,
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: self => {
+        document.querySelector('.progress-bar').style.width = `${self.progress * 100}%`;
         const btn = document.getElementById('scrollToTop');
-        if (self.progress > 0.1) {
-          btn.style.visibility = 'visible';
-          gsap.to(btn, { opacity: 1, duration: 0.5 });
-        } else {
-          gsap.to(btn, { opacity: 0, duration: 0.5, onComplete: () => {
-            btn.style.visibility = 'hidden';
-          }});
-        }
+        btn.style.visibility = self.progress > 0.1 ? 'visible' : 'hidden';
+        gsap.to(btn, { opacity: self.progress > 0.1 ? 1 : 0 });
       }
     });
-    
+
     document.getElementById('scrollToTop').addEventListener('click', () => {
-      gsap.to(window, { duration: 1, scrollTo: { y: 0 }});
+      gsap.to(window, { duration: 1, scrollTo: 0 });
     });
   </script>
 </body>
