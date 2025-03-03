@@ -14,25 +14,25 @@
       margin: 0;
       padding: 0;
       font-family: 'Roboto', sans-serif;
-      background: #e0f7fa;
-      color: #333;
+      background: #2c3e50; /* fond sombre */
+      color: #fff;
       overflow-x: hidden;
     }
     header {
       position: fixed;
       top: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      color: #fff;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.9);
+      padding: 15px 20px;
       z-index: 1000;
-      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     header h1 {
       margin: 0;
-      font-size: 1.5em;
+      font-size: 1.6em;
     }
     nav a {
       color: #fff;
@@ -44,76 +44,55 @@
     nav a:hover {
       color: #ff6f61;
     }
-    /* Route symbolique */
-    .road {
+    /* Conteneur de la route */
+    .road-container {
       position: relative;
-      margin-top: 80px; /* pour le header */
+      margin-top: 80px; /* laisser place au header */
       width: 100%;
-      min-height: 200vh; /* hauteur pour permettre le scroll */
-      background: linear-gradient(to bottom, #757575 0%, #757575 50%, #424242 50%, #424242 100%);
+      min-height: 300vh; /* pour offrir de l'espace au scroll */
+      background: #444; /* couleur d'asphalte */
+      background-image: 
+         linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
       background-size: 100% 80px;
     }
-    /* Conteneur des markers sur la route */
-    .markers {
+    /* SVG qui définit le chemin de la route (invisible mais utilisé pour l’animation) */
+    .road-path-svg {
       position: absolute;
+      top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 300px;
+      pointer-events: none;
+      overflow: visible;
     }
-    /* Marker */
-    .marker {
-      position: relative;
-      background: #ff6f61;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin: 100px 0;
-      cursor: pointer;
-    }
-    .marker:hover {
-      transform: scale(1.2);
-    }
-    /* Modal overlay */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-    .modal {
-      background: #fff;
-      border-radius: 10px;
-      padding: 30px;
-      max-width: 600px;
-      width: 90%;
-      position: relative;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    .modal h2 {
-      margin-top: 0;
-      color: #ff6f61;
-    }
-    .modal p {
-      line-height: 1.6;
-    }
-    .modal .close-btn {
+    /* La voiture qui se déplace le long du chemin */
+    .car {
       position: absolute;
-      top: 10px;
-      right: 15px;
-      background: #ff6f61;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      font-size: 1.2em;
+      width: 60px;
+      height: auto;
+      z-index: 10;
+    }
+    /* Panneau d'information */
+    .info-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      max-width: 90%;
+      z-index: 1500;
+    }
+    .info-panel h2 {
+      margin: 0 0 10px 0;
+      color: #ff6f61;
+      font-size: 1.4em;
+    }
+    .info-panel p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 1em;
     }
     footer {
       text-align: center;
@@ -123,154 +102,138 @@
       position: relative;
       z-index: 2;
     }
-    /* Responsive */
-    @media (max-width: 768px) {
-      .markers { width: 80px; }
-    }
   </style>
 </head>
 <body>
   <header>
     <h1>Mon Road Movie - Parcours à LLA</h1>
     <nav>
-      <a href="#marker1">Seconde</a>
-      <a href="#marker2">Première</a>
-      <a href="#marker3">Terminale</a>
-      <a href="#marker4">Bac & Futur</a>
+      <!-- Navigation : le scroll vers des positions clés -->
+      <a href="#p1" class="nav-link" data-target="0">Seconde</a>
+      <a href="#p2" class="nav-link" data-target="0.33">Première</a>
+      <a href="#p3" class="nav-link" data-target="0.66">Terminale</a>
+      <a href="#p4" class="nav-link" data-target="1">Bac & Futur</a>
     </nav>
   </header>
-  
-  <!-- Route symbolique avec fond animé -->
-  <div class="road">
-    <!-- Conteneur des markers sur la route -->
-    <div class="markers">
-      <div class="marker" id="marker1" data-modal="modal1"></div>
-      <div class="marker" id="marker2" data-modal="modal2"></div>
-      <div class="marker" id="marker3" data-modal="modal3"></div>
-      <div class="marker" id="marker4" data-modal="modal4"></div>
-    </div>
+
+  <!-- Conteneur de la route -->
+  <div class="road-container">
+    <!-- SVG path (chemin invisible servant à l'animation) -->
+    <svg class="road-path-svg" width="400" height="2500" viewBox="0 0 400 2500">
+      <!-- Ce chemin est un zigzag vertical avec 4 étapes clés -->
+      <path id="motionPath" d="
+        M200,50 
+        C200,150 100,300 200,400 
+        S300,550 200,700 
+        S100,850 200,1000 
+        S300,1150 200,1300 
+        S100,1450 200,1600 
+        S300,1750 200,1900 
+        S100,2050 200,2200 
+        S300,2350 200,2500" 
+      fill="none" stroke="none"/>
+    </svg>
+    <!-- La voiture qui suivra le chemin -->
+    <img src="https://img.icons8.com/emoji/96/000000/red-car-emoji.png" alt="Voiture" class="car" id="car">
   </div>
-  
-  <!-- Modals -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modalContent">
-      <button class="close-btn" id="closeBtn">&times;</button>
-      <h2 id="modalTitle"></h2>
-      <p id="modalText"></p>
-    </div>
+
+  <!-- Panneau d'information fixe -->
+  <div class="info-panel">
+    <h2 id="eventTitle">Premier jour de Seconde</h2>
+    <p id="eventDescription">
+      J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, incroyablement proche des élèves, drôle et bienveillant. Son approche chaleureuse m'a mis immédiatement à l'aise.
+    </p>
   </div>
-  
+
   <footer>
     <p>© 2025 Mon Parcours à LLA</p>
   </footer>
-  
-  <!-- GSAP et plugins -->
+
+  <!-- GSAP, ScrollTrigger, MotionPathPlugin et TextPlugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger, TextPlugin, ScrollToPlugin);
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, TextPlugin, ScrollToPlugin);
 
-    // Animation pulse pour les markers
-    gsap.utils.toArray('.marker').forEach(function(marker) {
-      gsap.to(marker, {
-        scale: 1.2,
-        duration: 1,
-        repeat: -1,
-        yoyo: true,
-        ease: "power1.inOut"
-      });
-    });
-
-    // Smooth scroll via la navigation
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        gsap.to(window, {duration: 1, scrollTo: targetId, ease: "power2.inOut"});
-      });
-    });
-
-    // Données pour les modals
-    const modalData = {
-      "modal1": {
+    // Données des événements
+    const events = [
+      {
         title: "Premier jour de Seconde",
-        text: "J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, incroyablement proche des élèves. Sa gentillesse, ses blagues et sa façon de créer une ambiance conviviale m'ont immédiatement mis à l'aise."
+        description: "J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, incroyablement proche des élèves, drôle et bienveillant. Son approche chaleureuse m'a mis immédiatement à l'aise."
       },
-      "modal2": {
+      {
         title: "Projet en Première : Jeu vidéo sur Roblox",
-        text: "Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré un crash à la fin qui m'a mis dans l'embarras, les vidéos réalisées pendant la pause ont sauvé notre présentation et nous ont valu les acclamations de la classe."
+        description: "Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré un crash en fin de présentation – source d’embarras – le résultat fut acclamé par la classe."
       },
-      "modal3": {
+      {
         title: "Vision pour Terminale : Philosophie & Maths Expertes",
-        text: "J'attends avec impatience les cours de philosophie, ma matière favorite, et je vise les meilleures notes. En parallèle, Maths Expertes représente un bonus ambitieux et un défi stimulant – un pari risqué, surtout si le professeur ne m'inspire pas, mais je suis déterminé à relever ce challenge."
+        description: "J'attends avec impatience les cours de philosophie, ma matière favorite, et je vise l'excellence. Parallèlement, Maths Expertes représente un bonus ambitieux et un défi stimulant, malgré mes appréhensions quant à la qualité d'enseignement."
       },
-      "modal4": {
+      {
         title: "Le Bac et l'Avenir : EPITA et le Futur",
-        text: "Pour le Bac, je compte changer de mentalité, m'organiser mieux et viser l'excellence. Mon objectif ultime est de réussir le concours 'Advance' pour intégrer EPITA à Strasbourg, un parcours de 5 ans menant à un doctorat reconnu à l'international, avec notamment un voyage d'étude de 6 mois dès la 2ème année."
+        description: "Pour le Bac, je compte changer de mentalité, m'organiser mieux et viser l'excellence. Mon objectif ultime est de réussir le concours 'Advance' pour intégrer EPITA à Strasbourg, un parcours de 5 ans menant à un doctorat reconnu à l'international, avec un voyage d'étude de 6 mois dès la 2ème année."
       }
-    };
+    ];
 
-    // Fonctionnalité modal
-    const markers = document.querySelectorAll('.marker');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalText = document.getElementById('modalText');
-    const closeBtn = document.getElementById('closeBtn');
+    // Fonction pour mettre à jour le panneau d'info
+    function updateInfo(title, description) {
+      gsap.to("#eventTitle", {duration: 0.5, text: {value: title}, ease: "none"});
+      gsap.to("#eventDescription", {duration: 0.8, text: {value: description}, ease: "none", delay: 0.3});
+    }
 
-    markers.forEach(marker => {
-      marker.addEventListener('click', function() {
-        const modalId = this.getAttribute('data-modal');
-        const data = modalData[modalId];
-        modalTitle.textContent = "";
-        modalText.textContent = "";
-        modalOverlay.style.display = "flex";
-        // Animation typewriter pour le titre
-        gsap.to(modalTitle, {
-          duration: 1,
-          text: { value: data.title },
-          ease: "none"
-        });
-        // Animation pour le texte
-        gsap.to(modalText, {
-          duration: 2,
-          text: { value: data.text },
-          ease: "none",
-          delay: 0.5
-        });
-      });
-    });
-
-    closeBtn.addEventListener('click', () => {
-      gsap.to(modalOverlay, { duration: 0.5, opacity: 0, onComplete: () => {
-        modalOverlay.style.display = "none";
-        modalOverlay.style.opacity = 1;
-      }});
-    });
-
-    // Animation d'apparition des markers lors du scroll
-    gsap.utils.toArray('.marker').forEach(function(marker) {
-      gsap.from(marker, {
-        scrollTrigger: {
-          trigger: marker,
-          start: "top 90%"
-        },
-        opacity: 0,
-        scale: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)"
-      });
-    });
-
-    // Parallaxe du fond de la route
-    gsap.to(".road", {
+    // Animation de la voiture le long du chemin en fonction du scroll
+    gsap.to("#car", {
       scrollTrigger: {
-        trigger: ".road",
+        trigger: ".road-container",
         start: "top top",
+        end: "bottom bottom",
         scrub: true
       },
-      backgroundPosition: "center 100%"
+      duration: 1,
+      motionPath: {
+        path: "#motionPath",
+        align: "#motionPath",
+        autoRotate: true,
+        alignOrigin: [0.5, 0.5]
+      }
+    });
+
+    // Timeline qui met à jour le panneau d'info selon la progression du scroll
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".road-container",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate: self => {
+          const progress = self.progress;
+          if (progress < 0.33) {
+            updateInfo(events[0].title, events[0].description);
+          } else if (progress < 0.66) {
+            updateInfo(events[1].title, events[1].description);
+          } else if (progress < 0.83) {
+            updateInfo(events[2].title, events[2].description);
+          } else {
+            updateInfo(events[3].title, events[3].description);
+          }
+        }
+      }
+    });
+
+    // Navigation fluide pour la barre (le lien scroll vers la bonne position)
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetProgress = parseFloat(this.getAttribute('data-target'));
+        // Calculer la position du scroll dans la .road-container en fonction du progress souhaité
+        const container = document.querySelector(".road-container");
+        const totalHeight = container.scrollHeight - window.innerHeight;
+        const targetY = totalHeight * targetProgress;
+        gsap.to(window, {duration: 1, scrollTo: {y: targetY}, ease: "power2.inOut"});
+      });
     });
   </script>
 </body>
