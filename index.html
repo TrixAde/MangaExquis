@@ -63,7 +63,7 @@
       height: 100%;
       background: rgba(255,111,97,0.3);
     }
-    /* Road background – vraie route avec fond gris et ligne blanche en pointillés */
+    /* Road background – asphalte gris avec ligne blanche en pointillés */
     .road-bg {
       position: fixed;
       top: 0;
@@ -71,7 +71,7 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: #555; /* Couleur d'asphalte */
+      background: #555;
       z-index: 2;
     }
     .road-bg::after {
@@ -110,8 +110,7 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Vegetation decorative elements – ajout de diversité */
-    /* Left side vegetation */
+    /* Vegetation decorative elements – ajout aléatoire d’éléments urbains */
     .vegetation {
       position: fixed;
       width: 48px;
@@ -120,24 +119,22 @@
       background-repeat: no-repeat;
       z-index: 3;
     }
-    .vegetation.vegetation-left { }
-    .vegetation.vegetation-right { }
-    /* Left side */
-    <!-– Ajout de 6 éléments sur la gauche –>
-    .vegetation.left1 { top: 100px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
-    .vegetation.left2 { top: 200px; left: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
-    .vegetation.left3 { top: 300px; left: 10px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
-    .vegetation.left4 { top: 450px; left: 30px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
-    .vegetation.left5 { top: 600px; left: 15px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
-    .vegetation.left6 { top: 750px; left: 35px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
-    /* Right side */
-    .vegetation.right1 { top: 150px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
-    .vegetation.right2 { top: 250px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
-    .vegetation.right3 { top: 350px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
-    .vegetation.right4 { top: 500px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
-    .vegetation.right5 { top: 650px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
-    .vegetation.right6 { top: 800px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
-    
+    /* Left side – 7 éléments (positions non linéaires) */
+    .vegetation.left1 { top: 100px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
+    .vegetation.left2 { top: 250px; left: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .vegetation.left3 { top: 190px; left: 10px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .vegetation.left4 { top: 480px; left: 30px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .vegetation.left5 { top: 620px; left: 15px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
+    .vegetation.left6 { top: 720px; left: 35px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .vegetation.left7 { top: 850px; left: 25px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    /* Right side – 7 éléments */
+    .vegetation.right1 { top: 130px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .vegetation.right2 { top: 280px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .vegetation.right3 { top: 360px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
+    .vegetation.right4 { top: 510px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .vegetation.right5 { top: 670px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .vegetation.right6 { top: 780px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .vegetation.right7 { top: 920px; right: 25px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
     /* Main container */
     .content {
       position: relative;
@@ -175,12 +172,12 @@
       color: #ff6f61;
       font-weight: bold;
     }
-    /* Each event */
+    /* Each event – cases blanches légèrement transparentes */
     .event {
       position: relative;
       width: 45%;
       padding: 20px;
-      background: linear-gradient(135deg, #ffffff, #f7f7f7);
+      background: rgba(255,255,255,0.85);
       border-radius: 8px;
       margin: 80px 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
@@ -190,7 +187,7 @@
     .event:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      background: linear-gradient(135deg, #fff, #f0f0f0);
+      background: rgba(255,255,255,0.95);
     }
     .event h2 {
       margin-top: 0;
@@ -273,9 +270,9 @@
     .signpost.signpost-left { }
     .signpost.signpost-right { }
     #signpost1 { left: 5%; top: 300px; }
-    /* Déplacer "Adventure" au niveau du 11th Grade */
+    /* Position "Adventure" at about the 11th Grade level */
     #signpost2 { right: 5%; top: 400px; }
-    /* Déplacer "Future!" plus haut */
+    /* Position "Future!" higher, at about 1100px */
     #signpost3 { left: 5%; top: 1100px; }
     /* Scroll-to-top button */
     #scrollToTop {
@@ -332,37 +329,41 @@
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
   
-  <!-- Vegetation elements on Left side -->
+  <!-- Vegetation elements on Left side (7 elements, positions aléatoires) -->
   <div class="vegetation vegetation-left left1"></div>
   <div class="vegetation vegetation-left left2"></div>
   <div class="vegetation vegetation-left left3"></div>
   <div class="vegetation vegetation-left left4"></div>
   <div class="vegetation vegetation-left left5"></div>
   <div class="vegetation vegetation-left left6"></div>
+  <div class="vegetation vegetation-left left7"></div>
   
-  <!-- Vegetation elements on Right side -->
+  <!-- Vegetation elements on Right side (7 elements) -->
   <div class="vegetation vegetation-right right1"></div>
   <div class="vegetation vegetation-right right2"></div>
   <div class="vegetation vegetation-right right3"></div>
   <div class="vegetation vegetation-right right4"></div>
   <div class="vegetation vegetation-right right5"></div>
   <div class="vegetation vegetation-right right6"></div>
+  <div class="vegetation vegetation-right right7"></div>
   
-  <!-- Définition des styles inline pour chaque vegetation (diversité et couleurs) -->
+  <!-- Définition inline des positions et images pour la végétation -->
   <style>
-    .left1 { top: 100px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
-    .left2 { top: 200px; left: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
-    .left3 { top: 300px; left: 10px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
-    .left4 { top: 450px; left: 30px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
-    .left5 { top: 600px; left: 15px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
-    .left6 { top: 750px; left: 35px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .left1 { top: 100px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
+    .left2 { top: 250px; left: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .left3 { top: 190px; left: 10px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .left4 { top: 480px; left: 30px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .left5 { top: 620px; left: 15px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
+    .left6 { top: 720px; left: 35px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .left7 { top: 850px; left: 25px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
     
-    .right1 { top: 150px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
-    .right2 { top: 250px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
-    .right3 { top: 350px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
-    .right4 { top: 500px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
-    .right5 { top: 650px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
-    .right6 { top: 800px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .right1 { top: 130px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .right2 { top: 280px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .right3 { top: 360px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
+    .right4 { top: 510px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .right5 { top: 670px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .right6 { top: 780px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .right7 { top: 920px; right: 25px; background-image: url('https://img.icons8.com/color/48/000000/city-tree.png'); }
   </style>
   
   <!-- Progress Bar fixed at the bottom -->
@@ -383,7 +384,8 @@
   
   <!-- Road background with animated car -->
   <div class="road-bg">
-    <div class="car">
+    <!-- La voiture commence à 30% pour être sur le côté gauche -->
+    <div class="car" style="left: 30%; top: 20px;">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
     </div>
   </div>
@@ -464,8 +466,8 @@
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // Animate header and content on load
-    gsap.from("header", {duration: 1, y: -100, opacity: 0, ease: "power2.out"});
-    gsap.from(".content", {duration: 1, opacity: 0, ease: "power2.out", delay: 0.5});
+    gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
+    gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
 
     // Animate each event section
     gsap.utils.toArray('.event').forEach(section => {
@@ -492,7 +494,7 @@
       }
     });
     
-    // Animate the car along the road
+    // Animate the car's vertical position
     gsap.to(".car", {
       y: () => window.innerHeight - 100,
       ease: "none",
@@ -504,6 +506,18 @@
       }
     });
     
+    // Animate the car's horizontal position (from left to right) when passing the separator
+    gsap.to(".car", {
+      left: "70%",
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: ".separator",
+        start: "top center",
+        end: "bottom center",
+        scrub: true
+      }
+    });
+    
     // Smooth navigation using ScrollToPlugin
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
@@ -511,7 +525,7 @@
         const headerHeight = document.querySelector('header').offsetHeight;
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          gsap.to(window, {duration: 1, scrollTo: {y: target, offsetY: headerHeight}});
+          gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: headerHeight } });
         }
       });
     });
@@ -521,13 +535,13 @@
       button.addEventListener('click', function() {
         const extraContent = this.nextElementSibling;
         if (extraContent.classList.contains('open')) {
-          gsap.to(extraContent, {maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
+          gsap.to(extraContent, { maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
             extraContent.classList.remove('open');
           }});
           this.textContent = 'Show more 😊';
         } else {
           extraContent.classList.add('open');
-          gsap.to(extraContent, {maxHeight: 300, padding: "10px", duration: 0.5});
+          gsap.to(extraContent, { maxHeight: 300, padding: "10px", duration: 0.5 });
           this.textContent = 'Show less 😄';
         }
       });
@@ -547,8 +561,26 @@
       );
     });
     
-    // Animate vegetation elements for a gentle sway
-    gsap.to(".vegetation", {duration: 3, rotation: 3, yoyo: true, repeat: -1, ease: "power1.inOut"});
+    // Animate vegetation elements for gentle sway
+    gsap.to(".vegetation", {
+      duration: 3,
+      rotation: 3,
+      yoyo: true,
+      repeat: -1,
+      ease: "power1.inOut"
+    });
+    
+    // Add a parallax effect to vegetation elements
+    gsap.to(".vegetation", {
+      y: 50,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".content",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true
+      }
+    });
     
     // Update progress bar on scroll
     ScrollTrigger.create({
@@ -569,9 +601,9 @@
         const btn = document.getElementById('scrollToTop');
         if (self.progress > 0.1) {
           btn.style.visibility = 'visible';
-          gsap.to(btn, {opacity: 1, duration: 0.5});
+          gsap.to(btn, { opacity: 1, duration: 0.5 });
         } else {
-          gsap.to(btn, {opacity: 0, duration: 0.5, onComplete: () => {
+          gsap.to(btn, { opacity: 0, duration: 0.5, onComplete: () => {
             btn.style.visibility = 'hidden';
           }});
         }
@@ -580,7 +612,7 @@
     
     // Scroll-to-top button action
     document.getElementById('scrollToTop').addEventListener('click', () => {
-      gsap.to(window, {duration: 1, scrollTo: {y: 0}});
+      gsap.to(window, { duration: 1, scrollTo: { y: 0 } });
     });
   </script>
 </body>
