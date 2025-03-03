@@ -14,21 +14,21 @@
       margin: 0;
       padding: 0;
       font-family: 'Roboto', sans-serif;
-      background: #2c3e50; /* fond sombre */
+      background: #2c3e50;
       color: #fff;
       overflow-x: hidden;
     }
     header {
       position: fixed;
       top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.9);
+      width: 100%;
+      background: rgba(0,0,0,0.85);
       padding: 15px 20px;
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
     }
     header h1 {
       margin: 0;
@@ -44,55 +44,104 @@
     nav a:hover {
       color: #ff6f61;
     }
-    /* Conteneur de la route */
+    /* Conteneur de la route symbolique */
     .road-container {
       position: relative;
-      margin-top: 80px; /* laisser place au header */
-      width: 100%;
-      min-height: 300vh; /* pour offrir de l'espace au scroll */
-      background: #444; /* couleur d'asphalte */
-      background-image: 
-         linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
+      margin-top: 80px; /* espace pour le header */
+      min-height: 300vh;
+      background: #444; /* asphalte */
+      background-image: linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255,255,255,0.3) 50%, transparent 55%, transparent 100%);
       background-size: 100% 80px;
+      overflow: hidden;
     }
-    /* SVG qui définit le chemin de la route (invisible mais utilisé pour l’animation) */
-    .road-path-svg {
+    /* Ligne centrale */
+    .central-line {
       position: absolute;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      pointer-events: none;
-      overflow: visible;
+      width: 6px;
+      height: 100%;
+      background: #ff6f61;
+      opacity: 0.8;
     }
-    /* La voiture qui se déplace le long du chemin */
-    .car {
+    /* Marqueurs */
+    .marker {
       position: absolute;
-      width: 60px;
-      height: auto;
-      z-index: 10;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ff6f61;
+      border: 4px solid #fff;
+      cursor: pointer;
+      opacity: 0;
     }
-    /* Panneau d'information */
-    .info-panel {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+    /* Tooltip caché */
+    .tooltip {
+      position: absolute;
+      padding: 6px 10px;
       background: rgba(0,0,0,0.8);
-      padding: 20px 30px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      pointer-events: none;
+      opacity: 0;
+      white-space: nowrap;
+    }
+    /* Positionnement pour les marqueurs (alternance gauche/droite) */
+    /* Chaque marker aura une position verticale (en pourcentage) et une position horizontale calculée */
+    .marker.marker1 { top: 15%; left: calc(50% - 80px); }
+    .marker.marker2 { top: 40%; left: calc(50% + 50px); }
+    .marker.marker3 { top: 65%; left: calc(50% - 90px); }
+    .marker.marker4 { top: 90%; left: calc(50% + 40px); }
+    
+    /* Tooltip : position dynamique en fonction du marker */
+    .marker:hover + .tooltip {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal {
+      background: #fff;
+      color: #333;
       border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      max-width: 90%;
-      z-index: 1500;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.7);
     }
-    .info-panel h2 {
-      margin: 0 0 10px 0;
+    .modal h2 {
+      margin-top: 0;
       color: #ff6f61;
-      font-size: 1.4em;
     }
-    .info-panel p {
-      margin: 0;
+    .modal p {
       line-height: 1.6;
-      font-size: 1em;
+    }
+    .modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+      font-size: 1.4em;
     }
     footer {
       text-align: center;
@@ -102,63 +151,66 @@
       position: relative;
       z-index: 2;
     }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .marker {
+        width: 25px;
+        height: 25px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Mon Road Movie - Parcours à LLA</h1>
     <nav>
-      <!-- Navigation : le scroll vers des positions clés -->
-      <a href="#p1" class="nav-link" data-target="0">Seconde</a>
-      <a href="#p2" class="nav-link" data-target="0.33">Première</a>
-      <a href="#p3" class="nav-link" data-target="0.66">Terminale</a>
-      <a href="#p4" class="nav-link" data-target="1">Bac & Futur</a>
+      <a href="#m1" class="nav-link" data-target="0">Seconde</a>
+      <a href="#m2" class="nav-link" data-target="0.33">Première</a>
+      <a href="#m3" class="nav-link" data-target="0.66">Terminale</a>
+      <a href="#m4" class="nav-link" data-target="1">Bac & Futur</a>
     </nav>
   </header>
-
-  <!-- Conteneur de la route -->
+  
   <div class="road-container">
-    <!-- SVG path (chemin invisible servant à l'animation) -->
-    <svg class="road-path-svg" width="400" height="2500" viewBox="0 0 400 2500">
-      <!-- Ce chemin est un zigzag vertical avec 4 étapes clés -->
-      <path id="motionPath" d="
-        M200,50 
-        C200,150 100,300 200,400 
-        S300,550 200,700 
-        S100,850 200,1000 
-        S300,1150 200,1300 
-        S100,1450 200,1600 
-        S300,1750 200,1900 
-        S100,2050 200,2200 
-        S300,2350 200,2500" 
-      fill="none" stroke="none"/>
-    </svg>
-    <!-- La voiture qui suivra le chemin -->
-    <img src="https://img.icons8.com/emoji/96/000000/red-car-emoji.png" alt="Voiture" class="car" id="car">
+    <!-- Ligne centrale de la route -->
+    <div class="central-line"></div>
+    
+    <!-- Marqueurs -->
+    <div class="marker marker1" id="m1" data-index="0"></div>
+    <div class="tooltip" style="top: 12%; left: calc(50% - 120px);">Seconde</div>
+    
+    <div class="marker marker2" id="m2" data-index="1"></div>
+    <div class="tooltip" style="top: 37%; left: calc(50% + 60px);">Première</div>
+    
+    <div class="marker marker3" id="m3" data-index="2"></div>
+    <div class="tooltip" style="top: 62%; left: calc(50% - 130px);">Terminale</div>
+    
+    <div class="marker marker4" id="m4" data-index="3"></div>
+    <div class="tooltip" style="top: 87%; left: calc(50% + 20px);">Bac & Futur</div>
   </div>
-
-  <!-- Panneau d'information fixe -->
-  <div class="info-panel">
-    <h2 id="eventTitle">Premier jour de Seconde</h2>
-    <p id="eventDescription">
-      J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, incroyablement proche des élèves, drôle et bienveillant. Son approche chaleureuse m'a mis immédiatement à l'aise.
-    </p>
+  
+  <!-- Modal d'information -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContent">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+    </div>
   </div>
-
+  
   <footer>
     <p>© 2025 Mon Parcours à LLA</p>
   </footer>
-
-  <!-- GSAP, ScrollTrigger, MotionPathPlugin et TextPlugin -->
+  
+  <!-- GSAP et plugins -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, TextPlugin, ScrollToPlugin);
-
-    // Données des événements
+    gsap.registerPlugin(ScrollTrigger, TextPlugin, ScrollToPlugin);
+    
+    // Données pour les événements
     const events = [
       {
         title: "Premier jour de Seconde",
@@ -166,11 +218,11 @@
       },
       {
         title: "Projet en Première : Jeu vidéo sur Roblox",
-        description: "Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré un crash en fin de présentation – source d’embarras – le résultat fut acclamé par la classe."
+        description: "Pour un travail d'EMC contre le cyberharcèlement, j'ai collaboré avec Yann (pour le building) et Swann (pour les idées) afin de créer un jeu vidéo sur Roblox. J’ai assuré la partie script. Malgré un crash en fin de présentation qui m'a gêné, nos vidéos réalisées pendant la pause ont sauvé la mise et ont valu des acclamations de la classe."
       },
       {
         title: "Vision pour Terminale : Philosophie & Maths Expertes",
-        description: "J'attends avec impatience les cours de philosophie, ma matière favorite, et je vise l'excellence. Parallèlement, Maths Expertes représente un bonus ambitieux et un défi stimulant, malgré mes appréhensions quant à la qualité d'enseignement."
+        description: "J'attends avec impatience les cours de philosophie, ma matière favorite, et je vise l'excellence. Parallèlement, Maths Expertes représente un bonus ambitieux et un défi stimulant, malgré mes appréhensions sur la qualité d'enseignement."
       },
       {
         title: "Le Bac et l'Avenir : EPITA et le Futur",
@@ -178,63 +230,70 @@
       }
     ];
 
-    // Fonction pour mettre à jour le panneau d'info
-    function updateInfo(title, description) {
-      gsap.to("#eventTitle", {duration: 0.5, text: {value: title}, ease: "none"});
-      gsap.to("#eventDescription", {duration: 0.8, text: {value: description}, ease: "none", delay: 0.3});
-    }
-
-    // Animation de la voiture le long du chemin en fonction du scroll
-    gsap.to("#car", {
-      scrollTrigger: {
-        trigger: ".road-container",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true
-      },
-      duration: 1,
-      motionPath: {
-        path: "#motionPath",
-        align: "#motionPath",
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5]
-      }
-    });
-
-    // Timeline qui met à jour le panneau d'info selon la progression du scroll
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".road-container",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-        onUpdate: self => {
-          const progress = self.progress;
-          if (progress < 0.33) {
-            updateInfo(events[0].title, events[0].description);
-          } else if (progress < 0.66) {
-            updateInfo(events[1].title, events[1].description);
-          } else if (progress < 0.83) {
-            updateInfo(events[2].title, events[2].description);
-          } else {
-            updateInfo(events[3].title, events[3].description);
-          }
+    // Animation d'apparition des marqueurs lors du scroll
+    gsap.utils.toArray('.marker').forEach(function(marker) {
+      gsap.from(marker, {
+        opacity: 0,
+        scale: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: marker,
+          start: "top 90%"
         }
-      }
+      });
     });
 
-    // Navigation fluide pour la barre (le lien scroll vers la bonne position)
+    // Navigation fluide
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const targetProgress = parseFloat(this.getAttribute('data-target'));
-        // Calculer la position du scroll dans la .road-container en fonction du progress souhaité
-        const container = document.querySelector(".road-container");
-        const totalHeight = container.scrollHeight - window.innerHeight;
-        const targetY = totalHeight * targetProgress;
+        const container = document.querySelector('.road-container');
+        const totalScroll = container.scrollHeight - window.innerHeight;
+        const targetY = totalScroll * targetProgress;
         gsap.to(window, {duration: 1, scrollTo: {y: targetY}, ease: "power2.inOut"});
       });
     });
+
+    // Modal gestion
+    const markers = document.querySelectorAll('.marker');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalText = document.getElementById('modalText');
+    const closeBtn = document.getElementById('closeBtn');
+    
+    markers.forEach(marker => {
+      marker.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        const data = events[index];
+        modalTitle.textContent = "";
+        modalText.textContent = "";
+        modalOverlay.style.display = "flex";
+        gsap.fromTo(modalOverlay, {opacity: 0}, {opacity: 1, duration: 0.5});
+        // Animation typewriter pour le titre et le texte
+        gsap.to(modalTitle, {duration: 1, text: {value: data.title}, ease: "none"});
+        gsap.to(modalText, {duration: 1.5, text: {value: data.description}, ease: "none", delay: 0.5});
+      });
+    });
+    
+    closeBtn.addEventListener('click', function() {
+      gsap.to(modalOverlay, {duration: 0.5, opacity: 0, onComplete: () => {
+        modalOverlay.style.display = "none";
+        modalOverlay.style.opacity = 1;
+      }});
+    });
+    
+    // Effet parallax pour la route
+    gsap.to(".road-container", {
+      scrollTrigger: {
+        trigger: ".road-container",
+        start: "top top",
+        scrub: true
+      },
+      backgroundPosition: "center 100%"
+    });
+    
   </script>
 </body>
 </html>
