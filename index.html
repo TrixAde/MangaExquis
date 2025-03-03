@@ -16,7 +16,6 @@
       position: relative;
       overflow-x: hidden;
     }
-
     header {
       position: fixed;
       top: 0;
@@ -27,7 +26,6 @@
       padding: 10px 0;
       text-align: center;
     }
-
     nav { margin-top: 5px; }
     nav a {
       color: #fff;
@@ -40,7 +38,6 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -55,7 +52,6 @@
       height: 100%;
       background: #ff6f61;
     }
-
     .road-bg {
       position: fixed;
       top: 0;
@@ -83,7 +79,6 @@
         transparent 40px
       );
     }
-
     .road-bg .car {
       position: absolute;
       top: 20px;
@@ -92,7 +87,6 @@
       transition: left 0.5s;
       z-index: 3;
     }
-
     .side-landscape {
       position: fixed;
       top: 0;
@@ -110,7 +104,6 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-
     .vegetation {
       width: 48px;
       height: 48px;
@@ -120,7 +113,6 @@
       z-index: 3;
       filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
     }
-
     .content {
       position: relative;
       z-index: 4;
@@ -129,9 +121,7 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-
     .group-past, .group-future { overflow: hidden; }
-
     .separator {
       width: 100%;
       text-align: center;
@@ -155,7 +145,6 @@
       color: #ff6f61;
       font-weight: bold;
     }
-
     .event {
       position: relative;
       width: 45%;
@@ -202,7 +191,6 @@
       margin-left: 60%;
     }
     .event.right::before { left: -70px; }
-
     .toggle-btn {
       background: #ff6f61;
       color: #fff;
@@ -215,7 +203,6 @@
       font-size: 0.9em;
     }
     .toggle-btn:hover { background: #e55b50; }
-
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -227,7 +214,6 @@
       padding: 10px;
       max-height: 300px;
     }
-
     .signpost {
       position: absolute;
       padding: 10px 15px;
@@ -244,7 +230,6 @@
     #signpost1 { left: 5%; top: 300px; }
     #signpost2 { right: 5%; top: 700px; }
     #signpost3 { left: 5%; top: 1200px; }
-
     #scrollToTop {
       position: fixed;
       bottom: 30px;
@@ -263,13 +248,11 @@
       z-index: 1100;
     }
     #scrollToTop:hover { background: #e55b50; }
-
     .clearfix::after {
       content: "";
       display: table;
       clear: both;
     }
-
     footer {
       text-align: center;
       padding: 20px;
@@ -278,7 +261,6 @@
       position: relative;
       z-index: 6;
     }
-
     @media (max-width: 768px) {
       .event, .event.left, .event.right {
         width: 90%;
@@ -374,38 +356,32 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Animation complète de la voiture
+    // Animation de la voiture via un timeline unique pour une transition fluide
     const car = document.querySelector('.car');
     const separator = document.querySelector('.separator');
     const roadWidth = document.querySelector('.road-bg').offsetWidth;
+    const carHeight = car.offsetHeight;
 
-    // Partie 1 : Déplacement vertical gauche
-    gsap.to(car, {
-      y: separator.offsetTop - 100,
-      x: 20,
-      ease: "none",
+    gsap.timeline({
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
-        end: `+=${separator.offsetTop}`,
-        scrub: 1
-      }
-    });
-
-    // Partie 2 : Déplacement vertical droit
-    gsap.to(car, {
-      y: document.body.scrollHeight,
-      x: roadWidth - 70,
-      ease: "none",
-      scrollTrigger: {
-        trigger: separator,
-        start: "top center",
         end: "bottom bottom",
-        scrub: 1
+        scrub: true
       }
+    })
+    .to(car, {
+      y: separator.offsetTop - 100,  // déplacement jusqu'au séparateur
+      x: 20,
+      ease: "none"
+    })
+    .to(car, {
+      y: document.body.scrollHeight - carHeight - 50,  // déplacement jusqu'en bas
+      x: roadWidth - 70,  // la voiture se positionne sur la droite
+      ease: "none"
     });
 
-    // Animations des éléments
+    // Animations des autres éléments
     gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
     gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
 
@@ -418,7 +394,6 @@
       );
     });
 
-    // Gestion des panneaux
     gsap.utils.toArray('.signpost').forEach((sign, index) => {
       gsap.fromTo(sign,
         { opacity: 0, y: 50 },
@@ -439,16 +414,13 @@
       'https://img.icons8.com/emoji/48/000000/tulip.png',
       'https://img.icons8.com/emoji/48/000000/sunflower.png'
     ];
-
     for (let i = 0; i < 30; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
       veg.style.backgroundImage = `url(${vegetationImages[Math.floor(Math.random() * vegetationImages.length)]})`;
-      
       const side = Math.random() < 0.5 ? 'left' : 'right';
       veg.style.top = `${Math.random() * 120}vh`;
       veg.style[side] = `${Math.random() * 200}px`;
-      
       document.body.appendChild(veg);
       gsap.to(veg, {
         duration: 3 + Math.random() * 5,
@@ -459,7 +431,7 @@
       });
     }
 
-    // Gestion du scroll
+    // Gestion du scroll pour la barre de progression et le bouton retour en haut
     ScrollTrigger.create({
       trigger: document.body,
       onUpdate: self => {
