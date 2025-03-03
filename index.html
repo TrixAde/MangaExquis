@@ -19,29 +19,15 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Progress Bar placed just below the header */
-    .progress-container {
-      position: fixed;
-      top: 60px; /* Below header */
-      left: 0;
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.3);
-      z-index: 1100;
-    }
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      background: rgba(200,180,255,1); /* Same pastel as header */
-    }
+    /* Header using a pastel gradient (red, orange, green, yellow) */
     header {
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(200,180,255,0.9); /* Pastel violet */
+      background: linear-gradient(90deg, #FF5733, #FFC300, #DAF7A6, #28B463);
       color: #fff;
       z-index: 1000;
-      padding: 10px 0;
+      padding: 15px 0;
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
@@ -62,6 +48,21 @@
     nav a:hover {
       color: #ff6f61;
       transform: scale(1.1);
+    }
+    /* Progress Bar placed just below the header */
+    .progress-container {
+      position: fixed;
+      top: 70px; /* Placed just below header */
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      z-index: 1100;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #FF5733, #FFC300, #DAF7A6, #28B463);
     }
     /* Road background with improved markings */
     .road-bg {
