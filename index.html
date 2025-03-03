@@ -63,7 +63,7 @@
       height: 100%;
       background: rgba(255,111,97,0.3);
     }
-    /* Road background – affichant une vraie route avec fond gris et ligne blanche en pointillés */
+    /* Road background – vraie route avec fond gris et ligne blanche en pointillés */
     .road-bg {
       position: fixed;
       top: 0;
@@ -71,7 +71,7 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: #555; /* Couleur de l'asphalte */
+      background: #555; /* Couleur d'asphalte */
       z-index: 2;
     }
     .road-bg::after {
@@ -90,7 +90,7 @@
         transparent 40px
       );
     }
-    /* Side landscapes – remplissent les côtés avec des images de nature */
+    /* Side landscapes – remplissent les côtés avec images de nature */
     .side-landscape {
       position: fixed;
       top: 0;
@@ -110,7 +110,8 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Vegetation elements (arbres, fleurs, feuilles) animés sur les côtés */
+    /* Vegetation decorative elements – ajout de diversité */
+    /* Left side vegetation */
     .vegetation {
       position: fixed;
       width: 48px;
@@ -119,12 +120,24 @@
       background-repeat: no-repeat;
       z-index: 3;
     }
-    .vegetation.vegetation-left {
-      left: 20px;
-    }
-    .vegetation.vegetation-right {
-      right: 20px;
-    }
+    .vegetation.vegetation-left { }
+    .vegetation.vegetation-right { }
+    /* Left side */
+    <!-– Ajout de 6 éléments sur la gauche –>
+    .vegetation.left1 { top: 100px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
+    .vegetation.left2 { top: 200px; left: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .vegetation.left3 { top: 300px; left: 10px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .vegetation.left4 { top: 450px; left: 30px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .vegetation.left5 { top: 600px; left: 15px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
+    .vegetation.left6 { top: 750px; left: 35px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    /* Right side */
+    .vegetation.right1 { top: 150px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .vegetation.right2 { top: 250px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .vegetation.right3 { top: 350px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
+    .vegetation.right4 { top: 500px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .vegetation.right5 { top: 650px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .vegetation.right6 { top: 800px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    
     /* Main container */
     .content {
       position: relative;
@@ -260,8 +273,10 @@
     .signpost.signpost-left { }
     .signpost.signpost-right { }
     #signpost1 { left: 5%; top: 300px; }
-    #signpost2 { right: 5%; top: 800px; }
-    #signpost3 { left: 5%; top: 1300px; }
+    /* Déplacer "Adventure" au niveau du 11th Grade */
+    #signpost2 { right: 5%; top: 400px; }
+    /* Déplacer "Future!" plus haut */
+    #signpost3 { left: 5%; top: 1100px; }
     /* Scroll-to-top button */
     #scrollToTop {
       position: fixed;
@@ -310,27 +325,45 @@
       .side-landscape { width: 100px; }
       .vegetation { width: 40px; height: 40px; }
     }
-    /* Vegetation decorative elements */
-    .vegetation {
-      position: fixed;
-      width: 48px;
-      height: 48px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      z-index: 3;
-    }
   </style>
 </head>
 <body>
-  <!-- Side landscapes: left (forest) and right (garden) -->
+  <!-- Side landscapes -->
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
   
-  <!-- Decorative vegetation elements -->
-  <div class="vegetation vegetation-left" style="top: 150px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png');"></div>
-  <div class="vegetation vegetation-left" style="top: 400px; left: 50px; background-image: url('https://img.icons8.com/color/48/000000/tree.png');"></div>
-  <div class="vegetation vegetation-right" style="top: 200px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png');"></div>
-  <div class="vegetation vegetation-right" style="top: 600px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png');"></div>
+  <!-- Vegetation elements on Left side -->
+  <div class="vegetation vegetation-left left1"></div>
+  <div class="vegetation vegetation-left left2"></div>
+  <div class="vegetation vegetation-left left3"></div>
+  <div class="vegetation vegetation-left left4"></div>
+  <div class="vegetation vegetation-left left5"></div>
+  <div class="vegetation vegetation-left left6"></div>
+  
+  <!-- Vegetation elements on Right side -->
+  <div class="vegetation vegetation-right right1"></div>
+  <div class="vegetation vegetation-right right2"></div>
+  <div class="vegetation vegetation-right right3"></div>
+  <div class="vegetation vegetation-right right4"></div>
+  <div class="vegetation vegetation-right right5"></div>
+  <div class="vegetation vegetation-right right6"></div>
+  
+  <!-- Définition des styles inline pour chaque vegetation (diversité et couleurs) -->
+  <style>
+    .left1 { top: 100px; left: 20px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
+    .left2 { top: 200px; left: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .left3 { top: 300px; left: 10px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .left4 { top: 450px; left: 30px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .left5 { top: 600px; left: 15px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
+    .left6 { top: 750px; left: 35px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    
+    .right1 { top: 150px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .right2 { top: 250px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+    .right3 { top: 350px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/tree.png'); }
+    .right4 { top: 500px; right: 20px; background-image: url('https://img.icons8.com/color/48/000000/palm-tree.png'); }
+    .right5 { top: 650px; right: 40px; background-image: url('https://img.icons8.com/color/48/000000/flower.png'); }
+    .right6 { top: 800px; right: 30px; background-image: url('https://img.icons8.com/color/48/000000/leaf.png'); }
+  </style>
   
   <!-- Progress Bar fixed at the bottom -->
   <div class="progress-container">
