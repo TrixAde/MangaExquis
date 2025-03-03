@@ -16,7 +16,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Banderole supérieure (header) */
+    /* Header réduit en hauteur */
     header {
       position: fixed;
       top: 0;
@@ -87,7 +87,7 @@
     }
     .road-bg .car {
       position: absolute;
-      top: 0;
+      top: 0; /* Voiture placée tout en haut */
       width: 50px;
       z-index: 3;
     }
@@ -108,6 +108,7 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
+    /* Les végétaux seront positionnés absolument */
     .vegetation {
       position: absolute;
       line-height: 1;
@@ -253,16 +254,16 @@
       display: table;
       clear: both;
     }
-    /* Laisser plus d'espace en bas pour cacher la voiture */
-    .spacer {
-      height: 150vh;
-    }
+    /* Footer repositionné en bas, fixe, pour masquer la voiture */
     footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
       text-align: center;
-      padding: 20px;
+      padding: 10px 0;
       background: #333;
       color: #fff;
-      position: relative;
       z-index: 10;
     }
     @media (max-width: 768px) {
@@ -346,14 +347,11 @@
     </div>
   </div>
 
-  <!-- Espaceur pour repousser le footer vers le bas -->
-  <div class="spacer"></div>
+  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
 
   <footer>
     <p>© 2025 My Journey at LLA</p>
   </footer>
-
-  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -361,7 +359,7 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Positionnement initial de la voiture en haut
+    // Positionnement initial de la voiture en haut de la route
     const car = document.querySelector('.car');
     const roadBg = document.querySelector('.road-bg');
     gsap.set(car, { x: 20, y: 0 });
@@ -369,7 +367,7 @@
     const finalY = window.innerHeight - car.offsetHeight - 20; 
     const finalX = roadBg.offsetWidth - car.offsetWidth - 20;
 
-    // Animation de la voiture dès le scroll
+    // Animation de la voiture liée au scroll
     gsap.to(car, {
       x: finalX,
       y: finalY,
@@ -423,66 +421,52 @@
       );
     });
 
-    // Génération de la végétation répartie aléatoirement sur la zone verte
+    // Définition des émojis avec des tailles réduites
     const vegetationEmojis = [
-      { type: '🌳', size: 80 },   // Arbre
-      { type: '🌻', size: 40 },   // Fleur
-      { type: '🌿', size: 60 },   // Buisson
-      { type: '🌸', size: 35 },   // Fleur délicate
-      { type: '🎋', size: 70 },   // Bambou
-      { type: '🍁', size: 45 },   // Feuille d'érable
-      { type: '🍀', size: 50 },   // Trèfle
-      { type: '🌵', size: 55 }    // Cactus
+      { type: '🌳', size: 50 },   // Arbre
+      { type: '🌻', size: 30 },   // Fleur
+      { type: '🌿', size: 40 },   // Buisson
+      { type: '🌸', size: 25 },   // Fleur délicate
+      { type: '🎋', size: 45 },   // Bambou
+      { type: '🍁', size: 30 },   // Feuille d'érable
+      { type: '🍀', size: 35 },   // Trèfle
+      { type: '🌵', size: 35 }    // Cactus
     ];
-    const vegetationCount = 30;
-    const placedPositions = [];
-    const minDistance = 50;
-    const safeMarginX = 50;
-    const safeMarginY = 50;
-    const vw = window.innerWidth;
-    const bodyHeight = document.body.scrollHeight;
-    const mid = vw / 2;
-    const roadHalfWidth = 125;
-    const roadBuffer = 20; // marge supplémentaire pour éviter la route
-    const roadLeft = mid - roadHalfWidth - roadBuffer;
-    const roadRight = mid + roadHalfWidth + roadBuffer;
+    const margin = 20;
+    const headerHeight = document.querySelector('header').offsetHeight;
+    const footerHeight = document.querySelector('footer').offsetHeight;
+    // La zone disponible pour les végétaux est l'ensemble du viewport en laissant une marge
+    const roadLeft = window.innerWidth / 2 - 125;
+    const roadRight = window.innerWidth / 2 + 125;
 
-    function getRandom(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-    function isFarEnough(x, y) {
-      for (let pos of placedPositions) {
-        const dx = x - pos.x;
-        const dy = y - pos.y;
-        if (Math.sqrt(dx*dx + dy*dy) < minDistance) return false;
-      }
-      return true;
-    }
-
-    for (let i = 0; i < vegetationCount; i++) {
-      let candidateX, candidateY;
-      let tries = 0;
-      do {
-        candidateX = getRandom(safeMarginX, vw - safeMarginX);
-        // Éviter la zone centrale (route)
-        if (candidateX >= roadLeft && candidateX <= roadRight) continue;
-        candidateY = getRandom(safeMarginY, bodyHeight - safeMarginY);
-        tries++;
-        if (tries > 50) break;
-      } while (!isFarEnough(candidateX, candidateY));
-      placedPositions.push({x: candidateX, y: candidateY});
+    // Distribution aléatoire sur toute la zone verte (hors du centre de la route et des bords)
+    for (let i = 0; i < 30; i++) {
       const emoji = vegetationEmojis[Math.floor(Math.random() * vegetationEmojis.length)];
       const veg = document.createElement('div');
       veg.className = 'vegetation';
       veg.textContent = emoji.type;
-      // Réduction de la taille à 70% de la valeur indiquée
-      veg.style.fontSize = (emoji.size * 0.7) + 'px';
-      veg.style.left = candidateX + 'px';
-      veg.style.top = candidateY + 'px';
+      veg.style.fontSize = emoji.size + 'px';
+      
+      // Positionnement horizontal aléatoire en excluant la zone de la route
+      let x = Math.random() * (window.innerWidth - 2 * margin) + margin;
+      if (x >= roadLeft && x <= roadRight) {
+        // Redirige vers la gauche ou la droite aléatoirement
+        if (Math.random() < 0.5) {
+          x = Math.random() * (roadLeft - margin) + margin;
+        } else {
+          x = Math.random() * ((window.innerWidth - margin) - roadRight) + roadRight;
+        }
+      }
+      veg.style.left = x + 'px';
+      
+      // Positionnement vertical aléatoire dans la zone visible (hors header et footer)
+      let y = Math.random() * ((window.innerHeight - footerHeight - margin) - (headerHeight + margin)) + (headerHeight + margin);
+      veg.style.top = y + 'px';
+      
       document.body.appendChild(veg);
       gsap.to(veg, {
         duration: 3 + Math.random() * 5,
-        y: 30,
+        y: 10,
         yoyo: true,
         repeat: -1,
         ease: "sine.inOut"
