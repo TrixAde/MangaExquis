@@ -16,7 +16,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Banderole (header) moins haute */
+    /* Banderole supérieure (header) */
     header {
       position: fixed;
       top: 0;
@@ -24,12 +24,12 @@
       background: rgba(51,51,51,0.9);
       color: #fff;
       z-index: 1000;
-      padding: 5px 0; /* réduction de la hauteur */
+      padding: 5px 0;
       text-align: center;
     }
     header h1 {
       margin: 0;
-      font-size: 1.5em; /* taille réduite */
+      font-size: 1.5em;
       line-height: 1;
     }
     nav { margin-top: 3px; }
@@ -87,7 +87,7 @@
     }
     .road-bg .car {
       position: absolute;
-      top: 0; /* Voiture placée tout en haut */
+      top: 0;
       width: 50px;
       z-index: 3;
     }
@@ -110,10 +110,8 @@
     }
     .vegetation {
       position: absolute;
-      /* font-size sera défini dynamiquement */
       line-height: 1;
       z-index: 3;
-      /* Animation appliquée via GSAP */
     }
     .content {
       position: relative;
@@ -255,13 +253,17 @@
       display: table;
       clear: both;
     }
+    /* Laisser plus d'espace en bas pour cacher la voiture */
+    .spacer {
+      height: 150vh;
+    }
     footer {
       text-align: center;
       padding: 20px;
       background: #333;
       color: #fff;
       position: relative;
-      z-index: 6;
+      z-index: 10;
     }
     @media (max-width: 768px) {
       .event, .event.left, .event.right {
@@ -344,11 +346,14 @@
     </div>
   </div>
 
-  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
+  <!-- Espaceur pour repousser le footer vers le bas -->
+  <div class="spacer"></div>
 
   <footer>
     <p>© 2025 My Journey at LLA</p>
   </footer>
+
+  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -418,7 +423,7 @@
       );
     });
 
-    // Génération de la végétation répartie en 3 groupes : gauche, droite et bas
+    // Génération de la végétation répartie aléatoirement sur la zone verte
     const vegetationEmojis = [
       { type: '🌳', size: 80 },   // Arbre
       { type: '🌻', size: 40 },   // Fleur
@@ -429,35 +434,59 @@
       { type: '🍀', size: 50 },   // Trèfle
       { type: '🌵', size: 55 }    // Cactus
     ];
-    const groups = { left: 10, right: 10, bottom: 10 };
+    const vegetationCount = 30;
+    const placedPositions = [];
+    const minDistance = 50;
+    const safeMarginX = 50;
+    const safeMarginY = 50;
+    const vw = window.innerWidth;
+    const bodyHeight = document.body.scrollHeight;
+    const mid = vw / 2;
+    const roadHalfWidth = 125;
+    const roadBuffer = 20; // marge supplémentaire pour éviter la route
+    const roadLeft = mid - roadHalfWidth - roadBuffer;
+    const roadRight = mid + roadHalfWidth + roadBuffer;
 
-    for (let side in groups) {
-      let count = groups[side];
-      for (let i = 0; i < count; i++) {
-        const emoji = vegetationEmojis[Math.floor(Math.random() * vegetationEmojis.length)];
-        const veg = document.createElement('div');
-        veg.className = 'vegetation';
-        veg.textContent = emoji.type;
-        veg.style.fontSize = emoji.size + 'px';
-        if(side === 'left'){
-          veg.style.left = (10 + Math.random()*20) + 'px';
-          veg.style.top = ((i / count) * 100 + Math.random()*5) + 'vh';
-        } else if(side === 'right'){
-          veg.style.right = (10 + Math.random()*20) + 'px';
-          veg.style.top = ((i / count) * 100 + Math.random()*5) + 'vh';
-        } else if(side === 'bottom'){
-          veg.style.bottom = (10 + Math.random()*20) + 'px';
-          veg.style.left = (Math.random()*80 + 10) + '%';
-        }
-        document.body.appendChild(veg);
-        gsap.to(veg, {
-          duration: 3 + Math.random() * 5,
-          y: 30,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut"
-        });
+    function getRandom(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    function isFarEnough(x, y) {
+      for (let pos of placedPositions) {
+        const dx = x - pos.x;
+        const dy = y - pos.y;
+        if (Math.sqrt(dx*dx + dy*dy) < minDistance) return false;
       }
+      return true;
+    }
+
+    for (let i = 0; i < vegetationCount; i++) {
+      let candidateX, candidateY;
+      let tries = 0;
+      do {
+        candidateX = getRandom(safeMarginX, vw - safeMarginX);
+        // Éviter la zone centrale (route)
+        if (candidateX >= roadLeft && candidateX <= roadRight) continue;
+        candidateY = getRandom(safeMarginY, bodyHeight - safeMarginY);
+        tries++;
+        if (tries > 50) break;
+      } while (!isFarEnough(candidateX, candidateY));
+      placedPositions.push({x: candidateX, y: candidateY});
+      const emoji = vegetationEmojis[Math.floor(Math.random() * vegetationEmojis.length)];
+      const veg = document.createElement('div');
+      veg.className = 'vegetation';
+      veg.textContent = emoji.type;
+      // Réduction de la taille à 70% de la valeur indiquée
+      veg.style.fontSize = (emoji.size * 0.7) + 'px';
+      veg.style.left = candidateX + 'px';
+      veg.style.top = candidateY + 'px';
+      document.body.appendChild(veg);
+      gsap.to(veg, {
+        duration: 3 + Math.random() * 5,
+        y: 30,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
+      });
     }
 
     // Bouton retour en haut
