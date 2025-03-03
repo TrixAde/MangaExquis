@@ -19,7 +19,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Header using a pastel gradient (red, orange, green, yellow) */
+    /* Header with pastel gradient (red, orange, green, yellow) */
     header {
       position: fixed;
       top: 0;
@@ -27,7 +27,7 @@
       background: linear-gradient(90deg, #FF5733, #FFC300, #DAF7A6, #28B463);
       color: #fff;
       z-index: 1000;
-      padding: 15px 0;
+      padding: 15px 0 30px; /* padding-bottom augmenté pour laisser la place à la barre */
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
@@ -49,10 +49,10 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar placed just below the header */
+    /* Progress Bar inside header */
     .progress-container {
-      position: fixed;
-      top: 70px; /* Placed just below header */
+      position: absolute;
+      bottom: 5px;
       left: 0;
       width: 100%;
       height: 6px;
@@ -64,7 +64,7 @@
       height: 100%;
       background: linear-gradient(90deg, #FF5733, #FFC300, #DAF7A6, #28B463);
     }
-    /* Road background with improved markings */
+    /* Road background with improved markings and increased transparency */
     .road-bg {
       position: fixed;
       top: 0;
@@ -72,7 +72,7 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: #555; /* Asphalt color */
+      background: rgba(85,85,85,0.3); /* asphalt color with increased transparency */
       background-image: repeating-linear-gradient(
         to bottom,
         transparent,
@@ -230,8 +230,8 @@
       transform: rotate(-10deg);
       box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
-    .signpost.signpost-left { /* Positions via id */ }
-    .signpost.signpost-right { /* Positions via id */ }
+    .signpost.signpost-left { }
+    .signpost.signpost-right { }
     #signpost1 { left: 5%; top: 300px; }
     #signpost2 { right: 5%; top: 800px; }
     #signpost3 { left: 5%; top: 1300px; }
@@ -284,11 +284,7 @@
   </style>
 </head>
 <body>
-  <!-- Progress Bar -->
-  <div class="progress-container">
-    <div class="progress-bar"></div>
-  </div>
-  
+  <!-- Header (with progress bar inside) -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
@@ -297,6 +293,9 @@
       <a href="#event3">12th Grade</a>
       <a href="#event4">Baccalaureate & Future</a>
     </nav>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
   </header>
   
   <!-- Road background with animated car -->
