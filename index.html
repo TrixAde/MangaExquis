@@ -81,8 +81,7 @@
     }
     .road-bg .car {
       position: absolute;
-      top: 20px;
-      /* La position initiale sera fixée par GSAP */
+      /* On retire la valeur top initiale pour le positionner via GSAP */
       width: 50px;
       z-index: 3;
     }
@@ -355,39 +354,45 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Positionnement initial de la voiture
+    // --- Animation de la voiture ---
+
     const car = document.querySelector('.car');
     const roadBg = document.querySelector('.road-bg');
-    gsap.set(car, { x: 20, y: 20 });
-
-    // Définition des positions intermédiaire et finale
-    const midY = 120; // Valeur intermédiaire pour le premier scroll
-    const finalY = window.innerHeight - car.offsetHeight - 20; 
-    const finalX = roadBg.offsetWidth - car.offsetWidth - 20; // Position sur la droite du bloc route
-
-    // Timeline unique répartie en deux phases (0-50% et 50-100% du scroll)
-    var tl = gsap.timeline({
+    
+    // Position initiale : en haut de la route
+    gsap.set(car, { x: 20, y: 0 });
+    
+    // Calcul des positions finales
+    const finalY = window.innerHeight - car.offsetHeight - 20;
+    const finalX = roadBg.offsetWidth - car.offsetWidth - 20;
+    
+    // Tween 1 : pour les 200 premiers pixels de scroll – la voiture descend de 0 à 50px
+    gsap.to(car, {
+      x: 20,
+      y: 50,
+      ease: "none",
       scrollTrigger: {
-        trigger: document.body,
+        trigger: ".content",
         start: "top top",
+        end: "+=200",
+        scrub: true
+      }
+    });
+    
+    // Tween 2 : du scroll 200px jusqu'à la fin – la voiture descend jusqu'en bas et glisse vers la droite
+    gsap.to(car, {
+      x: finalX,
+      y: finalY,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".content",
+        start: "+=200",
         end: "bottom bottom",
         scrub: true
       }
     });
-    // Phase 1 : dès le premier scroll, la voiture descend légèrement sans changer de côté
-    tl.to(car, {
-      x: 20,
-      y: midY,
-      ease: "none"
-    }, 0)
-    // Phase 2 : à partir de 50% du scroll, elle descend davantage et glisse doucement vers la droite
-    .to(car, {
-      x: finalX,
-      y: finalY,
-      ease: "none"
-    }, 0.5);
 
-    // Barre de progression
+    // --- Barre de progression et bouton retour en haut ---
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -400,11 +405,11 @@
       }
     });
 
-    // Animation d'apparition du header et du contenu
+    // Apparition du header et du contenu
     gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
     gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
 
-    // Animation des sections d'événements
+    // Animation des sections événements
     gsap.utils.toArray('.event').forEach(section => {
       gsap.fromTo(section,
         { opacity: 0, y: 50, rotation: -5 },
