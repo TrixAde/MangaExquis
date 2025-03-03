@@ -19,7 +19,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Header – the bande with title and nav */
+    /* Header (band with title and nav) – original style */
     header {
       position: fixed;
       top: 0;
@@ -48,7 +48,7 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar fixed at the bottom of the viewport */
+    /* Progress Bar fixed at the bottom */
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -63,7 +63,7 @@
       height: 100%;
       background: rgba(255,111,97,0.3);
     }
-    /* Road background (the "road") – now less transparent and with more defined white markings */
+    /* Road background (the road) – improved look with asphalt texture and white dashed line */
     .road-bg {
       position: fixed;
       top: 0;
@@ -71,52 +71,48 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: rgba(51,51,51,0.8);
-      background-image: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 30px,
-        rgba(255,255,255,0.4) 30px,
-        rgba(255,255,255,0.4) 35px,
-        transparent 35px,
-        transparent 70px
-      );
-      background-size: 100% 70px;
+      /* Utilisation d'une image d'asphalte */
+      background: url('https://source.unsplash.com/250x1000/?asphalt') no-repeat center center/cover;
+      opacity: 0.95;
       z-index: 1;
     }
-    /* Animated car on the road */
-    .car {
+    .road-bg::after {
+      content: "";
       position: absolute;
-      top: 20px;
       left: 50%;
+      top: 0;
       transform: translateX(-50%);
-      z-index: 2;
+      width: 8px;
+      height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.8) 0px,
+        rgba(255,255,255,0.8) 20px,
+        transparent 20px,
+        transparent 40px
+      );
     }
-    .car img {
-      width: 50px;
-      height: auto;
-      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
-    }
-    /* Side landscapes: left (trees) and right (flowers) */
+    /* Side landscapes: Left and Right – remplis avec des images de nature */
     .side-landscape {
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 120px;
+      width: 200px;
       z-index: 0;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      opacity: 0.95;
     }
     .side-landscape.left {
       left: 0;
-      background-image: url('https://source.unsplash.com/random/300x800/?forest');
+      background: url('https://source.unsplash.com/collection/190727/200x1200/?forest,trees') no-repeat center center/cover;
     }
     .side-landscape.right {
       right: 0;
-      background-image: url('https://source.unsplash.com/random/300x800/?flowers');
+      background: url('https://source.unsplash.com/collection/190727/200x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Main container for content */
+    /* Main container */
     .content {
       position: relative;
       z-index: 3;
@@ -125,7 +121,7 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-    /* Grouping sections (for 10th/11th vs 12th/Bac) */
+    /* Grouping sections */
     .group-past, .group-future {
       overflow: hidden;
     }
@@ -174,7 +170,7 @@
       margin-top: 0;
       color: #ff6f61;
     }
-    /* Red marker on events (without emoji) */
+    /* Red marker (sans emoji) */
     .event::before {
       content: '';
       position: absolute;
@@ -303,7 +299,7 @@
   </style>
 </head>
 <body>
-  <!-- Side landscapes (trees & flowers) -->
+  <!-- Side landscapes: left (trees) and right (flowers) -->
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
   
@@ -312,7 +308,7 @@
     <div class="progress-bar"></div>
   </div>
   
-  <!-- Header (band containing the title and buttons) -->
+  <!-- Header (band with title and nav) -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
