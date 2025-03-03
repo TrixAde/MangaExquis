@@ -163,63 +163,35 @@
     .event.right::before {
       left: -70px;
     }
+    /* Panneaux de signalisation symboliques */
+    .signpost {
+      position: absolute;
+      padding: 10px 15px;
+      background: #fff;
+      border: 2px solid #ff6f61;
+      border-radius: 4px;
+      font-weight: bold;
+      opacity: 0;
+      z-index: 2;
+      transform: rotate(-10deg);
+    }
+    #signpost1 {
+      left: 5%;
+      top: 300px;
+    }
+    #signpost2 {
+      right: 5%;
+      top: 800px;
+    }
+    #signpost3 {
+      left: 5%;
+      top: 1300px;
+    }
     /* Nettoyage des floats */
     .clearfix::after {
       content: "";
       display: table;
       clear: both;
-    }
-    /* Section symbolique */
-    .symbolism {
-      position: relative;
-      z-index: 3;
-      width: 90%;
-      max-width: 1000px;
-      margin: 80px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .symbolism h2 {
-      text-align: center;
-      color: #ff6f61;
-    }
-    .symbol-section {
-      margin: 20px 0;
-      border-top: 1px solid #ccc;
-      padding-top: 10px;
-    }
-    .symbol-toggle {
-      background: #ff6f61;
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-      text-align: left;
-      font-size: 1.1em;
-      transition: background 0.3s;
-    }
-    .symbol-toggle:hover {
-      background: #e55b50;
-    }
-    .symbol-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease-out, padding 0.5s;
-      padding: 0 10px;
-      margin-top: 10px;
-    }
-    .symbol-content.open {
-      padding: 10px;
-      max-height: 600px;
-    }
-    .symbol-content img {
-      width: 100%;
-      border-radius: 4px;
-      margin-bottom: 10px;
     }
     /* Footer */
     footer {
@@ -232,7 +204,7 @@
     }
     /* Responsive */
     @media (max-width: 768px) {
-      .event, .event.left, .event.right, .symbolism {
+      .event, .event.left, .event.right {
         width: 90%;
         float: none;
         margin: 40px auto;
@@ -243,6 +215,9 @@
       }
       .road-bg {
         width: 80px;
+      }
+      .signpost {
+        font-size: 0.9em;
       }
     }
   </style>
@@ -265,17 +240,22 @@
     </div>
   </div>
   
+  <!-- Panneaux symboliques -->
+  <div class="signpost signpost-left" id="signpost1">Liberté</div>
+  <div class="signpost signpost-right" id="signpost2">Aventure</div>
+  <div class="signpost signpost-left" id="signpost3">Découverte</div>
+  
   <!-- Contenu principal -->
   <div class="content clearfix">
     <!-- Événement 1 : Premier jour de Seconde -->
     <section class="event left" id="event1">
       <h2>Premier jour de Seconde</h2>
       <p>
-        J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, qui était incroyablement proche des élèves. Sa bienveillance et ses blagues ont créé une ambiance chaleureuse dès le départ.
+        J'étais choqué en découvrant mon professeur principal d'histoire-géographie, M. Deraco, dont la proximité et l'humour ont immédiatement instauré une ambiance chaleureuse.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Ce jour-là, malgré l'appréhension, j'ai senti naître en moi le désir d'explorer et de découvrir de nouveaux horizons.</p>
+        <p>Ce jour-là, l'appréhension laissa place à une envie irrépressible d'explorer de nouveaux horizons.</p>
       </div>
     </section>
     
@@ -283,11 +263,11 @@
     <section class="event right" id="event2">
       <h2>Projet en Première : Jeu vidéo sur Roblox</h2>
       <p>
-        Pour un travail d'EMC sur le cyberharcèlement, j'ai collaboré avec mes amis pour créer un jeu vidéo sur Roblox. J’ai assuré la partie script et, malgré quelques imprévus, notre projet a su captiver la classe.
+        Pour un travail d'EMC sur le cyberharcèlement, j'ai collaboré avec mes amis pour créer un jeu vidéo sur Roblox. J’ai assuré la partie script et, malgré quelques imprévus, notre projet a captivé la classe.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Ce projet fut l'occasion d'apprendre à gérer le stress, à travailler en équipe et à transformer l'échec en opportunité d'innovation.</p>
+        <p>Ce projet fut l'occasion d'apprendre à transformer les obstacles en opportunités et à renforcer l'esprit d'équipe.</p>
       </div>
     </section>
     
@@ -299,7 +279,7 @@
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Je m'imagine débattre passionnément en classe et explorer des problématiques innovantes, en repoussant toujours plus loin mes frontières intellectuelles.</p>
+        <p>Je m'imagine en pleine effervescence intellectuelle, où chaque cours devient une nouvelle étape sur le chemin de la connaissance.</p>
       </div>
     </section>
     
@@ -307,52 +287,14 @@
     <section class="event right" id="event4">
       <h2>Le Bac et l'Avenir : EPITA et le futur</h2>
       <p>
-        Pour le Bac, je compte changer de mentalité et m'organiser pour atteindre l'excellence et intégrer EPITA à Strasbourg, ouvrant la voie à un futur riche en projets.
+        Pour le Bac, je compte réorganiser mes priorités pour atteindre l'excellence et intégrer EPITA à Strasbourg, ouvrant ainsi la voie à un avenir riche en projets.
       </p>
       <button class="toggle-btn">Afficher plus</button>
       <div class="extra-content">
-        <p>Je me projette dans un avenir où passion, technologie et aventures internationales se conjuguent pour m'emmener vers un doctorat et au-delà.</p>
+        <p>Je me projette dans un futur où passion et technologie se conjuguent pour m'emmener vers des horizons innovants.</p>
       </div>
     </section>
   </div>
-  
-  <!-- Nouvelle section : La Symbolique de la Route -->
-  <section class="symbolism">
-    <h2>La Symbolique de la Route</h2>
-    
-    <!-- I. Longing for Freedom -->
-    <div class="symbol-section">
-      <button class="symbol-toggle">I. Longing for Freedom</button>
-      <div class="symbol-content">
-        <img src="https://source.unsplash.com/random/800x400?freedom" alt="Longing for Freedom">
-        <p>
-          Le chemin évoque le désir ardent de liberté, l'appel de l'inconnu et l'envie de briser les chaînes du quotidien. Cette quête de liberté se reflète dans chaque virage et chaque horizon qui s'ouvre devant nous.
-        </p>
-      </div>
-    </div>
-    
-    <!-- II. The Building of a Nation -->
-    <div class="symbol-section">
-      <button class="symbol-toggle">II. The Building of a Nation</button>
-      <div class="symbol-content">
-        <img src="https://source.unsplash.com/random/800x400?nation" alt="Building of a Nation">
-        <p>
-          La route symbolise aussi la construction d'une nation – pierre par pierre – où chaque étape représente un défi surmonté et une fondation posée pour un avenir commun.
-        </p>
-      </div>
-    </div>
-    
-    <!-- III. In Search of a New Life -->
-    <div class="symbol-section">
-      <button class="symbol-toggle">III. In Search of a New Life</button>
-      <div class="symbol-content">
-        <img src="https://source.unsplash.com/random/800x400?newlife" alt="In Search of a New Life">
-        <p>
-          Enfin, le voyage incarne la recherche d'une nouvelle vie, la volonté d'explorer, de se réinventer et de tracer sa propre route vers des horizons inédits.
-        </p>
-      </div>
-    </div>
-  </section>
   
   <footer>
     <p>© 2025 Mon Parcours à LLA</p>
@@ -435,22 +377,18 @@
       });
     });
     
-    // Boutons interactifs pour les sections symboliques
-    document.querySelectorAll('.symbol-toggle').forEach(button => {
-      button.addEventListener('click', function() {
-        const content = this.nextElementSibling;
-        if (content.classList.contains('open')) {
-          gsap.to(content, {maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
-            content.classList.remove('open');
-          }});
-          // Supprime l'indication d'ouverture
-          this.textContent = this.textContent.replace(" (Fermer)", "");
-        } else {
-          content.classList.add('open');
-          gsap.to(content, {maxHeight: 600, padding: "10px", duration: 0.5});
-          this.textContent += " (Fermer)";
+    // Animation des panneaux symboliques
+    gsap.utils.toArray('.signpost').forEach(function(sign) {
+      gsap.fromTo(sign,
+        { opacity: 0, x: sign.classList.contains('signpost-left') ? -50 : 50 },
+        { opacity: 1, x: 0, duration: 1,
+          scrollTrigger: {
+            trigger: sign,
+            start: "top 90%",
+            toggleActions: "play none none reverse"
+          }
         }
-      });
+      );
     });
   </script>
 </body>
