@@ -19,7 +19,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Header – bande contenant le titre et la navigation */
+    /* Header – titre et navigation */
     header {
       position: fixed;
       top: 0;
@@ -48,7 +48,7 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar fixed au bas de la fenêtre - inchangée */
+    /* Progress Bar fixée en bas – inchangée */
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -63,7 +63,7 @@
       height: 100%;
       background: #ff6f61;
     }
-    /* Road background – vraie route avec fond gris asphalte et ligne blanche en pointillés */
+    /* Road background – route grise avec ligne blanche en pointillés */
     .road-bg {
       position: fixed;
       top: 0;
@@ -90,13 +90,13 @@
         transparent 40px
       );
     }
-    /* Positionnement de la voiture à l'intérieur de la route */
+    /* Voiture sur la route */
     .road-bg .car {
       position: absolute;
       bottom: 10px;
       width: 50px;
     }
-    /* Side landscapes – zones vertes sur les côtés */
+    /* Side landscapes – zones vertes */
     .side-landscape {
       position: fixed;
       top: 0;
@@ -116,7 +116,7 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Vegetation decorative elements – style de base pour la végétation générée dynamiquement */
+    /* Végétation générée dynamiquement */
     .vegetation {
       width: 48px;
       height: 48px;
@@ -125,7 +125,7 @@
       background-repeat: no-repeat;
       z-index: 3;
     }
-    /* Main container */
+    /* Main content */
     .content {
       position: relative;
       z-index: 4;
@@ -134,35 +134,7 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-    /* Grouping sections */
-    .group-past, .group-future {
-      overflow: hidden;
-    }
-    /* Separator between groups */
-    .separator {
-      width: 100%;
-      text-align: center;
-      margin: 60px 0;
-      position: relative;
-    }
-    .separator::before, .separator::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      height: 2px;
-      background: #ff6f61;
-    }
-    .separator::before { left: 0; }
-    .separator::after { right: 0; }
-    .separator span {
-      background: #fff;
-      padding: 0 15px;
-      font-size: 1.2em;
-      color: #ff6f61;
-      font-weight: bold;
-    }
-    /* Each event – les cases d’anecdotes, légèrement transparentes */
+    /* Les cases d’événements */
     .event {
       position: relative;
       width: 45%;
@@ -183,7 +155,7 @@
       margin-top: 0;
       color: #ff6f61;
     }
-    /* Red marker */
+    /* Marqueur rouge pour chaque événement */
     .event::before {
       content: '';
       position: absolute;
@@ -201,7 +173,7 @@
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-    /* Positioning left/right for events */
+    /* Positionnement des événements */
     .event.left {
       float: left;
       clear: both;
@@ -216,7 +188,7 @@
       margin-left: 60%;
     }
     .event.right::before { left: -70px; }
-    /* Toggle button for extra content */
+    /* Bouton pour afficher du contenu supplémentaire */
     .toggle-btn {
       background: #ff6f61;
       color: #fff;
@@ -231,7 +203,7 @@
     .toggle-btn:hover {
       background: #e55b50;
     }
-    /* Extra content hidden par défaut */
+    /* Contenu supplémentaire caché par défaut */
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -243,7 +215,7 @@
       padding: 10px;
       max-height: 300px;
     }
-    /* Symbolic signposts */
+    /* Signposts */
     .signpost {
       position: absolute;
       padding: 10px 15px;
@@ -260,11 +232,9 @@
     .signpost.signpost-left { }
     .signpost.signpost-right { }
     #signpost1 { left: 5%; top: 300px; }
-    /* Signpost "Adventure" */
     #signpost2 { right: 5%; top: 400px; }
-    /* Signpost "Future!" */
     #signpost3 { left: 5%; top: 700px; }
-    /* Scroll-to-top button */
+    /* Bouton scroll-to-top */
     #scrollToTop {
       position: fixed;
       bottom: 30px;
@@ -319,12 +289,12 @@
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
   
-  <!-- Progress Bar fixed at the bottom -->
+  <!-- Progress Bar fixée en bas -->
   <div class="progress-container">
     <div class="progress-bar"></div>
   </div>
   
-  <!-- Header (bande avec titre et navigation) -->
+  <!-- Header (titre et navigation) -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
@@ -342,88 +312,81 @@
     </div>
   </div>
   
-  <!-- Symbolic Signposts -->
+  <!-- Signposts -->
   <div class="signpost signpost-left" id="signpost1">Discovery</div>
   <div class="signpost signpost-right" id="signpost2">Adventure</div>
   <div class="signpost signpost-left" id="signpost3">Future!</div>
   
   <!-- Main Content -->
   <div class="content clearfix">
-    <!-- Group: 10th & 11th Grade -->
+    <!-- Groupe : 10th & 11th Grade -->
     <div class="group-past">
-      <!-- Event 1: First Day of 10th Grade -->
       <section class="event left" id="event1">
         <h2>First Day of 10th Grade 🚀</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
           <p>
-            I was surprised to meet my main history-geography teacher, Mr. Deraco, whose humor and approachability created a warm atmosphere from the start. That day, any apprehension gave way to an irresistible desire to explore new horizons.
+            I was surprised to meet my main history-geography teacher, Mr. Deraco, whose humor and approachability created a warm atmosphere from the start.
           </p>
         </div>
       </section>
       
-      <!-- Event 2: 11th Grade Project on Roblox -->
       <section class="event right" id="event2">
         <h2>11th Grade Project: Roblox Video Game 🎮</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
           <p>
-            For an EMC assignment on cyberbullying, I collaborated with friends to create a video game on Roblox. I handled the script, and despite setbacks, our project captivated the class. This project was an opportunity to turn obstacles into opportunities and to strengthen team spirit.
+            For an EMC assignment on cyberbullying, I collaborated with friends to create a video game on Roblox.
           </p>
         </div>
       </section>
     </div>
     
-    <!-- Separator between groups -->
+    <!-- Séparateur -->
     <div class="separator"><span>The Future Awaits</span></div>
     
-    <!-- Group: 12th Grade & Baccalaureate -->
+    <!-- Groupe : 12th Grade & Baccalaureate -->
     <div class="group-future">
-      <!-- Event 3: 12th Grade Vision -->
       <section class="event left" id="event3">
         <h2>12th Grade Vision: Philosophy & Advanced Math 💡</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
           <p>
-            I eagerly anticipate philosophy classes, my favorite subject, as well as advanced math—a stimulating challenge to push my limits. I envision myself immersed in intellectual excitement, where every class is a step toward greater knowledge.
+            I eagerly anticipate philosophy classes and advanced math—a stimulating challenge.
           </p>
         </div>
       </section>
       
-      <!-- Event 4: Baccalaureate & the Future -->
       <section class="event right" id="event4">
         <h2>Baccalaureate & the Future: EPITA & Me 🎓</h2>
         <button class="toggle-btn">Show more 😊</button>
         <div class="extra-content">
           <p>
-            For the Bac, I plan to reorganize my priorities to achieve excellence and enter EPITA in Strasbourg, paving the way for a future full of exciting projects. I picture a future where passion and technology merge to lead me toward innovative horizons.
+            I plan to reorganize my priorities to achieve excellence and enter EPITA.
           </p>
         </div>
       </section>
     </div>
   </div>
   
-  <!-- Scroll-to-top button -->
+  <!-- Bouton scroll-to-top -->
   <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
   
   <footer>
     <p>© 2025 My Journey at LLA</p>
   </footer>
   
-  <!-- GSAP, ScrollTrigger and ScrollToPlugin -->
+  <!-- GSAP, ScrollTrigger et ScrollToPlugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Initialisation de la voiture : elle démarre à gauche (x = 10, y = 0)
-    gsap.set(".car", { x: 10, y: 0 });
-
-    // Vertical movement of the car throughout the scroll
-    gsap.to(".car", {
-      y: () => window.innerHeight - 100,
-      ease: "none",
+    // --- Animation de la voiture via une timeline ---
+    // La voiture démarre à gauche (x = 10) et, dès que la séquence "The Future Awaits" apparaît,
+    // elle glisse vers la droite (x = 190) tout en se déplaçant verticalement.
+    const carTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
@@ -431,21 +394,9 @@
         scrub: true
       }
     });
+    carTimeline.fromTo(".car", { x: 10, y: 0 }, { x: 190, y: () => window.innerHeight - 100, ease: "none" });
 
-    // Horizontal movement of the car :
-    // Elle passe de x = 10 (gauche) à x = 190 (droite) lorsque la section "The Future Awaits" apparaît.
-    gsap.to(".car", {
-      x: 190,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".separator",
-        start: "top center",
-        end: "bottom center",
-        scrub: true
-      }
-    });
-
-    // Smooth navigation using ScrollToPlugin
+    // --- Navigation fluide ---
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -457,7 +408,7 @@
       });
     });
 
-    // Toggle extra content on events
+    // --- Toggle du contenu supplémentaire ---
     document.querySelectorAll('.toggle-btn').forEach(button => {
       button.addEventListener('click', function() {
         const extraContent = this.nextElementSibling;
@@ -474,7 +425,7 @@
       });
     });
 
-    // Animate the symbolic signposts
+    // --- Animation des signposts ---
     gsap.utils.toArray('.signpost').forEach(sign => {
       gsap.fromTo(sign,
         { opacity: 0, x: sign.classList.contains('signpost-left') ? -50 : 50 },
@@ -488,9 +439,8 @@
       );
     });
 
-    // ------------------------------
-    // Génération dynamique de la végétation
-    // On définit deux tableaux : un pour les fleurs (4 types) et un pour les arbres (2 types)
+    // --- Génération dynamique de la végétation ---
+    // On définit 4 types de fleurs et 2 types d'arbres.
     const flowerImages = [
       'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
       'https://img.icons8.com/emoji/48/000000/rose.png',
@@ -501,93 +451,49 @@
       'https://img.icons8.com/emoji/48/000000/deciduous-tree.png',
       'https://img.icons8.com/emoji/48/000000/pine-tree.png'
     ];
-    const vegetationCount = 20;
-    const vegetationWidth = 48; // largeur définie dans le CSS (.vegetation)
-
-    // Répartition équitable entre gauche et droite
-    const leftCount = Math.floor(vegetationCount / 2);
-    const rightCount = vegetationCount - leftCount;
-
-    // Pour chaque côté, on décide d'avoir environ la moitié de fleurs et l'autre moitié d'arbres
-    const leftFlowersCount = Math.ceil(leftCount / 2);
-    const leftTreesCount = leftCount - leftFlowersCount;
-    const rightFlowersCount = Math.ceil(rightCount / 2);
-    const rightTreesCount = rightCount - rightFlowersCount;
-
-    // Supprimer d'éventuels éléments existants
+    // On souhaite 10 végétaux de chaque côté
+    const leftCount = 10, rightCount = 10;
+    const vegWidth = 48;
+    // Supprimez d'éventuels éléments existants
     document.querySelectorAll('.vegetation').forEach(el => el.remove());
-
-    // Génération côté gauche (zone de 250px à partir de 0)
-    for (let i = 0; i < leftFlowersCount; i++) {
+    
+    // Génération côté gauche (zone de 0 à 250px)
+    for (let i = 0; i < leftCount; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
-      const randomFlower = flowerImages[Math.floor(Math.random() * flowerImages.length)];
-      veg.style.backgroundImage = `url(${randomFlower})`;
+      // Alterner fleurs et arbres (les indices pairs pour les fleurs, impairs pour les arbres)
+      if (i % 2 === 0) {
+        const randomFlower = flowerImages[Math.floor(Math.random() * flowerImages.length)];
+        veg.style.backgroundImage = `url(${randomFlower})`;
+      } else {
+        const randomTree = treeImages[Math.floor(Math.random() * treeImages.length)];
+        veg.style.backgroundImage = `url(${randomTree})`;
+      }
       veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
-      veg.style.left = Math.floor(Math.random() * (250 - vegetationWidth)) + "px";
+      veg.style.left = Math.floor(Math.random() * (250 - vegWidth)) + "px";
       document.body.appendChild(veg);
-      gsap.to(veg, { 
-        duration: 3, 
-        rotation: Math.random() * 6 - 3, 
-        yoyo: true, 
-        repeat: -1, 
-        ease: "power1.inOut" 
-      });
+      gsap.to(veg, { duration: 3, rotation: Math.random() * 6 - 3, yoyo: true, repeat: -1, ease: "power1.inOut" });
     }
-    for (let i = 0; i < leftTreesCount; i++) {
-      const veg = document.createElement('div');
-      veg.className = 'vegetation';
-      const randomTree = treeImages[Math.floor(Math.random() * treeImages.length)];
-      veg.style.backgroundImage = `url(${randomTree})`;
-      veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
-      veg.style.left = Math.floor(Math.random() * (250 - vegetationWidth)) + "px";
-      document.body.appendChild(veg);
-      gsap.to(veg, { 
-        duration: 3, 
-        rotation: Math.random() * 6 - 3, 
-        yoyo: true, 
-        repeat: -1, 
-        ease: "power1.inOut" 
-      });
-    }
-
+    
     // Génération côté droit (zone de window.innerWidth - 250 à window.innerWidth)
-    for (let i = 0; i < rightFlowersCount; i++) {
+    for (let i = 0; i < rightCount; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
-      const randomFlower = flowerImages[Math.floor(Math.random() * flowerImages.length)];
-      veg.style.backgroundImage = `url(${randomFlower})`;
+      if (i % 2 === 0) {
+        const randomFlower = flowerImages[Math.floor(Math.random() * flowerImages.length)];
+        veg.style.backgroundImage = `url(${randomFlower})`;
+      } else {
+        const randomTree = treeImages[Math.floor(Math.random() * treeImages.length)];
+        veg.style.backgroundImage = `url(${randomTree})`;
+      }
       veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
-      const randomOffset = Math.floor(Math.random() * (250 - vegetationWidth));
+      const randomOffset = Math.floor(Math.random() * (250 - vegWidth));
       veg.style.left = (window.innerWidth - 250 + randomOffset) + "px";
       document.body.appendChild(veg);
-      gsap.to(veg, { 
-        duration: 3, 
-        rotation: Math.random() * 6 - 3, 
-        yoyo: true, 
-        repeat: -1, 
-        ease: "power1.inOut" 
-      });
-    }
-    for (let i = 0; i < rightTreesCount; i++) {
-      const veg = document.createElement('div');
-      veg.className = 'vegetation';
-      const randomTree = treeImages[Math.floor(Math.random() * treeImages.length)];
-      veg.style.backgroundImage = `url(${randomTree})`;
-      veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
-      const randomOffset = Math.floor(Math.random() * (250 - vegetationWidth));
-      veg.style.left = (window.innerWidth - 250 + randomOffset) + "px";
-      document.body.appendChild(veg);
-      gsap.to(veg, { 
-        duration: 3, 
-        rotation: Math.random() * 6 - 3, 
-        yoyo: true, 
-        repeat: -1, 
-        ease: "power1.inOut" 
-      });
+      gsap.to(veg, { duration: 3, rotation: Math.random() * 6 - 3, yoyo: true, repeat: -1, ease: "power1.inOut" });
     }
 
-    // Update progress bar on scroll
+    // --- Mise à jour de la barre de progression ---
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -597,7 +503,7 @@
       }
     });
 
-    // Show "Back to Top" button when scrolling down
+    // --- Bouton "Back to Top" ---
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -614,8 +520,6 @@
         }
       }
     });
-
-    // Scroll-to-top button action
     document.getElementById('scrollToTop').addEventListener('click', () => {
       gsap.to(window, { duration: 1, scrollTo: { y: 0 }});
     });
