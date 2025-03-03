@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mon Road Movie - Parcours à LLA 🚗✨</title>
+  <title>My Road Movie - Journey at LLA 🚀</title>
   <!-- Normalize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <!-- Google Fonts -->
@@ -19,11 +19,26 @@
       position: relative;
       overflow-x: hidden;
     }
-    header {
+    /* Progress Bar */
+    .progress-container {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
-      background: rgba(51,51,51,0.9);
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      z-index: 1100;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff6f61, #ffe66d);
+    }
+    header {
+      position: fixed;
+      top: 40px;
+      width: 100%;
+      background: rgba(0,70,140,0.9); /* Dark blue instead of gray */
       color: #fff;
       z-index: 1000;
       padding: 10px 0;
@@ -48,22 +63,7 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress bar */
-    .progress-container {
-      position: fixed;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.3);
-      z-index: 1100;
-    }
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff6f61, #ffe66d);
-    }
-    /* Fond de la route */
+    /* Road background */
     .road-bg {
       position: fixed;
       top: 0;
@@ -76,7 +76,7 @@
       background-size: 100% 80px;
       z-index: 1;
     }
-    /* Voiture animée sur la route */
+    /* Animated car on the road */
     .car {
       position: absolute;
       top: 20px;
@@ -89,7 +89,7 @@
       height: auto;
       filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
     }
-    /* Conteneur principal */
+    /* Main container */
     .content {
       position: relative;
       z-index: 3;
@@ -98,7 +98,7 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-    /* Chaque événement */
+    /* Each event */
     .event {
       position: relative;
       width: 45%;
@@ -119,43 +119,13 @@
       margin-top: 0;
       color: #ff6f61;
     }
-    /* Bouton toggle pour contenu supplémentaire */
-    .toggle-btn {
-      background: #ff6f61;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 10px;
-      font-size: 0.9em;
-    }
-    .toggle-btn:hover {
-      background: #e55b50;
-    }
-    /* Contenu supplémentaire caché par défaut */
-    .extra-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease-out, padding 0.5s;
-      padding: 0 10px;
-      font-size: 0.9em;
-    }
-    .extra-content.open {
-      padding: 10px;
-      max-height: 300px;
-    }
-    /* Marqueur circulaire sur la route avec effet pulse */
+    /* Red marker (without emoji) */
     .event::before {
-      content: '🛣️';
+      content: '';
       position: absolute;
       top: 20px;
-      font-size: 1.2em;
       width: 24px;
       height: 24px;
-      text-align: center;
-      line-height: 24px;
       border-radius: 50%;
       background: #ff6f61;
       border: 4px solid #fff;
@@ -167,7 +137,7 @@
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-    /* Positionnement à gauche/droite */
+    /* Positioning left/right */
     .event.left {
       float: left;
       clear: both;
@@ -186,7 +156,34 @@
     .event.right::before {
       left: -70px;
     }
-    /* Panneaux de signalisation symboliques */
+    /* Toggle button for extra content */
+    .toggle-btn {
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    .toggle-btn:hover {
+      background: #e55b50;
+    }
+    /* Extra content hidden by default */
+    .extra-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, padding 0.5s;
+      padding: 0 10px;
+      font-size: 0.9em;
+    }
+    .extra-content.open {
+      padding: 10px;
+      max-height: 300px;
+    }
+    /* Symbolic signposts */
     .signpost {
       position: absolute;
       padding: 10px 15px;
@@ -200,6 +197,12 @@
       transform: rotate(-10deg);
       box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
+    .signpost.signpost-left {
+      /* Will be positioned via id */
+    }
+    .signpost.signpost-right {
+      /* Will be positioned via id */
+    }
     #signpost1 {
       left: 5%;
       top: 300px;
@@ -212,7 +215,7 @@
       left: 5%;
       top: 1300px;
     }
-    /* Bouton "Retour en haut" */
+    /* Scroll-to-top button */
     #scrollToTop {
       position: fixed;
       bottom: 30px;
@@ -233,7 +236,7 @@
     #scrollToTop:hover {
       background: #e55b50;
     }
-    /* Nettoyage des floats */
+    /* Clear floats */
     .clearfix::after {
       content: "";
       display: table;
@@ -269,103 +272,103 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Mon Road Movie - Parcours à LLA 🚀</h1>
-    <nav>
-      <a href="#event1">Seconde</a>
-      <a href="#event2">Première</a>
-      <a href="#event3">Terminale</a>
-      <a href="#event4">Bac & Futur</a>
-    </nav>
-  </header>
-  
   <!-- Progress Bar -->
   <div class="progress-container">
     <div class="progress-bar"></div>
   </div>
   
-  <!-- Fond de la route avec voiture animée -->
+  <header>
+    <h1>My Road Movie - Journey at LLA 🚀</h1>
+    <nav>
+      <a href="#event1">10th Grade</a>
+      <a href="#event2">11th Grade</a>
+      <a href="#event3">12th Grade</a>
+      <a href="#event4">Baccalaureate & Future</a>
+    </nav>
+  </header>
+  
+  <!-- Road background with animated car -->
   <div class="road-bg">
     <div class="car">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Voiture">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
     </div>
   </div>
   
-  <!-- Panneaux symboliques -->
-  <div class="signpost" id="signpost1">Découverte</div>
-  <div class="signpost" id="signpost2">Aventure</div>
-  <div class="signpost" id="signpost3">Futur !</div>
+  <!-- Symbolic Signposts -->
+  <div class="signpost signpost-left" id="signpost1">Discovery</div>
+  <div class="signpost signpost-right" id="signpost2">Adventure</div>
+  <div class="signpost signpost-left" id="signpost3">Future!</div>
   
-  <!-- Contenu principal -->
+  <!-- Main Content -->
   <div class="content clearfix">
-    <!-- Événement 1 : Premier jour de Seconde -->
+    <!-- Event 1: First Day of 10th Grade -->
     <section class="event left" id="event1">
-      <h2>Premier jour de Seconde 🚀</h2>
+      <h2>First Day of 10th Grade 🚀</h2>
       <p>
-        J'étais surpris de découvrir mon professeur principal d'histoire-géographie, M. Deraco, dont l'humour et la proximité ont instauré une ambiance chaleureuse dès le départ.
+        I was surprised to meet my main history-geography teacher, Mr. Deraco, whose humor and approachability created a warm atmosphere right from the start.
       </p>
-      <button class="toggle-btn">Afficher plus 😊</button>
+      <button class="toggle-btn">Show more 😊</button>
       <div class="extra-content">
-        <p>Ce jour-là, l'appréhension laissa place à une envie irrésistible d'explorer de nouveaux horizons.</p>
+        <p>That day, any apprehension gave way to an irresistible desire to explore new horizons.</p>
       </div>
     </section>
     
-    <!-- Événement 2 : Projet en Première sur Roblox -->
+    <!-- Event 2: 11th Grade Project on Roblox -->
     <section class="event right" id="event2">
-      <h2>Projet en Première : Jeu vidéo sur Roblox 🎮</h2>
+      <h2>11th Grade Project: Roblox Video Game 🎮</h2>
       <p>
-        Pour un travail d'EMC sur le cyberharcèlement, j'ai collaboré avec mes amis pour créer un jeu vidéo sur Roblox. J’ai assuré la partie script et, malgré quelques imprévus, notre projet a captivé la classe.
+        For an EMC assignment on cyberbullying, I collaborated with my friends to create a video game on Roblox. I handled the script part and, despite some setbacks, our project captivated the class.
       </p>
-      <button class="toggle-btn">Afficher plus 😊</button>
+      <button class="toggle-btn">Show more 😊</button>
       <div class="extra-content">
-        <p>Ce projet fut l'occasion de transformer les obstacles en opportunités et de renforcer l'esprit d'équipe.</p>
+        <p>This project was an opportunity to transform obstacles into opportunities and strengthen team spirit.</p>
       </div>
     </section>
     
-    <!-- Événement 3 : Vision pour Terminale -->
+    <!-- Event 3: 12th Grade Vision -->
     <section class="event left" id="event3">
-      <h2>Vision pour Terminale : Philosophie & Maths 💡</h2>
+      <h2>12th Grade Vision: Philosophy & Advanced Math 💡</h2>
       <p>
-        J’attends avec impatience les cours de philosophie, ma matière de cœur, ainsi que Maths Expertes, un défi stimulant pour repousser mes limites.
+        I eagerly await philosophy classes, my favorite subject, as well as advanced math—a stimulating challenge to push my limits.
       </p>
-      <button class="toggle-btn">Afficher plus 😊</button>
+      <button class="toggle-btn">Show more 😊</button>
       <div class="extra-content">
-        <p>Je m'imagine en pleine effervescence intellectuelle, où chaque cours devient une étape vers la connaissance.</p>
+        <p>I envision myself immersed in intellectual excitement, where every class is a step toward greater knowledge.</p>
       </div>
     </section>
     
-    <!-- Événement 4 : Le Bac et l'Avenir -->
+    <!-- Event 4: Baccalaureate & the Future -->
     <section class="event right" id="event4">
-      <h2>Le Bac & le Futur : EPITA & Moi 🎓</h2>
+      <h2>Baccalaureate & the Future: EPITA & Me 🎓</h2>
       <p>
-        Pour le Bac, je compte réorganiser mes priorités afin d'atteindre l'excellence et intégrer EPITA à Strasbourg, ouvrant la voie à un avenir riche en projets.
+        For the Bac, I plan to reorganize my priorities to achieve excellence and enter EPITA in Strasbourg, paving the way for a future filled with exciting projects.
       </p>
-      <button class="toggle-btn">Afficher plus 😊</button>
+      <button class="toggle-btn">Show more 😊</button>
       <div class="extra-content">
-        <p>Je me projette dans un futur où passion et technologie se conjuguent pour m'emmener vers des horizons innovants.</p>
+        <p>I picture a future where passion and technology merge to lead me toward innovative horizons.</p>
       </div>
     </section>
   </div>
   
-  <!-- Bouton Retour en haut -->
-  <button id="scrollToTop" title="Retour en haut">⬆️ Retour en haut</button>
+  <!-- Scroll-to-top button -->
+  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
   
   <footer>
-    <p>© 2025 Mon Parcours à LLA</p>
+    <p>© 2025 My Journey at LLA</p>
   </footer>
   
-  <!-- GSAP, ScrollTrigger et ScrollToPlugin -->
+  <!-- GSAP, ScrollTrigger and ScrollToPlugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Animation du header et du contenu lors du chargement
+    // Header and content animation on load
     gsap.from("header", {duration: 1, y: -100, opacity: 0, ease: "power2.out"});
     gsap.from(".content", {duration: 1, opacity: 0, ease: "power2.out", delay: 0.5});
 
-    // Animation d'apparition pour chaque section événement
+    // Animate each event section
     gsap.utils.toArray('.event').forEach(section => {
       gsap.fromTo(section,
         { opacity: 0, y: 50, rotation: -5 },
@@ -379,7 +382,7 @@
       );
     });
 
-    // Animation de la route en arrière-plan (effet parallaxe)
+    // Parallax effect on the road background
     gsap.to(".road-bg", {
       y: 100,
       ease: "none",
@@ -390,7 +393,7 @@
       }
     });
     
-    // Animation de la voiture qui circule sur la route
+    // Animate the car along the road
     gsap.to(".car", {
       y: () => window.innerHeight - 100,
       ease: "none",
@@ -402,7 +405,7 @@
       }
     });
     
-    // Navigation fluide via ScrollToPlugin
+    // Smooth navigation using ScrollToPlugin
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -414,7 +417,7 @@
       });
     });
     
-    // Boutons interactifs pour afficher/masquer le contenu supplémentaire
+    // Toggle extra content on events
     document.querySelectorAll('.toggle-btn').forEach(button => {
       button.addEventListener('click', function() {
         const extraContent = this.nextElementSibling;
@@ -422,19 +425,19 @@
           gsap.to(extraContent, {maxHeight: 0, padding: 0, duration: 0.5, onComplete: () => {
             extraContent.classList.remove('open');
           }});
-          this.textContent = 'Afficher plus 😊';
+          this.textContent = 'Show more 😊';
         } else {
           extraContent.classList.add('open');
           gsap.to(extraContent, {maxHeight: 300, padding: "10px", duration: 0.5});
-          this.textContent = 'Afficher moins 😄';
+          this.textContent = 'Show less 😄';
         }
       });
     });
     
-    // Animation des panneaux symboliques
+    // Animate the symbolic signposts
     gsap.utils.toArray('.signpost').forEach(sign => {
       gsap.fromTo(sign,
-        { opacity: 0, x: sign.id === "signpost1" || sign.id === "signpost3" ? -50 : 50 },
+        { opacity: 0, x: sign.classList.contains('signpost-left') ? -50 : 50 },
         { opacity: 1, x: 0, duration: 1,
           scrollTrigger: {
             trigger: sign,
@@ -445,7 +448,7 @@
       );
     });
     
-    // Progress bar de défilement
+    // Progress bar update on scroll
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -455,7 +458,7 @@
       }
     });
     
-    // Bouton "Retour en haut" : apparait dès que le scroll dépasse 10%
+    // Show "Back to Top" button when scrolling down
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -473,7 +476,7 @@
       }
     });
     
-    // Action du bouton "Retour en haut"
+    // Scroll-to-top button action
     document.getElementById('scrollToTop').addEventListener('click', () => {
       gsap.to(window, {duration: 1, scrollTo: {y: 0}});
     });
