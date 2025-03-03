@@ -84,7 +84,6 @@
       top: 20px;
       left: 20px;
       width: 50px;
-      transition: left 0.5s;
       z-index: 3;
     }
     .side-landscape {
@@ -300,9 +299,9 @@
     </div>
   </div>
 
-  <div class="signpost signpost-left" id="signpost1">Discovery</div>
-  <div class="signpost signpost-right" id="signpost2">Adventure</div>
-  <div class="signpost signpost-left" id="signpost3">Future!</div>
+  <div class="signpost" id="signpost1">Discovery</div>
+  <div class="signpost" id="signpost2">Adventure</div>
+  <div class="signpost" id="signpost3">Future!</div>
 
   <div class="content clearfix">
     <div class="group-past">
@@ -356,32 +355,49 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Animation de la voiture via un timeline unique pour une transition fluide
+    // Barre de progression avec start/end définis pour démarrer à 0
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: self => {
+        document.querySelector('.progress-bar').style.width = (self.progress * 100) + '%';
+        const btn = document.getElementById('scrollToTop');
+        btn.style.visibility = self.progress > 0.1 ? 'visible' : 'hidden';
+        gsap.to(btn, { opacity: self.progress > 0.1 ? 1 : 0 });
+      }
+    });
+
+    // Animation de la voiture répartie sur deux étapes égales du scroll
     const car = document.querySelector('.car');
     const separator = document.querySelector('.separator');
-    const roadWidth = document.querySelector('.road-bg').offsetWidth;
+    const roadBg = document.querySelector('.road-bg');
     const carHeight = car.offsetHeight;
 
     gsap.timeline({
       scrollTrigger: {
-        trigger: ".content",
+        trigger: document.body,
         start: "top top",
         end: "bottom bottom",
         scrub: true
       }
     })
+    // Première moitié du scroll : mouvement immédiat (petit déplacement vers le bas)
     .to(car, {
-      y: separator.offsetTop - 100,  // déplacement jusqu'au séparateur
-      x: 20,
+      duration: 1,
+      y: 100,  // un déplacement initial de 100px vers le bas
+      x: 20,   // reste à gauche
       ease: "none"
-    })
+    }, 0)
+    // Seconde moitié du scroll : la voiture continue vers le bas et se déplace vers la droite
     .to(car, {
-      y: document.body.scrollHeight - carHeight - 50,  // déplacement jusqu'en bas
-      x: roadWidth - 70,  // la voiture se positionne sur la droite
+      duration: 1,
+      y: () => document.body.scrollHeight - carHeight - 50,
+      x: () => roadBg.offsetWidth - 70,
       ease: "none"
-    });
+    }, 1);
 
-    // Animations des autres éléments
+    // Autres animations
     gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
     gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
 
@@ -430,17 +446,6 @@
         ease: "sine.inOut"
       });
     }
-
-    // Gestion du scroll pour la barre de progression et le bouton retour en haut
-    ScrollTrigger.create({
-      trigger: document.body,
-      onUpdate: self => {
-        document.querySelector('.progress-bar').style.width = `${self.progress * 100}%`;
-        const btn = document.getElementById('scrollToTop');
-        btn.style.visibility = self.progress > 0.1 ? 'visible' : 'hidden';
-        gsap.to(btn, { opacity: self.progress > 0.1 ? 1 : 0 });
-      }
-    });
 
     // Bouton retour en haut
     document.getElementById('scrollToTop').addEventListener('click', () => {
