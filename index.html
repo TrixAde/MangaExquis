@@ -63,7 +63,7 @@
       height: 100%;
       background: #ff6f61;
     }
-    /* Road background – vraie route avec fond gris asphalte et ligne blanche en pointillés */
+    /* Road background – ici la couleur est modifiée (#777) pour être bien visible */
     .road-bg {
       position: fixed;
       top: 0;
@@ -71,9 +71,9 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: #555;
+      background: #777;  /* Couleur modifiée pour que vous remarquiez le changement */
       z-index: 2;
-      overflow: hidden; /* Confinement de la voiture */
+      overflow: hidden; /* Conserve la voiture dans la route */
     }
     .road-bg::after {
       content: "";
@@ -117,7 +117,7 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Vegetation decorative elements – style de base pour la végétation générée dynamiquement */
+    /* Vegetation decorative elements */
     .vegetation {
       width: 48px;
       height: 48px;
@@ -163,7 +163,7 @@
       color: #ff6f61;
       font-weight: bold;
     }
-    /* Chaque événement – les cases d’anecdotes, légèrement transparentes */
+    /* Chaque événement */
     .event {
       position: relative;
       width: 45%;
@@ -202,7 +202,7 @@
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-    /* Positionnement gauche/droite pour les événements */
+    /* Positionnement des événements à gauche ou à droite */
     .event.left {
       float: left;
       clear: both;
@@ -404,7 +404,7 @@
     </div>
   </div>
   
-  <!-- Bouton Scroll-to-top -->
+  <!-- Bouton "Back to Top" -->
   <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
   
   <footer>
@@ -461,12 +461,12 @@
       }
     });
     
-    // Mouvement vertical de la voiture sur tout le scroll (trigger sur document.body)
+    // Mouvement vertical de la voiture sur tout le scroll (trigger sur ".content")
     gsap.to(".car", {
       y: () => window.innerHeight - 100,
       ease: "none",
       scrollTrigger: {
-        trigger: document.body,
+        trigger: ".content",
         start: "top top",
         end: "bottom bottom",
         scrub: true
