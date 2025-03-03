@@ -58,16 +58,17 @@
       height: 100%;
       background: #ff6f61;
     }
+    /* La "route" étendue sur toute la hauteur du document */
     .road-bg {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 250px;
-      height: 100%;
+      /* La hauteur sera définie en JS pour couvrir tout le document */
       background: #777;
       z-index: 2;
-      overflow: hidden;
+      /* On retire l'overflow pour ne pas clipper la voiture */
     }
     .road-bg::after {
       content: "";
@@ -85,12 +86,14 @@
         transparent 40px
       );
     }
-    .road-bg .car {
+    /* La voiture */
+    .car {
       position: absolute;
-      top: 0; /* Voiture placée tout en haut */
+      top: 0; /* départ en haut */
       width: 50px;
       z-index: 3;
     }
+    /* Paysages fixes sur les côtés */
     .side-landscape {
       position: fixed;
       top: 0;
@@ -108,7 +111,7 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Les végétaux seront positionnés absolument */
+    /* Les végétaux seront positionnés absolument sur le fond vert */
     .vegetation {
       position: absolute;
       line-height: 1;
@@ -254,18 +257,6 @@
       display: table;
       clear: both;
     }
-    /* Footer repositionné en bas, fixe, pour masquer la voiture */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      padding: 10px 0;
-      background: #333;
-      color: #fff;
-      z-index: 10;
-    }
     @media (max-width: 768px) {
       .event, .event.left, .event.right {
         width: 90%;
@@ -297,6 +288,7 @@
     </nav>
   </header>
 
+  <!-- La route (background) -->
   <div class="road-bg">
     <div class="car">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
@@ -349,25 +341,27 @@
 
   <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
 
-  <footer>
-    <p>© 2025 My Journey at LLA</p>
-  </footer>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Positionnement initial de la voiture en haut de la route
+    // Référence à la voiture et à la "route"
     const car = document.querySelector('.car');
     const roadBg = document.querySelector('.road-bg');
+    
+    // Pour que la "route" couvre toute la hauteur du document,
+    // on définit sa hauteur en fonction du scrollHeight du body.
+    roadBg.style.height = document.body.scrollHeight + 'px';
+    
+    // Positionnement initial de la voiture
     gsap.set(car, { x: 20, y: 0 });
     
-    const finalY = window.innerHeight - car.offsetHeight - 20; 
+    // La voiture part de y:0 et descend jusqu'à la fin de la "route"
+    const finalY = roadBg.offsetHeight - car.offsetHeight - 20;
     const finalX = roadBg.offsetWidth - car.offsetWidth - 20;
-
-    // Animation de la voiture liée au scroll
+    
     gsap.to(car, {
       x: finalX,
       y: finalY,
@@ -379,8 +373,8 @@
         scrub: true
       }
     });
-
-    // Barre de progression et affichage du bouton "Back to Top"
+    
+    // Barre de progression et bouton "Back to Top"
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -392,11 +386,11 @@
         gsap.to(btn, { opacity: self.progress > 0.1 ? 1 : 0 });
       }
     });
-
+    
     // Animation d'apparition du header et du contenu
     gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
     gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
-
+    
     // Animation des sections d'événements
     gsap.utils.toArray('.event').forEach(section => {
       gsap.fromTo(section,
@@ -406,7 +400,7 @@
         }
       );
     });
-
+    
     // Animation des panneaux
     gsap.utils.toArray('.signpost').forEach((sign, index) => {
       gsap.fromTo(sign,
@@ -420,8 +414,8 @@
         }
       );
     });
-
-    // Définition des émojis avec des tailles réduites
+    
+    // Répartition équitable des végétaux sur toute la hauteur du document
     const vegetationEmojis = [
       { type: '🌳', size: 50 },   // Arbre
       { type: '🌻', size: 30 },   // Fleur
@@ -432,36 +426,37 @@
       { type: '🍀', size: 35 },   // Trèfle
       { type: '🌵', size: 35 }    // Cactus
     ];
+    const totalVegetation = 30;
     const margin = 20;
     const headerHeight = document.querySelector('header').offsetHeight;
-    const footerHeight = document.querySelector('footer').offsetHeight;
-    // La zone disponible pour les végétaux est l'ensemble du viewport en laissant une marge
+    const bodyHeight = document.body.scrollHeight;
+    // Plage verticale pour les végétaux
+    const verticalRange = bodyHeight - headerHeight - margin*2;
+    // Zone de la route (centrale) à exclure
     const roadLeft = window.innerWidth / 2 - 125;
     const roadRight = window.innerWidth / 2 + 125;
-
-    // Distribution aléatoire sur toute la zone verte (hors du centre de la route et des bords)
-    for (let i = 0; i < 30; i++) {
+    
+    for (let i = 0; i < totalVegetation; i++) {
       const emoji = vegetationEmojis[Math.floor(Math.random() * vegetationEmojis.length)];
       const veg = document.createElement('div');
       veg.className = 'vegetation';
       veg.textContent = emoji.type;
       veg.style.fontSize = emoji.size + 'px';
+      // Distribution verticale régulière avec une petite variation aléatoire
+      const baseY = headerHeight + margin + (verticalRange * (i + 0.5) / totalVegetation);
+      const y = baseY + (Math.random() * verticalRange/(totalVegetation*2) - verticalRange/(totalVegetation*4));
+      veg.style.top = y + 'px';
       
-      // Positionnement horizontal aléatoire en excluant la zone de la route
-      let x = Math.random() * (window.innerWidth - 2 * margin) + margin;
-      if (x >= roadLeft && x <= roadRight) {
-        // Redirige vers la gauche ou la droite aléatoirement
-        if (Math.random() < 0.5) {
-          x = Math.random() * (roadLeft - margin) + margin;
-        } else {
-          x = Math.random() * ((window.innerWidth - margin) - roadRight) + roadRight;
-        }
+      // Choix aléatoire entre côté gauche ou droit pour l'horizontale
+      let x;
+      if (Math.random() < 0.5) {
+        // côté gauche, en respectant la marge et en excluant la zone centrale
+        x = Math.random() * (roadLeft - margin) + margin;
+      } else {
+        // côté droit
+        x = Math.random() * ((window.innerWidth - margin) - roadRight) + roadRight;
       }
       veg.style.left = x + 'px';
-      
-      // Positionnement vertical aléatoire dans la zone visible (hors header et footer)
-      let y = Math.random() * ((window.innerHeight - footerHeight - margin) - (headerHeight + margin)) + (headerHeight + margin);
-      veg.style.top = y + 'px';
       
       document.body.appendChild(veg);
       gsap.to(veg, {
@@ -472,12 +467,12 @@
         ease: "sine.inOut"
       });
     }
-
-    // Bouton retour en haut
+    
+    // Bouton "Back to Top"
     document.getElementById('scrollToTop').addEventListener('click', () => {
       gsap.to(window, { duration: 1, scrollTo: 0 });
     });
-
+    
     // Gestion du contenu extensible
     document.querySelectorAll('.toggle-btn').forEach(button => {
       button.addEventListener('click', function() {
