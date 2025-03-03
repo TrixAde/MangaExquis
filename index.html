@@ -19,7 +19,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Header – bande contenant le titre et la navigation */
+    /* Header – bande avec titre et navigation */
     header {
       position: fixed;
       top: 0;
@@ -48,7 +48,7 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar fixed au bas de la fenêtre */
+    /* Progress Bar fixed en bas */
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -63,7 +63,7 @@
       height: 100%;
       background: #ff6f61;
     }
-    /* Road background – ici la couleur est modifiée (#777) pour être bien visible */
+    /* Road background – ici, le fond est sombre pour bien voir la voiture */
     .road-bg {
       position: fixed;
       top: 0;
@@ -71,9 +71,10 @@
       transform: translateX(-50%);
       width: 250px;
       height: 100%;
-      background: #777;  /* Couleur modifiée pour que vous remarquiez le changement */
+      background: #777;
       z-index: 2;
-      overflow: hidden; /* Conserve la voiture dans la route */
+      /* Vous pouvez laisser ou retirer overflow:hidden selon l'effet désiré */
+      overflow: hidden;
     }
     .road-bg::after {
       content: "";
@@ -91,13 +92,13 @@
         transparent 40px
       );
     }
-    /* Positionnement de la voiture à l'intérieur de la route */
+    /* La voiture est placée à l'intérieur de la route, initialement en bas (bottom: 10px) */
     .road-bg .car {
       position: absolute;
       bottom: 10px;
       width: 50px;
     }
-    /* Side landscapes – zones vertes sur les côtés */
+    /* Side landscapes */
     .side-landscape {
       position: fixed;
       top: 0;
@@ -117,7 +118,7 @@
       right: 0;
       background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
-    /* Vegetation decorative elements */
+    /* Éléments décoratifs de végétation */
     .vegetation {
       width: 48px;
       height: 48px;
@@ -126,7 +127,7 @@
       background-repeat: no-repeat;
       z-index: 3;
     }
-    /* Main container */
+    /* Main Content */
     .content {
       position: relative;
       z-index: 4;
@@ -135,11 +136,11 @@
       margin: 120px auto 40px auto;
       padding-bottom: 100px;
     }
-    /* Grouping sections */
+    /* Groupes d'événements */
     .group-past, .group-future {
       overflow: hidden;
     }
-    /* Separator entre groupes */
+    /* Séparateur entre groupes */
     .separator {
       width: 100%;
       text-align: center;
@@ -163,7 +164,7 @@
       color: #ff6f61;
       font-weight: bold;
     }
-    /* Chaque événement */
+    /* Événements individuels */
     .event {
       position: relative;
       width: 45%;
@@ -202,7 +203,7 @@
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-    /* Positionnement des événements à gauche ou à droite */
+    /* Positionnement des événements à gauche ou droite */
     .event.left {
       float: left;
       clear: both;
@@ -217,7 +218,7 @@
       margin-left: 60%;
     }
     .event.right::before { left: -70px; }
-    /* Bouton de toggle pour le contenu extra */
+    /* Bouton pour afficher le contenu extra */
     .toggle-btn {
       background: #ff6f61;
       color: #fff;
@@ -232,7 +233,7 @@
     .toggle-btn:hover {
       background: #e55b50;
     }
-    /* Contenu extra caché par défaut */
+    /* Contenu extra caché */
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -261,9 +262,7 @@
     .signpost.signpost-left { }
     .signpost.signpost-right { }
     #signpost1 { left: 5%; top: 300px; }
-    /* Signpost "Adventure" */
     #signpost2 { right: 5%; top: 400px; }
-    /* Signpost "Future!" */
     #signpost3 { left: 5%; top: 700px; }
     /* Bouton "Back to Top" */
     #scrollToTop {
@@ -320,12 +319,12 @@
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
   
-  <!-- Progress Bar fixed au bas de la fenêtre -->
+  <!-- Progress Bar en bas -->
   <div class="progress-container">
     <div class="progress-bar"></div>
   </div>
   
-  <!-- Header (bande avec titre et navigation) -->
+  <!-- Header -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
@@ -336,7 +335,7 @@
     </nav>
   </header>
   
-  <!-- Road background avec la voiture animée -->
+  <!-- Road background avec la voiture -->
   <div class="road-bg">
     <div class="car">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
@@ -352,7 +351,6 @@
   <div class="content clearfix">
     <!-- Groupe : 10th & 11th Grade -->
     <div class="group-past">
-      <!-- Événement 1 : First Day of 10th Grade -->
       <section class="event left" id="event1">
         <h2>First Day of 10th Grade 🚀</h2>
         <button class="toggle-btn">Show more 😊</button>
@@ -363,7 +361,6 @@
         </div>
       </section>
       
-      <!-- Événement 2 : 11th Grade Project on Roblox -->
       <section class="event right" id="event2">
         <h2>11th Grade Project: Roblox Video Game 🎮</h2>
         <button class="toggle-btn">Show more 😊</button>
@@ -375,12 +372,11 @@
       </section>
     </div>
     
-    <!-- Séparateur entre groupes -->
+    <!-- Séparateur -->
     <div class="separator"><span>The Future Awaits</span></div>
     
     <!-- Groupe : 12th Grade & Baccalaureate -->
     <div class="group-future">
-      <!-- Événement 3 : 12th Grade Vision -->
       <section class="event left" id="event3">
         <h2>12th Grade Vision: Philosophy & Advanced Math 💡</h2>
         <button class="toggle-btn">Show more 😊</button>
@@ -391,7 +387,6 @@
         </div>
       </section>
       
-      <!-- Événement 4 : Baccalaureate & the Future -->
       <section class="event right" id="event4">
         <h2>Baccalaureate & the Future: EPITA & Me 🎓</h2>
         <button class="toggle-btn">Show more 😊</button>
@@ -418,11 +413,11 @@
   <script>
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Animation du header et du contenu au chargement
+    // Animation d'entrée du header et du contenu
     gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
     gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
 
-    // Animation de chaque section d'événement
+    // Animation d'apparition des événements
     gsap.utils.toArray('.event').forEach(section => {
       gsap.fromTo(section,
         { opacity: 0, y: 50, rotation: -5 },
@@ -447,22 +442,10 @@
       }
     });
     
-    // Animation de la voiture :
-    // Départ dans la voie de gauche (x: 60) puis passage à la voie de droite (x: 190) lorsque le séparateur est atteint
+    // Animation combinée de la voiture (horizontal & vertical)
     gsap.set(".car", { x: 60 });
     gsap.to(".car", {
       x: 190,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".separator",
-        start: "top center",
-        end: "bottom center",
-        scrub: true
-      }
-    });
-    
-    // Mouvement vertical de la voiture sur tout le scroll (trigger sur ".content")
-    gsap.to(".car", {
       y: () => window.innerHeight - 100,
       ease: "none",
       scrollTrigger: {
@@ -473,7 +456,7 @@
       }
     });
     
-    // Navigation fluide via ScrollToPlugin
+    // Navigation fluide
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -485,7 +468,7 @@
       });
     });
     
-    // Toggle du contenu extra sur les événements
+    // Toggle du contenu extra
     document.querySelectorAll('.toggle-btn').forEach(button => {
       button.addEventListener('click', function() {
         const extraContent = this.nextElementSibling;
@@ -516,7 +499,7 @@
       );
     });
     
-    // Génération dynamique des éléments de végétation sur les côtés
+    // Génération dynamique de végétation
     const vegetationImages = [
       'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
       'https://img.icons8.com/emoji/48/000000/rose.png',
@@ -528,28 +511,22 @@
       'https://img.icons8.com/emoji/48/000000/hibiscus.png'
     ];
     const vegetationCount = 20;
-    const vegetationWidth = 48; // largeur définie dans le CSS (.vegetation)
-    // Suppression d'éventuels éléments existants
+    const vegetationWidth = 48;
     document.querySelectorAll('.vegetation').forEach(el => el.remove());
     for (let i = 0; i < vegetationCount; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
       const randomImage = vegetationImages[Math.floor(Math.random() * vegetationImages.length)];
       veg.style.backgroundImage = `url(${randomImage})`;
-      // Choisir aléatoirement le côté : gauche ou droite
       const side = Math.random() < 0.5 ? 'left' : 'right';
-      // Position verticale aléatoire (entre 10vh et 90vh)
       veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
       if(side === 'left'){
-        // Pour le côté gauche : x entre 0 et (250 - largeur de l'élément)
         veg.style.left = Math.floor(Math.random() * (250 - vegetationWidth)) + "px";
       } else {
-        // Pour le côté droit : x entre (window.innerWidth - 250) et (window.innerWidth - 250 + (250 - largeur))
         const randomOffset = Math.floor(Math.random() * (250 - vegetationWidth));
         veg.style.left = (window.innerWidth - 250 + randomOffset) + "px";
       }
       document.body.appendChild(veg);
-      // Animation douce de l'élément
       gsap.to(veg, { 
         duration: 3, 
         rotation: Math.random() * 6 - 3, 
@@ -559,7 +536,7 @@
       });
     }
     
-    // Mise à jour de la progress bar au scroll
+    // Mise à jour de la progress bar
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -569,7 +546,7 @@
       }
     });
     
-    // Affichage du bouton "Back to Top" lors du scroll
+    // Bouton "Back to Top"
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
@@ -587,7 +564,6 @@
       }
     });
     
-    // Action du bouton Scroll-to-top
     document.getElementById('scrollToTop').addEventListener('click', () => {
       gsap.to(window, { duration: 1, scrollTo: { y: 0 }});
     });
