@@ -48,20 +48,20 @@
       color: #ff6f61;
       transform: scale(1.1);
     }
-    /* Progress Bar fixed au bas de la fenêtre */
+    /* Progress Bar fixed au bas de la fenêtre - plus visible */
     .progress-container {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.3);
+      height: 8px;
+      background: rgba(255,255,255,0.5);
       z-index: 1100;
     }
     .progress-bar {
       width: 0%;
       height: 100%;
-      background: rgba(255,111,97,0.3);
+      background: #ff6f61;
     }
     /* Road background – vraie route avec fond gris asphalte et ligne blanche en pointillés */
     .road-bg {
@@ -96,7 +96,7 @@
       bottom: 10px;
       width: 50px;
     }
-    /* Side landscapes – remplissent les côtés avec des images de nature */
+    /* Side landscapes – zones vertes sur les côtés */
     .side-landscape {
       position: fixed;
       top: 0;
@@ -183,7 +183,7 @@
       margin-top: 0;
       color: #ff6f61;
     }
-    /* Red marker (sans emoji) */
+    /* Red marker */
     .event::before {
       content: '';
       position: absolute;
@@ -260,9 +260,9 @@
     .signpost.signpost-left { }
     .signpost.signpost-right { }
     #signpost1 { left: 5%; top: 300px; }
-    /* Signpost "Adventure" positionné au niveau du 11th Grade */
+    /* Signpost "Adventure" */
     #signpost2 { right: 5%; top: 400px; }
-    /* Signpost "Future!" positionné plus haut */
+    /* Signpost "Future!" */
     #signpost3 { left: 5%; top: 700px; }
     /* Scroll-to-top button */
     #scrollToTop {
@@ -446,20 +446,31 @@
       }
     });
 
-    // Animate the car using a timeline to combine horizontal and vertical movements
-    gsap.set(".car", { x: 60 });
-    gsap.timeline({
+    // Vertical movement of the car throughout the scroll
+    gsap.to(".car", {
+      y: () => window.innerHeight - 100,
+      ease: "none",
       scrollTrigger: {
         trigger: ".content",
         start: "top top",
         end: "bottom bottom",
         scrub: true
       }
-    })
-    .fromTo(".car", 
-      { x: 60, y: 0 }, 
-      { x: 120, y: () => window.innerHeight - 100, ease: "none" }
-    );
+    });
+
+    // Horizontal movement of the car :
+    // Elle démarre à gauche (x = 10) et passe à droite (x = 190) dès que la section "The Future Awaits" apparaît.
+    gsap.set(".car", { x: 10 });
+    gsap.to(".car", {
+      x: 190,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".separator",
+        start: "top center",
+        end: "bottom center",
+        scrub: true
+      }
+    });
 
     // Smooth navigation using ScrollToPlugin
     document.querySelectorAll('nav a').forEach(link => {
@@ -504,26 +515,40 @@
       );
     });
 
-    // Dynamic generation of vegetation elements with multiple flower images
-    const flowerImages = [
+    // Dynamic generation of vegetation elements in the side zones (exclusivement dans les zones vertes)
+    const vegetationImages = [
       'https://img.icons8.com/emoji/48/000000/cherry-blossom.png',
       'https://img.icons8.com/emoji/48/000000/rose.png',
       'https://img.icons8.com/emoji/48/000000/tulip.png',
-      'https://img.icons8.com/emoji/48/000000/sunflower.png'
+      'https://img.icons8.com/emoji/48/000000/sunflower.png',
+      'https://img.icons8.com/emoji/48/000000/deciduous-tree.png',
+      'https://img.icons8.com/emoji/48/000000/pine-tree.png',
+      'https://img.icons8.com/emoji/48/000000/maple-leaf.png',
+      'https://img.icons8.com/emoji/48/000000/hibiscus.png'
     ];
-    const vegetationCount = 14;
-    // Remove any existing vegetation elements
+    const vegetationCount = 20;
+    const vegetationWidth = 48; // largeur définie dans le CSS (.vegetation)
+    // Supprimer d'éventuels éléments existants
     document.querySelectorAll('.vegetation').forEach(el => el.remove());
     for (let i = 0; i < vegetationCount; i++) {
       const veg = document.createElement('div');
       veg.className = 'vegetation';
-      const randomImage = flowerImages[Math.floor(Math.random() * flowerImages.length)];
+      const randomImage = vegetationImages[Math.floor(Math.random() * vegetationImages.length)];
       veg.style.backgroundImage = `url(${randomImage})`;
-      // Position the vegetation element at a random position on the screen
+      // Choisir aléatoirement le côté : gauche ou droite
+      const side = Math.random() < 0.5 ? 'left' : 'right';
+      // Position verticale aléatoire (entre 10vh et 90vh)
       veg.style.top = Math.floor(Math.random() * 80 + 10) + "vh";
-      veg.style.left = Math.floor(Math.random() * 90 + 5) + "vw";
+      if(side === 'left'){
+        // Pour le côté gauche : x entre 0 et (250 - largeur de l'élément)
+        veg.style.left = Math.floor(Math.random() * (250 - vegetationWidth)) + "px";
+      } else {
+        // Pour le côté droit : x entre (window.innerWidth - 250) et (window.innerWidth - 250 + (250 - largeur))
+        const randomOffset = Math.floor(Math.random() * (250 - vegetationWidth));
+        veg.style.left = (window.innerWidth - 250 + randomOffset) + "px";
+      }
       document.body.appendChild(veg);
-      // Gentle oscillation animation
+      // Animation douce de l'élément
       gsap.to(veg, { 
         duration: 3, 
         rotation: Math.random() * 6 - 3, 
