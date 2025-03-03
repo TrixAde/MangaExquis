@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Road Movie - Journey at LLA 🚀</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet>
   <style>
-    /* Tous les styles précédents conservés */
-    body {
-      font-family: 'Roboto', sans-serif;
+    /* Reset et styles de base */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #8DC26F, #A4DE02);
-      color: #333;
-      position: relative;
-      overflow-x: hidden;
     }
 
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #8DC26F, #A4DE02);
+      color: #333;
+      overflow-x: hidden;
+      min-height: 200vh;
+    }
+
+    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -25,453 +30,346 @@
       background: rgba(51,51,51,0.9);
       color: #fff;
       z-index: 1000;
-      padding: 10px 0;
+      padding: 15px 0;
       text-align: center;
+      backdrop-filter: blur(5px);
     }
 
-    nav { margin-top: 5px; }
+    nav {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
     nav a {
       color: #fff;
-      margin: 0 15px;
       text-decoration: none;
       font-weight: 700;
-      transition: color 0.3s, transform 0.3s;
+      transition: all 0.3s;
     }
+
     nav a:hover {
       color: #ff6f61;
       transform: scale(1.1);
     }
 
+    /* Barre de progression */
     .progress-container {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 8px;
-      background: rgba(255,255,255,0.5);
-      z-index: 1100;
+      background: rgba(255,255,255,0.3);
+      z-index: 999;
     }
+
     .progress-bar {
       width: 0%;
       height: 100%;
       background: #ff6f61;
+      transition: width 0.3s ease;
     }
 
-    .road-bg {
+    /* Route */
+    .road-container {
       position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 250px;
-      height: 100%;
-      background: #777;
+      height: 100vh;
       z-index: 2;
-      overflow: hidden;
     }
-    .road-bg::after {
-      content: "";
+
+    .road-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #555;
+    }
+
+    .road-line {
       position: absolute;
       left: 50%;
-      top: 0;
       transform: translateX(-50%);
       width: 8px;
       height: 100%;
       background: repeating-linear-gradient(
         to bottom,
-        rgba(255,255,255,0.8) 0px,
-        rgba(255,255,255,0.8) 20px,
+        #fff 0px,
+        #fff 20px,
         transparent 20px,
         transparent 40px
       );
     }
 
-    .road-bg .car {
+    .car {
       position: absolute;
-      top: 20px;
-      left: 20px;
       width: 50px;
+      left: 20px;
+      top: 20px;
       z-index: 3;
       transition: left 0.5s;
     }
 
+    /* Paysages latéraux */
     .side-landscape {
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 250px;
-      z-index: 0;
+      width: calc(50% - 125px);
+      z-index: 1;
       background-size: cover;
-      opacity: 0.95;
-    }
-    .side-landscape.left {
-      left: 0;
-      background: url('https://source.unsplash.com/collection/190727/250x1200/?forest,trees') no-repeat center center/cover;
-    }
-    .side-landscape.right {
-      right: 0;
-      background: url('https://source.unsplash.com/collection/190727/250x1200/?garden,flowers') no-repeat center center/cover;
     }
 
+    .left-landscape {
+      left: 0;
+      background-image: url('https://source.unsplash.com/random/800x1200?forest');
+    }
+
+    .right-landscape {
+      right: 0;
+      background-image: url('https://source.unsplash.com/random/800x1200?meadow');
+    }
+
+    /* Végétation */
     .vegetation {
-      width: 48px;
-      height: 48px;
-      position: absolute;
+      position: fixed;
       background-size: contain;
       background-repeat: no-repeat;
-      z-index: 3;
-      filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
-    }
-
-    /* Ajout de styles pour les nouveaux éléments végétaux */
-    .tree {
-      width: 80px !important;
-      height: 80px !important;
       z-index: 2;
+      filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
     }
 
-    .bush {
-      width: 60px !important;
-      height: 60px !important;
-    }
-
+    /* Contenu principal */
     .content {
       position: relative;
       z-index: 4;
       width: 90%;
       max-width: 1000px;
-      margin: 120px auto 40px auto;
-      padding-bottom: 100px;
-    }
-
-    .group-past, .group-future { overflow: hidden; }
-
-    .separator {
-      width: 100%;
-      text-align: center;
-      margin: 60px 0;
-      position: relative;
-    }
-    .separator::before, .separator::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      height: 2px;
-      background: #ff6f61;
-    }
-    .separator::before { left: 0; }
-    .separator::after { right: 0; }
-    .separator span {
-      background: #fff;
-      padding: 0 15px;
-      font-size: 1.2em;
-      color: #ff6f61;
-      font-weight: bold;
+      margin: 120px auto;
+      padding: 40px 0 200px;
     }
 
     .event {
       position: relative;
       width: 45%;
-      padding: 20px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(247,247,247,0.7));
-      border-radius: 8px;
-      margin: 80px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      padding: 25px;
+      margin: 100px 0;
+      background: rgba(255,255,255,0.9);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       opacity: 0;
-      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .event:hover {
-      transform: scale(1.02);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+
+    .event.left {
+      float: left;
+      margin-right: 55%;
     }
+
+    .event.right {
+      float: right;
+      margin-left: 55%;
+    }
+
     .event::before {
       content: '';
       position: absolute;
-      top: 20px;
-      width: 24px;
-      height: 24px;
+      top: 30px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
       background: #ff6f61;
-      border: 4px solid #fff;
-      box-shadow: 0 0 0 4px #ff6f61;
-      animation: pulse 2s infinite;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px #ff6f61;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.7; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .event.left {
-      float: left;
-      clear: both;
-      text-align: right;
-      margin-right: 60%;
-    }
-    .event.left::before { right: -70px; }
-    .event.right {
-      float: right;
-      clear: both;
-      text-align: left;
-      margin-left: 60%;
-    }
-    .event.right::before { left: -70px; }
 
+    .event.left::before {
+      right: -60px;
+    }
+
+    .event.right::before {
+      left: -60px;
+    }
+
+    .separator {
+      clear: both;
+      text-align: center;
+      margin: 100px 0;
+      position: relative;
+    }
+
+    .separator span {
+      display: inline-block;
+      padding: 10px 30px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Boutons et interactions */
     .toggle-btn {
       background: #ff6f61;
-      color: #fff;
+      color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
+      padding: 8px 15px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 10px;
-      font-size: 0.9em;
-    }
-    .toggle-btn:hover { background: #e55b50; }
-
-    .extra-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease-out, padding 0.5s;
-      padding: 0 10px;
-      font-size: 0.9em;
-    }
-    .extra-content.open {
-      padding: 10px;
-      max-height: 300px;
+      margin-top: 15px;
+      transition: all 0.3s;
     }
 
-    .signpost {
-      position: absolute;
-      padding: 10px 15px;
-      background: linear-gradient(45deg, #ff6f61, #ffe66d);
-      border: 2px solid #fff;
-      border-radius: 4px;
-      font-weight: bold;
-      color: #333;
-      opacity: 0;
-      z-index: 5;
-      transform: rotate(-10deg);
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    .toggle-btn:hover {
+      background: #e55b50;
+      transform: scale(1.05);
     }
-    #signpost1 { left: 5%; top: 300px; }
-    #signpost2 { right: 5%; top: 700px; }
-    #signpost3 { left: 5%; top: 1200px; }
 
     #scrollToTop {
       position: fixed;
       bottom: 30px;
       right: 30px;
       background: #ff6f61;
-      color: #fff;
+      color: white;
       border: none;
-      padding: 12px 16px;
-      border-radius: 50px;
+      padding: 15px;
+      border-radius: 50%;
       cursor: pointer;
-      font-size: 1em;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s, visibility 0.4s;
-      z-index: 1100;
-    }
-    #scrollToTop:hover { background: #e55b50; }
-
-    .clearfix::after {
-      content: "";
-      display: table;
-      clear: both;
+      transition: all 0.3s;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #333;
-      color: #fff;
-      position: relative;
-      z-index: 6;
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
-      .event, .event.left, .event.right {
-        width: 90%;
-        float: none;
-        margin: 40px auto;
-        text-align: left;
+      .road-container { width: 100px; }
+      
+      .event {
+        width: 85%;
+        margin: 60px auto;
+        float: none !important;
       }
-      .event::before { left: -40px; }
-      .road-bg { width: 80px; }
-      .signpost { font-size: 0.9em; }
-      .side-landscape { width: 100px; }
-      .vegetation { width: 40px; height: 40px; }
+      
+      .event::before {
+        top: -35px;
+        left: 50% !important;
+        transform: translateX(-50%);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="side-landscape left"></div>
-  <div class="side-landscape right"></div>
-
-  <div class="progress-container">
-    <div class="progress-bar"></div>
-  </div>
-
+  <!-- Structure de base -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
       <a href="#event1">10th Grade</a>
       <a href="#event2">11th Grade</a>
       <a href="#event3">12th Grade</a>
-      <a href="#event4">Baccalaureate & Future</a>
+      <a href="#event4">Future</a>
     </nav>
   </header>
 
-  <div class="road-bg">
-    <div class="car">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" alt="Car">
-    </div>
+  <div class="progress-container">
+    <div class="progress-bar"></div>
   </div>
 
-  <div class="signpost signpost-left" id="signpost1">Discovery</div>
-  <div class="signpost signpost-right" id="signpost2">Adventure</div>
-  <div class="signpost signpost-left" id="signpost3">Future!</div>
+  <div class="side-landscape left-landscape"></div>
+  <div class="side-landscape right-landscape"></div>
 
-  <div class="content clearfix">
-    <!-- Contenu inchangé -->
+  <div class="road-container">
+    <div class="road-bg"></div>
+    <div class="road-line"></div>
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/car.png" 
+         class="car" 
+         alt="Voiture">
   </div>
 
-  <button id="scrollToTop" title="Back to Top">⬆️ Back to Top</button>
+  <div class="content">
+    <!-- Contenu des événements -->
+  </div>
 
-  <footer>
-    <p>© 2025 My Journey at LLA</p>
-  </footer>
+  <button id="scrollToTop">↑</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    document.addEventListener('DOMContentLoaded', () => {
+      // Configuration de base
+      const car = document.querySelector('.car');
+      const separator = document.querySelector('.separator');
+      const roadWidth = document.querySelector('.road-container').offsetWidth;
 
-    // NOUVELLE ANIMATION DE LA VOITURE CORRIGÉE
-    const car = document.querySelector('.car');
-    const separator = document.querySelector('.separator');
-    const road = document.querySelector('.road-bg');
-    
-    // Animation principale
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".content",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1
-      }
-    });
-
-    // Déplacement vertical gauche jusqu'au séparateur
-    tl.to(car, {
-      y: separator.offsetTop - 100,
-      x: 20
-    });
-
-    // Déplacement vertical droit après le séparateur
-    tl.to(car, {
-      y: document.body.scrollHeight,
-      x: road.offsetWidth - 70
-    }, `+=${separator.offsetTop}`);
-
-    // ANIMATIONS DES ÉLÉMENTS VÉGÉTAUX AMÉLIORÉES
-    const vegetationImages = [
-      {url: 'https://img.icons8.com/emoji/48/000000/deciduous-tree.png', class: 'tree'},
-      {url: 'https://img.icons8.com/emoji/48/000000/evergreen-tree.png', class: 'tree'},
-      {url: 'https://img.icons8.com/emoji/48/000000/cactus.png', class: 'bush'},
-      {url: 'https://img.icons8.com/emoji/48/000000/herb.png', class: 'bush'},
-      {url: 'https://img.icons8.com/emoji/48/000000/sunflower.png'},
-      {url: 'https://img.icons8.com/emoji/48/000000/rose.png'},
-      {url: 'https://img.icons8.com/emoji/48/000000/tulip.png'},
-      {url: 'https://img.icons8.com/emoji/48/000000/hibiscus.png'},
-      {url: 'https://img.icons8.com/emoji/48/000000/palm-tree.png', class: 'tree'},
-      {url: 'https://img.icons8.com/emoji/48/000000/maple-leaf.png', class: 'bush'}
-    ];
-
-    for (let i = 0; i < 40; i++) {
-      const veg = document.createElement('div');
-      const randomType = vegetationImages[Math.floor(Math.random() * vegetationImages.length)];
-      
-      veg.className = `vegetation ${randomType.class || ''}`;
-      veg.style.backgroundImage = `url(${randomType.url})`;
-      
-      const side = Math.random() < 0.5 ? 'left' : 'right';
-      veg.style.top = `${Math.random() * 150}vh`;
-      veg.style[side] = `${Math.random() * 200}px`;
-      
-      // Espacement accru entre les éléments
-      veg.style.margin = `${Math.random() * 20}px`;
-      
-      document.body.appendChild(veg);
-      
-      // Animation plus variée
-      gsap.to(veg, {
-        duration: 3 + Math.random() * 5,
-        y: 30 * (Math.random() < 0.5 ? -1 : 1),
-        x: 10 * (Math.random() < 0.5 ? -1 : 1),
-        rotation: Math.random() * 10,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut"
+      // Animation principale de la voiture
+      gsap.to(car, {
+        y: () => window.innerHeight * 2,
+        x: () => roadWidth - 70,
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1
+        }
       });
-    }
 
-    // RESTE DU CODE PARFAITEMENT FONCTIONNEL
-    gsap.from("header", { duration: 1, y: -100, opacity: 0, ease: "power2.out" });
-    gsap.from(".content", { duration: 1, opacity: 0, ease: "power2.out", delay: 0.5 });
-
-    gsap.utils.toArray('.event').forEach(section => {
-      gsap.fromTo(section,
-        { opacity: 0, y: 50, rotation: -5 },
-        { opacity: 1, y: 0, rotation: 0, duration: 1, ease: "power2.out",
-          scrollTrigger: { trigger: section, start: "top 80%", toggleActions: "play none none reverse" }
-        }
-      );
-    });
-
-    gsap.utils.toArray('.signpost').forEach((sign, index) => {
-      gsap.fromTo(sign,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1,
+      // Gestion des événements
+      gsap.utils.toArray('.event').forEach(event => {
+        gsap.fromTo(event, {
+          opacity: 0,
+          y: 50
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
           scrollTrigger: {
-            trigger: `.event:nth-of-type(${index + 1})`,
-            start: "top center",
-            toggleActions: "play none none reverse"
+            trigger: event,
+            start: "top 80%",
+            toggleActions: "play none none none"
           }
+        });
+      });
+
+      // Végétation dynamique
+      const createVegetation = () => {
+        const types = [
+          {name: 'tree', size: [80, 80], imgs: ['🌳', '🌲', '🌴']},
+          {name: 'bush', size: [60, 60], imgs: ['🌿', '🍀', '🎋']},
+          {name: 'flower', size: [40, 40], imgs: ['🌻', '🌺', '🌷']}
+        ];
+
+        for(let i = 0; i < 30; i++) {
+          const type = types[Math.floor(Math.random() * types.length)];
+          const veg = document.createElement('div');
+          veg.className = `vegetation ${type.name}`;
+          veg.style.cssText = `
+            width: ${type.size[0]}px;
+            height: ${type.size[1]}px;
+            left: ${Math.random() * 45}%;
+            top: ${Math.random() * 100}vh;
+            font-size: ${type.size[0]}px;
+          `;
+          veg.textContent = type.imgs[Math.floor(Math.random() * type.imgs.length)];
+          document.body.appendChild(veg);
         }
-      );
-    });
+      };
+      createVegetation();
 
-    ScrollTrigger.create({
-      trigger: document.body,
-      onUpdate: self => {
-        document.querySelector('.progress-bar').style.width = `${self.progress * 100}%`;
-        const btn = document.getElementById('scrollToTop');
-        btn.style.visibility = self.progress > 0.1 ? 'visible' : 'hidden';
-        gsap.to(btn, { opacity: self.progress > 0.1 ? 1 : 0 });
-      }
-    });
-
-    document.getElementById('scrollToTop').addEventListener('click', () => {
-      gsap.to(window, { duration: 1, scrollTo: 0 });
-    });
-
-    document.querySelectorAll('.toggle-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        const extraContent = this.nextElementSibling;
-        if (extraContent.classList.contains('open')) {
-          gsap.to(extraContent, { maxHeight: 0, padding: 0, duration: 0.5 });
-          extraContent.classList.remove('open');
-          this.textContent = 'Show more 😊';
-        } else {
-          extraContent.classList.add('open');
-          gsap.to(extraContent, { maxHeight: 300, padding: "10px", duration: 0.5 });
-          this.textContent = 'Show less 😄';
+      // Gestion du scroll
+      ScrollTrigger.create({
+        onUpdate: ({progress}) => {
+          document.querySelector('.progress-bar').style.width = `${progress * 100}%`;
+          document.getElementById('scrollToTop').style.opacity = progress > 0.1 ? 1 : 0;
         }
+      });
+
+      document.getElementById('scrollToTop').addEventListener('click', () => {
+        gsap.to(window, {duration: 1, scrollTo: 0});
       });
     });
   </script>
