@@ -90,6 +90,12 @@
         transparent 40px
       );
     }
+    /* Positionnement de la voiture à l'intérieur de la route */
+    .road-bg .car {
+      position: absolute;
+      bottom: 10px;
+      width: 50px;
+    }
     /* Side landscapes – remplissent les côtés avec des images de nature */
     .side-landscape {
       position: fixed;
@@ -112,12 +118,19 @@
     }
     /* Vegetation decorative elements – positionnés aléatoirement via JS */
     .vegetation {
-      position: absolute; /* nous utiliserons absolute pour pouvoir les placer dans le document */
+      position: absolute;
       width: 48px;
       height: 48px;
       background-size: contain;
       background-repeat: no-repeat;
       z-index: 3;
+    }
+    /* Ajout des images de fond pour la végétation */
+    .vegetation.vegetation-left {
+      background-image: url('https://img.icons8.com/emoji/48/000000/deciduous-tree.png');
+    }
+    .vegetation.vegetation-right {
+      background-image: url('https://img.icons8.com/emoji/48/000000/cherry-blossom.png');
     }
     /* Main container */
     .content {
@@ -225,7 +238,7 @@
     .toggle-btn:hover {
       background: #e55b50;
     }
-    /* Extra content hidden by default */
+    /* Extra content hidden by défaut */
     .extra-content {
       max-height: 0;
       overflow: hidden;
@@ -313,8 +326,7 @@
   <div class="side-landscape left"></div>
   <div class="side-landscape right"></div>
   
-  <!-- Vegetation decorative elements (7 on each side, positions will be randomized) -->
-  <!-- Crée 7 divs pour la gauche et 7 pour la droite -->
+  <!-- Vegetation decorative elements (7 on each side, positions seront randomisées) -->
   <div class="vegetation vegetation-left"></div>
   <div class="vegetation vegetation-left"></div>
   <div class="vegetation vegetation-left"></div>
@@ -336,7 +348,7 @@
     <div class="progress-bar"></div>
   </div>
   
-  <!-- Header (band with title and nav) -->
+  <!-- Header (bande avec titre et navigation) -->
   <header>
     <h1>My Road Movie - Journey at LLA 🚀</h1>
     <nav>
@@ -458,10 +470,10 @@
       }
     });
     
-    // Animate the car: start shifted left (x: -40) then move to x: 40 near the separator
-    gsap.set(".car", { x: -40 });
+    // Animate the car: start in the left lane (x: 60) then move to the right lane (x: 190)
+    gsap.set(".car", { x: 60 });
     gsap.to(".car", {
-      x: 40,
+      x: 190,
       ease: "none",
       scrollTrigger: {
         trigger: ".separator",
@@ -529,7 +541,7 @@
       // Position them randomly within 10% to 90% of viewport height
       const randomTop = Math.floor(Math.random() * 80 + 10);
       elem.style.top = randomTop + "vh";
-      // For left ones, assign a random left offset between 10px and 50px; for right ones, random right offset
+      // For left ones, assign a random left offset; for right ones, a random right offset
       if (elem.classList.contains('vegetation-left')) {
         const randomLeft = Math.floor(Math.random() * 40 + 10);
         elem.style.left = randomLeft + "px";
@@ -537,7 +549,7 @@
         const randomRight = Math.floor(Math.random() * 40 + 10);
         elem.style.right = randomRight + "px";
       }
-      // Gentle oscillation already appliquée ci-dessous :
+      // Gentle oscillation animation
       gsap.to(elem, { duration: 3, rotation: Math.random() * 6 - 3, yoyo: true, repeat: -1, ease: "power1.inOut" });
     });
     
